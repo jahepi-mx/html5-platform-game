@@ -1,6 +1,6 @@
 Object.defineProperty(Tile, "WALL_TYPE", { value: "WALL_TYPE" });
 Object.defineProperty(Tile, "PLATFORM_TYPE", { value: "PLATFORM_TYPE" });
-Object.defineProperty(Tile, "TEXTURE", { value: "TEXTURE" });
+Object.defineProperty(Tile, "TEXTURE_TYPE", { value: "TEXTURE" });
 
 function Tile(x, y, width, height, typeIndex, camera) {
     this.x = x * width;
@@ -17,7 +17,7 @@ function Tile(x, y, width, height, typeIndex, camera) {
         this.type = Tile.PLATFORM_TYPE;
     } else if (this.typeIndex === 0 
             || this.typeIndex === 6) {
-        this.type = Tile.TEXTURE;
+        this.type = Tile.TEXTURE_TYPE;
     }
 }
 
