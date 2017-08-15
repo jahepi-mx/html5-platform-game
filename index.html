@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="engine/config.js"></script>
+        <script src="engine/camera.js"></script>
+        <script src="engine/tile.js"></script>
+        <script src="engine/hero.js"></script>
+        <script src="engine/render.js"></script>
+        <script src="engine/controller.js"></script>
+        <script>
+            /*
+            var sandImg = new Image();
+            sandImg.src = 'tree.png';
+            var princessImg = new Image();
+            princessImg.src = 'princess.gif';
+            var princessLeftImg = new Image();
+            princessLeftImg.src = 'princessLeft.gif';
+            var img = new Image();
+            img.src = 'grass.png';
+            var backgroundImage;
+            */
+           
+            var render;
+            var controller;
+            var prevTimestamp = 0;
+            
+            window.onload = function() {
+                canvas = document.getElementById("game");
+                context = canvas.getContext("2d");
+                canvas.width = Config.worldWidth;
+                canvas.height = Config.worldHeight;
+                controller = new Controller();
+                render = new Render(context, canvas, controller);
+                //backgroundImage = context.createPattern(img, 'repeat'); // Create a pattern with this image, and set it to "repeat".
+                window.requestAnimationFrame(onUpdate);    
+            };
+            
+            function onUpdate(timestamp) {
+                var deltatime = (timestamp - prevTimestamp) / 1000;
+                console.log("Fps: " + (1 / deltatime));
+                render.update(deltatime);
+                prevTimestamp = timestamp;
+                window.requestAnimationFrame(onUpdate);
+            } 
+            document.onkeydown = function (e) {
+                e = e || window.event;
+                if (e.keyCode == '38') controller.jump();
+                if (e.keyCode == '37') controller.moveLeft(true);
+                if (e.keyCode == '39') controller.moveRight(true);
+            };
+
+            document.onkeyup = function (e) {
+                e = e || window.event;
+                if (e.keyCode == '37') controller.moveLeft(false);
+                if (e.keyCode == '39') controller.moveRight(false);
+            };
+        </script>
+    </head>
+    <body style="background-color: black">
+        <canvas id="game" style="background-color: green; margin: 0 auto; display: block"></canvas>
+    </body>
+</html>
