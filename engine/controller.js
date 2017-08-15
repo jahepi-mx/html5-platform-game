@@ -68,7 +68,7 @@ Controller.prototype.update = function(deltatime) {
                     }
                 }
                 // Up
-                if (tile.type === Tile.PLATFORM_TYPE && hero.velocityY <= 0 && hero.bottom() >= tile.top() && hero.top() < tile.top()) {
+                if (tile.type === Tile.PLATFORM_TYPE && hero.velocityY <= 0 && hero.bottom() >= tile.top() && (hero.top() + hero.height / 2) < tile.top()) {
                     if (hero.right() - hero.width / 2 > tile.left() && hero.left() < tile.left()) {
                         hero.y = tile.top() - hero.height;
                         hero.isJumping = false;
