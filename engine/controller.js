@@ -1,24 +1,22 @@
 function Controller() {
+    
     this.map = [
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,1,
-        1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,4,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,3,4,0,0,0,0,1,
+        1,1,1,1,1,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
     ];
+    
     this.tiles = [];
     this.hero = new Hero(100, 100, 30, 30);
     this.camera = new Camera();
     this.camera.move(this.hero.x, this.hero.y);
     for (var i = 0; i < this.map.length; i++) {
-        if (this.map[i] > 0) {
-            this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
-        } else {
-            this.tiles[i] = null;
-        }
+        this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
     }
 }
 
@@ -42,7 +40,8 @@ Controller.prototype.update = function(deltatime) {
             var tile = this.getTile(y * mapWidth + x);
             if (tile !== null) {
                 // Left
-                if (tile.type === 1 && hero.right() >= tile.left() && hero.left() < tile.left()) {
+                if (tile.type === Tile.WALL_TYPE && hero.right() >= tile.left() && hero.left() < tile.left()) {
+                    console.log(tile.type);
                     if (hero.bottom() - hero.height / 2 > tile.top() && hero.top() < tile.top())
                         hero.x = tile.left() - hero.width;
                     if (hero.top() + hero.height / 2 < tile.bottom() && hero.bottom() > tile.bottom())
@@ -52,7 +51,7 @@ Controller.prototype.update = function(deltatime) {
                 }
 
                 // Right
-                if (tile.type === 1 && hero.left() <= tile.right() && hero.right() > tile.right()) {
+                if (tile.type === Tile.WALL_TYPE && hero.left() <= tile.right() && hero.right() > tile.right()) {
                     if (hero.bottom() - hero.height / 2 > tile.top() && hero.top() < tile.top())
                         hero.x = tile.right();
                     if (hero.top() + hero.height / 2 < tile.bottom() && hero.bottom() > tile.bottom())
@@ -62,7 +61,7 @@ Controller.prototype.update = function(deltatime) {
                 }
 
                 // Up
-                if (tile.type === 1 && hero.bottom() >= tile.top() && hero.top() < tile.top()) {
+                if (tile.type === Tile.WALL_TYPE && hero.bottom() >= tile.top() && hero.top() < tile.top()) {
                     if (hero.right() - hero.width / 2 > tile.left() && hero.left() < tile.left()) {
                         hero.y = tile.top() - hero.height;
                         hero.isJumping = false;
@@ -77,7 +76,7 @@ Controller.prototype.update = function(deltatime) {
                     }
                 }
                 // Up
-                if (tile.type === 2 && hero.velocityY <= 0 && hero.bottom() >= tile.top() && hero.top() < tile.top()) {
+                if (tile.type === Tile.PLATFORM_TYPE && hero.velocityY <= 0 && hero.bottom() >= tile.top() && hero.top() < tile.top()) {
                     if (hero.right() - hero.width / 2 > tile.left() && hero.left() < tile.left()) {
                         hero.y = tile.top() - hero.height;
                         hero.isJumping = false;
@@ -93,7 +92,7 @@ Controller.prototype.update = function(deltatime) {
                 }
 
                 // Bottom
-                if (tile.type === 1 && hero.top() <= tile.bottom() && hero.bottom() > tile.bottom()) {
+                if (tile.type === Tile.WALL_TYPE && hero.top() <= tile.bottom() && hero.bottom() > tile.bottom()) {
                     if (hero.right() - hero.width / 2 > tile.left() && hero.left() < tile.left())
                         hero.y = tile.bottom();
                     if (hero.left() + hero.width / 2 < tile.right() && hero.right() > tile.right())
