@@ -12,7 +12,7 @@ function Controller() {
     ];
     
     this.tiles = [];
-    this.hero = new Hero(100, 100, 30, 30);
+    this.hero = new Hero(100, 100, 60, 60);
     this.camera = new Camera();
     this.camera.move(this.hero.x, this.hero.y);
     for (var i = 0; i < this.map.length; i++) {
@@ -24,16 +24,8 @@ Controller.prototype.update = function(deltatime) {
     var hero = this.hero;
     var camera = this.camera;
     var mapWidth = Config.mapWidth;
-    var gravity = Config.gravity;
-    var tiles = this.tiles;
     
-    if (!hero.isJumping) {
-        hero.y += gravity * deltatime;
-        hero.velocityY = 0;
-    } else {
-        hero.y -= hero.velocityY * deltatime;
-        hero.velocityY -= gravity * deltatime;
-    }
+    hero.update(deltatime);
 
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
@@ -142,9 +134,9 @@ Controller.prototype.jump = function() {
 };
 
 Controller.prototype.moveRight = function(bool) {
-    this.hero.movingRight = bool;
+    this.hero.moveRight(bool);
 };
 
 Controller.prototype.moveLeft = function(bool) {
-    this.hero.movingLeft = bool;
+    this.hero.moveLeft(bool);
 };

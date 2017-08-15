@@ -38,7 +38,7 @@ Tile.prototype.bottom = function() {
 };
 
 Tile.prototype.draw = function(context) {
-    if (!Config.debug) {
+    if (Config.debug) {
         context.fillStyle = "white";
         context.fillRect(this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
     } else {
