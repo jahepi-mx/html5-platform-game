@@ -114,3 +114,27 @@ Assets.hero.jump.sprite6.src = 'assets/hero/jump/jump7.png';
 Assets.hero.jump.sprite7.src = 'assets/hero/jump/jump8.png';
 Assets.hero.jump.sprite8.src = 'assets/hero/jump/jump9.png';
 Assets.hero.jump.sprite9.src = 'assets/hero/jump/jump10.png';
+
+// Hero - JumpShoot
+Assets.hero.jump_shoot.sprite0.src = 'assets/hero/jump_shoot/jump_shoot1.png';
+Assets.hero.jump_shoot.sprite1.src = 'assets/hero/jump_shoot/jump_shoot2.png';
+Assets.hero.jump_shoot.sprite2.src = 'assets/hero/jump_shoot/jump_shoot3.png';
+Assets.hero.jump_shoot.sprite3.src = 'assets/hero/jump_shoot/jump_shoot4.png';
+Assets.hero.jump_shoot.sprite4.src = 'assets/hero/jump_shoot/jump_shoot5.png';
+
+// Hero - RunShoot
+Assets.hero.run_shoot.sprite0.src = 'assets/hero/run_shoot/run_shoot1.png';
+Assets.hero.run_shoot.sprite1.src = 'assets/hero/run_shoot/run_shoot2.png';
+Assets.hero.run_shoot.sprite2.src = 'assets/hero/run_shoot/run_shoot3.png';
+Assets.hero.run_shoot.sprite3.src = 'assets/hero/run_shoot/run_shoot4.png';
+Assets.hero.run_shoot.sprite4.src = 'assets/hero/run_shoot/run_shoot5.png';
+Assets.hero.run_shoot.sprite5.src = 'assets/hero/run_shoot/run_shoot6.png';
+Assets.hero.run_shoot.sprite6.src = 'assets/hero/run_shoot/run_shoot7.png';
+Assets.hero.run_shoot.sprite7.src = 'assets/hero/run_shoot/run_shoot8.png';
+Assets.hero.run_shoot.sprite8.src = 'assets/hero/run_shoot/run_shoot9.png';
+
+// Hero - Shoot
+Assets.hero.shoot.sprite0.src = 'assets/hero/shoot/shoot1.png';
+Assets.hero.shoot.sprite1.src = 'assets/hero/shoot/shoot2.png';
+Assets.hero.shoot.sprite2.src = 'assets/hero/shoot/shoot3.png';
+Assets.hero.shoot.sprite3.src = 'assets/hero/shoot/shoot4.png';

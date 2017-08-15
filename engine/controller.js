@@ -12,7 +12,7 @@ function Controller() {
     ];
     
     this.tiles = [];
-    this.hero = new Hero(100, 100, 60, 60);
+    this.hero = new Hero(100, 260, 60, 60);
     this.camera = new Camera();
     this.camera.move(this.hero.x, this.hero.y);
     for (var i = 0; i < this.map.length; i++) {
@@ -139,4 +139,8 @@ Controller.prototype.moveRight = function(bool) {
 
 Controller.prototype.moveLeft = function(bool) {
     this.hero.moveLeft(bool);
+};
+
+Controller.prototype.shoot = function() {
+    this.hero.shoot();
 };

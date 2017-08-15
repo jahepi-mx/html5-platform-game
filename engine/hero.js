@@ -10,35 +10,35 @@ function Hero(x, y, width, height) {
     this.velocityY = 0;
     this.velocityXMain = 100;
     this.isJumping = false;
+    this.isShooting = false;
+    this.shootingTime = 0;
+    this.shootingTimeLimit = 30 / 60;
     this.direction = 1;
     
-    this.idleTime = 0;
-    this.idleCount = 0;
-    this.runTime = 0;
-    this.runCount = 0;
-    this.jumpTime = 0;
-    this.jumpCount = 0;
+    this.idleAnimation = new Animation(10);
+    this.runAnimation = new Animation(7);
+    this.jumpAnimation = new Animation(10);
+    this.jumpShootAnimation = new Animation(5);
+    this.runShootAnimation = new Animation(9);
+    this.shootAnimation = new Animation(4);
 }
 
 Hero.prototype.update = function(deltatime) {
     
-    this.idleTime += deltatime;
-    if (this.idleTime >= (6 / 60)) {
-        this.idleCount++;
-        this.idleTime = 0;
+    if (this.isShooting) {
+        this.shootingTime += deltatime;
     }
     
-    this.runTime += deltatime;
-    if (this.runTime >= (7.5 / 60)) {
-        this.runCount++;
-        this.runTime = 0;
+    if (this.shootingTime >= this.shootingTimeLimit) {
+        this.isShooting = false;
     }
     
-    this.jumpTime += deltatime;
-    if (this.jumpTime >= (6 / 60)) {
-        this.jumpCount++;
-        this.jumpTime = 0;
-    }
+    this.idleAnimation.update(deltatime);
+    this.runAnimation.update(deltatime);
+    this.jumpAnimation.update(deltatime);
+    this.jumpShootAnimation.update(deltatime);
+    this.runShootAnimation.update(deltatime);
+    this.shootAnimation.update(deltatime);
     
     if (!this.isJumping) {
         this.y += Config.gravity * deltatime;
@@ -55,6 +55,13 @@ Hero.prototype.jump = function() {
         this.velocityY = 100;
     }
 }
+
+Hero.prototype.shoot = function() {
+    if (!this.isShooting) {
+        this.shootingTime = 0;
+        this.isShooting = true;
+    }
+};
 
 Hero.prototype.left = function() {
     return this.x;
@@ -91,32 +98,59 @@ Hero.prototype.draw = function(context) {
         context.fillStyle = "blue";
         context.fillRect(this.x, this.y, this.width, this.height);
     } else {
-        if (this.isJumping) {
+        if (this.isJumping && this.isShooting) {
             if (this.direction === -1) {
                 context.save();
                 context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.jump["sprite" + (this.jumpCount % 10)], - this.x - this.width, this.y, this.width, this.height);
+                context.drawImage(Assets.hero.jump_shoot["sprite" + this.jumpShootAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
                 context.restore();
             } else {
-                context.drawImage(Assets.hero.jump["sprite" + (this.jumpCount % 10)], this.x, this.y, this.width, this.height);
+                context.drawImage(Assets.hero.jump_shoot["sprite" + this.jumpShootAnimation.getFrame()], this.x, this.y, this.width, this.height);
+            }
+        } else if (this.isJumping) {
+            if (this.direction === -1) {
+                context.save();
+                context.scale(this.direction, 1);
+                context.drawImage(Assets.hero.jump["sprite" + this.jumpAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
+                context.restore();
+            } else {
+                context.drawImage(Assets.hero.jump["sprite" + this.jumpAnimation.getFrame()], this.x, this.y, this.width, this.height);
+            }
+        } else if (!this.movingLeft && !this.movingRight && !this.isJumping && this.isShooting) {
+            if (this.direction === -1) {
+                context.save();
+                context.scale(this.direction, 1);
+                context.drawImage(Assets.hero.shoot["sprite" + this.shootAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
+                context.restore();
+            } else {
+                context.drawImage(Assets.hero.shoot["sprite" + this.shootAnimation.getFrame()], this.x, this.y, this.width, this.height);
             }
         } else if (!this.movingLeft && !this.movingRight && !this.isJumping) {
             if (this.direction === -1) {
                 context.save();
                 context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.idle["sprite" + (this.idleCount % 10)], - this.x - this.width, this.y, this.width, this.height);
+                context.drawImage(Assets.hero.idle["sprite" + this.idleAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
                 context.restore();
             } else {
-                context.drawImage(Assets.hero.idle["sprite" + (this.idleCount % 10)], this.x, this.y, this.width, this.height);
+                context.drawImage(Assets.hero.idle["sprite" + this.idleAnimation.getFrame()], this.x, this.y, this.width, this.height);
+            }
+        } else if((this.movingLeft || this.movingRight) && this.isShooting) {
+            if (this.direction === -1) {
+                context.save();
+                context.scale(this.direction, 1);
+                context.drawImage(Assets.hero.run_shoot["sprite" + this.runShootAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
+                context.restore();
+            } else {
+                context.drawImage(Assets.hero.run_shoot["sprite" + this.runShootAnimation.getFrame()], this.x, this.y, this.width, this.height);
             }
         } else if (this.movingLeft || this.movingRight) {
             if (this.direction === -1) {
                 context.save();
                 context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.run["sprite" + (this.runCount % 7)], - this.x - this.width, this.y, this.width, this.height);
+                context.drawImage(Assets.hero.run["sprite" + this.runAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
                 context.restore();
             } else {
-                context.drawImage(Assets.hero.run["sprite" + (this.runCount % 7)], this.x, this.y, this.width, this.height);
+                context.drawImage(Assets.hero.run["sprite" + this.runAnimation.getFrame()], this.x, this.y, this.width, this.height);
             }
         }
     }    
