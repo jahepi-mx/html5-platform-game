@@ -17,12 +17,12 @@ function Hero(x, y, width, height, camera) {
     this.camera = camera;
     this.blasts = [];
     
-    this.idleAnimation = new Animation(10);
-    this.runAnimation = new Animation(7);
-    this.jumpAnimation = new Animation(10);
-    this.jumpShootAnimation = new Animation(5);
-    this.runShootAnimation = new Animation(9);
-    this.shootAnimation = new Animation(4);
+    this.idleAnimation = new Animation(10, 1);
+    this.runAnimation = new Animation(7, 1);
+    this.jumpAnimation = new Animation(10, 1);
+    this.jumpShootAnimation = new Animation(5, 1);
+    this.runShootAnimation = new Animation(9, 1);
+    this.shootAnimation = new Animation(4, 1);
 }
 
 Hero.prototype.update = function(deltatime) {
@@ -66,7 +66,7 @@ Hero.prototype.shoot = function() {
     if (!this.isShooting) {
         this.shootingTime = 0;
         this.isShooting = true;
-        this.blasts.push(new HeroBlast(this.x, this.y, this.camera, this.direction, this));
+        this.blasts.push(new HeroBlast(this.x, this.y, this.camera, this.direction));
     }
 };
 

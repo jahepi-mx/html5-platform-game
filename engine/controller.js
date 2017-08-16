@@ -7,7 +7,7 @@ function Controller() {
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,4,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,3,4,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,3,3,3,4,0,0,0,0,1,
         1,1,1,1,1,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
     ];
     
@@ -31,9 +31,17 @@ Controller.prototype.update = function(deltatime) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
             var tile = this.getTile(y * mapWidth + x);
             if (tile !== null) {
+                
+                // Verify if hero blasts dont collide with WALL type tiles
+                if (tile.type === Tile.WALL_TYPE) {
+                    for (var i = 0; i < this.hero.blasts.length; i++) {
+                        hero.blasts[i].collide(tile);
+                    }
+                }
+                
                 // Left
                 if (tile.type === Tile.WALL_TYPE && hero.right() >= tile.left() && hero.left() < tile.left()) {
-                    console.log(tile.type);
+                    //console.log(tile.type);
                     if (hero.bottom() - hero.height / 2 > tile.top() && hero.top() < tile.top())
                         hero.x = tile.left() - hero.width;
                     if (hero.top() + hero.height / 2 < tile.bottom() && hero.bottom() > tile.bottom())

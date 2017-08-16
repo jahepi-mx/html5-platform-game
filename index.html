@@ -31,13 +31,11 @@ and open the template in the editor.
                 canvas.height = Config.worldHeight;
                 controller = new Controller();
                 render = new Render(context, canvas, controller);
-                //backgroundImage = context.createPattern(img, 'repeat'); // Create a pattern with this image, and set it to "repeat".
                 window.requestAnimationFrame(onUpdate);    
             };
             
             function onUpdate(timestamp) {
                 var deltatime = (timestamp - prevTimestamp) / 1000;
-                console.log("Fps: " + (1 / deltatime));
                 render.update(deltatime);
                 prevTimestamp = timestamp;
                 window.requestAnimationFrame(onUpdate);
