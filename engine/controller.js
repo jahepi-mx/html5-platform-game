@@ -12,8 +12,8 @@ function Controller() {
     ];
     
     this.tiles = [];
-    this.hero = new Hero(100, 260, 60, 60);
     this.camera = new Camera();
+    this.hero = new Hero(100, 260, 60, 60, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
     for (var i = 0; i < this.map.length; i++) {
         this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);

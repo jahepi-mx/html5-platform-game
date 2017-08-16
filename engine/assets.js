@@ -67,6 +67,21 @@ Assets = {
             sprite2: new Image(),
             sprite3: new Image(),
             sprite4: new Image(),
+        },
+        blast: {
+            sprite0: new Image(),
+            sprite1: new Image(),
+            sprite2: new Image(),
+            sprite3: new Image(),
+            sprite4: new Image(),
+        },
+        blast_explosion: {
+            sprite0: new Image(),
+            sprite1: new Image(),
+            sprite2: new Image(),
+            sprite3: new Image(),
+            sprite4: new Image(),
+            sprite5: new Image(),
         }
     }
 };
@@ -138,3 +153,19 @@ Assets.hero.shoot.sprite0.src = 'assets/hero/shoot/shoot1.png';
 Assets.hero.shoot.sprite1.src = 'assets/hero/shoot/shoot2.png';
 Assets.hero.shoot.sprite2.src = 'assets/hero/shoot/shoot3.png';
 Assets.hero.shoot.sprite3.src = 'assets/hero/shoot/shoot4.png';
+
+// Hero - Blast
+Assets.hero.blast.sprite0.src = 'assets/hero/blast/blast1.png';
+Assets.hero.blast.sprite1.src = 'assets/hero/blast/blast2.png';
+Assets.hero.blast.sprite2.src = 'assets/hero/blast/blast3.png';
+Assets.hero.blast.sprite3.src = 'assets/hero/blast/blast4.png';
+Assets.hero.blast.sprite4.src = 'assets/hero/blast/blast5.png';
+
+// Hero - BlastExplosion
+Assets.hero.blast_explosion.sprite0.src = 'assets/hero/blast_explosion/blast_explosion1.png';
+Assets.hero.blast_explosion.sprite1.src = 'assets/hero/blast_explosion/blast_explosion2.png';
+Assets.hero.blast_explosion.sprite2.src = 'assets/hero/blast_explosion/blast_explosion3.png';
+Assets.hero.blast_explosion.sprite3.src = 'assets/hero/blast_explosion/blast_explosion4.png';
+Assets.hero.blast_explosion.sprite4.src = 'assets/hero/blast_explosion/blast_explosion5.png';
+Assets.hero.blast_explosion.sprite5.src = 'assets/hero/blast_explosion/blast_explosion6.png';
+

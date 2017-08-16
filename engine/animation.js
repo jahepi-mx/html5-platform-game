@@ -5,8 +5,9 @@ function Animation(frames) {
 }
 
 Animation.prototype.update = function(deltatime) {
+    var fps = 1 / deltatime;
     this.time += deltatime;
-    if (this.time >= ((60 / this.frames) / 60)) {
+    if (this.time >= ((fps / this.frames) / fps)) {
         this.count++;
         this.count %= this.frames;
         this.time = 0;

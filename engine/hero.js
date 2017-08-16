@@ -1,4 +1,4 @@
-function Hero(x, y, width, height) {
+function Hero(x, y, width, height, camera) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -14,6 +14,8 @@ function Hero(x, y, width, height) {
     this.shootingTime = 0;
     this.shootingTimeLimit = 30 / 60;
     this.direction = 1;
+    this.camera = camera;
+    this.blasts = [];
     
     this.idleAnimation = new Animation(10);
     this.runAnimation = new Animation(7);
@@ -47,6 +49,10 @@ Hero.prototype.update = function(deltatime) {
         this.y -= this.velocityY * deltatime;
         this.velocityY -= Config.gravity * deltatime;
     }
+    
+    for (var i = 0; i < this.blasts.length; i++) {
+        this.blasts[i].update(deltatime);
+    }
 };
 
 Hero.prototype.jump = function() {
@@ -60,6 +66,7 @@ Hero.prototype.shoot = function() {
     if (!this.isShooting) {
         this.shootingTime = 0;
         this.isShooting = true;
+        this.blasts.push(new HeroBlast(this.x, this.y, this.camera, this.direction, this));
     }
 };
 
@@ -152,6 +159,10 @@ Hero.prototype.draw = function(context) {
             } else {
                 context.drawImage(Assets.hero.run["sprite" + this.runAnimation.getFrame()], this.x, this.y, this.width, this.height);
             }
+        }
+        
+        for (var i = 0; i < this.blasts.length; i++) {
+            this.blasts[i].draw(context);
         }
     }    
 };
