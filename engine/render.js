@@ -16,16 +16,13 @@ Render.prototype.update = function(deltatime) {
             if (tile !== null) {
                 tile.draw(this.context);
             }
-        }
-    }
-    for (var y = this.controller.getMinY(); y <= this.controller.getMaxY(); y++) {
-        for (var x = this.controller.getMinX(); x <= this.controller.getMaxX(); x++) {
             var enemy = this.controller.getEnemy(y * Config.mapWidth + x);
             if (enemy !== null) {
                 enemy.draw(this.context);
             }
         }
     }
+
     this.context.fillText("Fps: " + 1 / deltatime, 10, 10);
     this.controller.hero.draw(this.context);
 };

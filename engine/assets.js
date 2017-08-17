@@ -82,10 +82,25 @@ Assets = {
             sprite3: new Image(),
             sprite4: new Image(),
             sprite5: new Image(),
-        }
+        },
+        dead: {
+            sprite0: new Image(),
+            sprite1: new Image(),
+            sprite2: new Image(),
+            sprite3: new Image(),
+            sprite4: new Image(),
+            sprite5: new Image(),
+            sprite6: new Image(),
+            sprite7: new Image(),
+            sprite8: new Image(),
+            sprite9: new Image(),
+            sprite10: new Image(),
+        },
     },
     enemies: {
         block: new Image(),
+        blockHorizontalBack: new Image(),
+        blockHorizontalFront: new Image(),
     }
 };
 
@@ -172,6 +187,25 @@ Assets.hero.blast_explosion.sprite3.src = 'assets/hero/blast_explosion/blast_exp
 Assets.hero.blast_explosion.sprite4.src = 'assets/hero/blast_explosion/blast_explosion5.png';
 Assets.hero.blast_explosion.sprite5.src = 'assets/hero/blast_explosion/blast_explosion6.png';
 
+// Hero - Dead
+Assets.hero.dead.sprite0.src = 'assets/hero/dead/dead1.png';
+Assets.hero.dead.sprite1.src = 'assets/hero/dead/dead2.png';
+Assets.hero.dead.sprite2.src = 'assets/hero/dead/dead3.png';
+Assets.hero.dead.sprite3.src = 'assets/hero/dead/dead4.png';
+Assets.hero.dead.sprite4.src = 'assets/hero/dead/dead5.png';
+Assets.hero.dead.sprite5.src = 'assets/hero/dead/dead6.png';
+Assets.hero.dead.sprite6.src = 'assets/hero/dead/dead7.png';
+Assets.hero.dead.sprite7.src = 'assets/hero/dead/dead8.png';
+Assets.hero.dead.sprite8.src = 'assets/hero/dead/dead9.png';
+Assets.hero.dead.sprite9.src = 'assets/hero/dead/dead10.png';
+
 // BlockEnemy
 Assets.enemies.block.src = 'assets/enemies/block/block.png';
+
+// BlockEnemy
+Assets.enemies.block.src = 'assets/enemies/block/block.png';
+
+// BlockEnemyHorizontal
+Assets.enemies.blockHorizontalBack.src = 'assets/enemies/block/blockHorizontalBack.png';
+Assets.enemies.blockHorizontalFront.src = 'assets/enemies/block/blockHorizontalFront.png';
 

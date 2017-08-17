@@ -26,6 +26,7 @@ HeroBlast.prototype.update = function(deltatime) {
                 this.isDisposable = true;
             }
         } else {
+            this.blastAnimation.update(deltatime);
             if (this.direction === -1) {
                 this.traveled += this.velocity * deltatime; 
             } else {

@@ -18,14 +18,14 @@ function Controller() {
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     ];
     
     this.tiles = [];
     this.enemies = [];
     this.camera = new Camera();
-    this.hero = new Hero(100, 260, 60, 60, this.camera);
+    this.hero = new Hero(60, 260, 60, 60, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
     for (var i = 0; i < this.map.length; i++) {
         this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
@@ -33,6 +33,8 @@ function Controller() {
     for (var i = 0; i < this.enemyMap.length; i++) {
         if (this.enemyMap[i] === BlockEnemy.TYPE) {
             this.enemies[i] = new BlockEnemy(i % Config.mapWidth, parseInt(i / Config.mapWidth), this.camera);
+        } else if (this.enemyMap[i] === BlockEnemyHorizontal.TYPE) {
+            this.enemies[i] = new BlockEnemyHorizontal(i % Config.mapWidth, parseInt(i / Config.mapWidth), this.camera);
         }
     }
 }
@@ -50,6 +52,7 @@ Controller.prototype.update = function(deltatime) {
             var enemy = this.getEnemy(y * mapWidth + x);
             if (enemy !== null) {
                 enemy.update(deltatime);
+                hero.collide(enemy);
             }
             
             var tile = this.getTile(y * mapWidth + x);
@@ -126,13 +129,6 @@ Controller.prototype.update = function(deltatime) {
             }
         } 
     }
-
-    if (hero.movingRight || hero.movingLeft) hero.velocityX = hero.velocityXMain;
-    if (hero.movingRight) hero.velocityX = Math.abs(hero.velocityX);
-    if (hero.movingLeft) hero.velocityX = -Math.abs(hero.velocityX);
-    camera.move(hero.x, hero.y);
-    hero.x += hero.velocityX * deltatime;
-    hero.velocityX *= hero.friction;
 };
 
 Controller.prototype.getTile = function(index) {

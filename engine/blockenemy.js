@@ -28,3 +28,19 @@ BlockEnemy.prototype.update = function(deltatime) {
         }
     }
 };
+
+BlockEnemy.prototype.left = function() {
+    return this.x - this.camera.x;
+};
+
+BlockEnemy.prototype.right = function() {
+    return (this.x + this.width) - this.camera.x;
+};
+
+BlockEnemy.prototype.top = function() {
+    return this.y - this.traveled - this.camera.y;
+};
+
+BlockEnemy.prototype.bottom = function() {
+    return (this.y + this.height) - (this.traveled - this.camera.y);
+};
