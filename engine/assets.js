@@ -83,6 +83,9 @@ Assets = {
             sprite4: new Image(),
             sprite5: new Image(),
         }
+    },
+    enemies: {
+        block: new Image(),
     }
 };
 
@@ -168,4 +171,7 @@ Assets.hero.blast_explosion.sprite2.src = 'assets/hero/blast_explosion/blast_exp
 Assets.hero.blast_explosion.sprite3.src = 'assets/hero/blast_explosion/blast_explosion4.png';
 Assets.hero.blast_explosion.sprite4.src = 'assets/hero/blast_explosion/blast_explosion5.png';
 Assets.hero.blast_explosion.sprite5.src = 'assets/hero/blast_explosion/blast_explosion6.png';
+
+// BlockEnemy
+Assets.enemies.block.src = 'assets/enemies/block/block.png';
 

@@ -10,9 +10,15 @@ function HeroBlast(x, y, camera, direction) {
     this.isDisposable = false;
     this.blastAnimation = new Animation(5, 1.5);
     this.blastExplosionAnimation = new Animation(6, 2);
+    this.traveled = 0;
 }
 
 HeroBlast.prototype.update = function(deltatime) {
+    
+    if (Math.abs(this.camera.x - this.x) >= Config.worldWidth) {
+        this.collided = true;
+    }
+    
     if (!this.isDisposable) {
         if (this.collided) {
             this.blastExplosionAnimation.update(deltatime);
@@ -21,22 +27,21 @@ HeroBlast.prototype.update = function(deltatime) {
             }
         } else {
             if (this.direction === -1) {
-                this.x -= this.velocity * deltatime;
+                this.traveled += this.velocity * deltatime; 
             } else {
-                this.x += this.velocity * deltatime;
+                this.traveled -= this.velocity * deltatime;
             }
         }
     }
 };
 
 HeroBlast.prototype.draw = function(context) {
-    //console.log("camera y:" + this.camera.y + " y:" + this.y);
     if (!this.isDisposable) {
         var y = this.y - (this.camera.y - this.y);
         if (this.collided) {
-            context.drawImage(Assets.hero.blast_explosion["sprite" + this.blastExplosionAnimation.getFrame()], this.x, y, this.width, this.height); 
+            context.drawImage(Assets.hero.blast_explosion["sprite" + this.blastExplosionAnimation.getFrame()], this.x - this.traveled, y, this.width, this.height); 
         } else {
-            context.drawImage(Assets.hero.blast["sprite" + this.blastAnimation.getFrame()], this.x, y, this.width, this.height);
+            context.drawImage(Assets.hero.blast["sprite" + this.blastAnimation.getFrame()], this.x - this.traveled, y, this.width, this.height);
         }
     }
 };
@@ -55,11 +60,11 @@ HeroBlast.prototype.collide = function(object) {
 };
 
 HeroBlast.prototype.left = function() {
-    return this.x;
+    return this.x - this.traveled;
 };
 
 HeroBlast.prototype.right = function() {
-    return this.x + this.width;
+    return (this.x + this.width) - this.traveled;
 };
 
 HeroBlast.prototype.top = function() {

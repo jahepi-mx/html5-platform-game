@@ -51,7 +51,11 @@ Hero.prototype.update = function(deltatime) {
     }
     
     for (var i = 0; i < this.blasts.length; i++) {
-        this.blasts[i].update(deltatime);
+        if (this.blasts[i].isDisposable) {
+            this.blasts.splice(i, 1);
+        } else {
+            this.blasts[i].update(deltatime);
+        }
     }
 };
 

@@ -11,12 +11,29 @@ function Controller() {
         1,1,1,1,1,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
     ];
     
+    this.enemyMap = [
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    ];
+    
     this.tiles = [];
+    this.enemies = [];
     this.camera = new Camera();
     this.hero = new Hero(100, 260, 60, 60, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
     for (var i = 0; i < this.map.length; i++) {
         this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
+    }
+    for (var i = 0; i < this.enemyMap.length; i++) {
+        if (this.enemyMap[i] === BlockEnemy.TYPE) {
+            this.enemies[i] = new BlockEnemy(i % Config.mapWidth, parseInt(i / Config.mapWidth), this.camera);
+        }
     }
 }
 
@@ -29,6 +46,12 @@ Controller.prototype.update = function(deltatime) {
 
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
+            
+            var enemy = this.getEnemy(y * mapWidth + x);
+            if (enemy !== null) {
+                enemy.update(deltatime);
+            }
+            
             var tile = this.getTile(y * mapWidth + x);
             if (tile !== null) {
                 
@@ -115,6 +138,13 @@ Controller.prototype.update = function(deltatime) {
 Controller.prototype.getTile = function(index) {
     if (index >= 0 && index < this.tiles.length && this.tiles[index] !== null) {
         return this.tiles[index];
+    }
+    return null;
+};
+
+Controller.prototype.getEnemy = function(index) {
+    if (index >= 0 && index < this.enemies.length && this.enemies[index] !== undefined) {
+        return this.enemies[index];
     }
     return null;
 };
