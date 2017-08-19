@@ -15,7 +15,7 @@ function HeroBlast(x, y, camera, direction) {
 
 HeroBlast.prototype.update = function(deltatime) {
     
-    if (Math.abs(this.camera.x - this.x) >= Config.worldWidth) {
+    if (Math.abs(this.traveled) >= Config.worldWidth) {
         this.collided = true;
     }
     

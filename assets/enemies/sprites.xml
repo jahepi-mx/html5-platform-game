@@ -1,0 +1,33 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="block.png" x="0" y="1048" width="522" height="522"/>
+	<SubTexture name="blockHorizontalBack.png" x="0" y="0" width="522" height="522"/>
+	<SubTexture name="blockHorizontalFront.png" x="0" y="524" width="522" height="522"/>
+	<SubTexture name="boss1_damage1.png" x="524" y="925" width="230" height="174"/>
+	<SubTexture name="boss1_damage2.png" x="524" y="1101" width="229" height="173"/>
+	<SubTexture name="boss1_damage3.png" x="524" y="751" width="230" height="172"/>
+	<SubTexture name="boss1_damage4.png" x="524" y="581" width="231" height="168"/>
+	<SubTexture name="boss1_hit1.png" x="295" y="1736" width="291" height="161"/>
+	<SubTexture name="boss1_hit2.png" x="0" y="1736" width="293" height="163"/>
+	<SubTexture name="boss1_hit3.png" x="0" y="1572" width="295" height="162"/>
+	<SubTexture name="boss1_idle1.png" x="524" y="154" width="265" height="139"/>
+	<SubTexture name="boss1_idle2.png" x="0" y="1901" width="266" height="144"/>
+	<SubTexture name="boss1_idle3.png" x="524" y="0" width="266" height="152"/>
+	<SubTexture name="boss1_idle4.png" x="297" y="1572" width="266" height="152"/>
+	<SubTexture name="boss1_idle5.png" x="524" y="295" width="265" height="145"/>
+	<SubTexture name="boss1_idle6.png" x="268" y="1901" width="265" height="135"/>
+	<SubTexture name="boss1_idle7.png" x="524" y="442" width="265" height="137"/>
+	<SubTexture name="bullet1.png" x="597" y="1912" width="60" height="63"/>
+	<SubTexture name="bullet2.png" x="535" y="1912" width="60" height="63"/>
+	<SubTexture name="bullet3.png" x="535" y="1977" width="60" height="63"/>
+	<SubTexture name="bullet4.png" x="597" y="1977" width="60" height="63"/>
+	<SubTexture name="bullet5.png" x="659" y="1912" width="60" height="63"/>
+	<SubTexture name="explosion1.png" x="588" y="1700" width="211" height="210"/>
+	<SubTexture name="explosion2.png" x="791" y="154" width="209" height="210"/>
+	<SubTexture name="explosion3.png" x="738" y="1276" width="211" height="210"/>
+	<SubTexture name="explosion4.png" x="756" y="751" width="210" height="210"/>
+	<SubTexture name="explosion5.png" x="791" y="366" width="209" height="210"/>
+	<SubTexture name="explosion6.png" x="524" y="1276" width="212" height="210"/>
+	<SubTexture name="explosion7.png" x="756" y="963" width="210" height="210"/>
+	<SubTexture name="explosion8.png" x="779" y="1488" width="210" height="210"/>
+	<SubTexture name="explosion9.png" x="565" y="1488" width="212" height="210"/>
+</TextureAtlas>

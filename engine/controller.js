@@ -37,21 +37,21 @@ Controller.prototype.update = function(deltatime) {
                 if (tile.type === Tile.WALL_TYPE && hero.right() >= tile.left() && hero.left() < tile.left()) {
                     //console.log(tile.type);
                     if (hero.bottom() - hero.height / 2 > tile.top() && hero.top() < tile.top())
-                        hero.x = tile.left() - hero.width;
+                        hero.resetTraveledX(-0.2);
                     if (hero.top() + hero.height / 2 < tile.bottom() && hero.bottom() > tile.bottom())
-                        hero.x = tile.left() - hero.width;
+                        hero.resetTraveledX(-0.2);
                     if (hero.top() >= tile.top() && hero.bottom() <= tile.bottom())
-                        hero.x = tile.left() - hero.width;
+                        hero.resetTraveledX(-0.2);
                 }
 
                 // Right
                 if (tile.type === Tile.WALL_TYPE && hero.left() <= tile.right() && hero.right() > tile.right()) {
                     if (hero.bottom() - hero.height / 2 > tile.top() && hero.top() < tile.top())
-                        hero.x = tile.right();
+                        hero.resetTraveledX(0.2);
                     if (hero.top() + hero.height / 2 < tile.bottom() && hero.bottom() > tile.bottom())
-                        hero.x = tile.right();
+                        hero.resetTraveledX(0.2);
                     if (hero.top() >= tile.top() && hero.bottom() <= tile.bottom())
-                        hero.x = tile.right();
+                        hero.resetTraveledX(0.2);
                 }
 
                 // Up
@@ -97,6 +97,8 @@ Controller.prototype.update = function(deltatime) {
             }
         } 
     }
+    
+    this.camera.move(hero.traveledX, hero.y);
 };
 
 Controller.prototype.getTile = function(index) {

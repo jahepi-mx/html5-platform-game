@@ -8,7 +8,7 @@ function Hero(x, y, width, height, camera) {
     this.movingRight = false;
     this.velocityX = 0;
     this.velocityY = 0;
-    this.velocityXOrig = 100;
+    this.velocityXOrig = 200;
     this.isJumping = false;
     this.isShooting = false;
     this.shootingTime = 0;
@@ -17,6 +17,7 @@ function Hero(x, y, width, height, camera) {
     this.camera = camera;
     this.isDead = false;
     this.blasts = [];
+    this.traveledX = this.x;
     
     this.idleAnimation = new Animation(10, 1);
     this.runAnimation = new Animation(7, 1);
@@ -79,10 +80,13 @@ Hero.prototype.update = function(deltatime) {
         this.velocityX = -Math.abs(this.velocityX);
     }
     
-    this.camera.move(this.x, this.y);
-    
-    this.x += this.velocityX * deltatime;
+    this.traveledX += this.velocityX * deltatime;
     this.velocityX *= this.friction;
+};
+
+Hero.prototype.resetTraveledX = function(offset) {
+    this.velocityX = 0;
+    this.traveledX = this.camera.x + offset;
 };
 
 Hero.prototype.jump = function() {

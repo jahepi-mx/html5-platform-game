@@ -24,13 +24,13 @@ function BlockEnemy(x, y, width, height, type, velocity, maxDistance, camera, di
 
 BlockEnemy.prototype.draw = function(context) {
     if (this.type === BlockEnemy.VERTICAL) {
-        context.drawImage(Assets.enemies.block, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
+        context.drawImage(Assets.enemiesAtlas, Atlas.enemies.block.x, Atlas.enemies.block.y, Atlas.enemies.block.width, Atlas.enemies.block.height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
     }
     if (this.type === BlockEnemy.HORIZONTAL) {
         if (this.direction === -1) {
-            context.drawImage(Assets.enemies.blockHorizontalBack, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies.blockHorizontalBack.x, Atlas.enemies.blockHorizontalBack.y, Atlas.enemies.blockHorizontalBack.width, Atlas.enemies.blockHorizontalBack.height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
         } else {
-            context.drawImage(Assets.enemies.blockHorizontalFront, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies.blockHorizontalFront.x, Atlas.enemies.blockHorizontalFront.y, Atlas.enemies.blockHorizontalFront.width, Atlas.enemies.blockHorizontalFront.height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
         }
     }
 };
