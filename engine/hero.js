@@ -164,68 +164,31 @@ Hero.prototype.draw = function(context) {
         context.fillStyle = "blue";
         context.fillRect(this.x, this.y, this.width, this.height);
     } else {
+        var key = "";
         if (this.isDead) {
-            if (this.direction === -1) {
-                context.save();
-                context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.dead["sprite" + (this.deadAnimation.stopped ? this.deadAnimation.lastFrame() : this.deadAnimation.getFrame())], - this.x - this.width, this.y, this.width, this.height);
-                context.restore();
-            } else {
-                context.drawImage(Assets.hero.dead["sprite" + (this.deadAnimation.stopped ? this.deadAnimation.lastFrame() : this.deadAnimation.getFrame())], this.x, this.y, this.width, this.height);
-            }
+            key = "dead" + ((this.deadAnimation.stopped ? this.deadAnimation.lastFrame() : this.deadAnimation.getFrame()) + 1);
         } else if (this.isJumping && this.isShooting) {
-            if (this.direction === -1) {
-                context.save();
-                context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.jump_shoot["sprite" + this.jumpShootAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
-                context.restore();
-            } else {
-                context.drawImage(Assets.hero.jump_shoot["sprite" + this.jumpShootAnimation.getFrame()], this.x, this.y, this.width, this.height);
-            }
+            key = "jump_shoot" + (this.jumpShootAnimation.getFrame() + 1);
         } else if (this.isJumping) {
-            if (this.direction === -1) {
-                context.save();
-                context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.jump["sprite" + this.jumpAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
-                context.restore();
-            } else {
-                context.drawImage(Assets.hero.jump["sprite" + this.jumpAnimation.getFrame()], this.x, this.y, this.width, this.height);
-            }
+            key = "jump" + (this.jumpAnimation.getFrame() + 1);
         } else if (!this.movingLeft && !this.movingRight && !this.isJumping && this.isShooting) {
-            if (this.direction === -1) {
-                context.save();
-                context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.shoot["sprite" + this.shootAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
-                context.restore();
-            } else {
-                context.drawImage(Assets.hero.shoot["sprite" + this.shootAnimation.getFrame()], this.x, this.y, this.width, this.height);
-            }
+            key = "shoot" + (this.shootAnimation.getFrame() + 1);
         } else if (!this.movingLeft && !this.movingRight && !this.isJumping) {
-            if (this.direction === -1) {
-                context.save();
-                context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.idle["sprite" + this.idleAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
-                context.restore();
-            } else {
-                context.drawImage(Assets.hero.idle["sprite" + this.idleAnimation.getFrame()], this.x, this.y, this.width, this.height);
-            }
+            key = "idle" + (this.idleAnimation.getFrame() + 1);
         } else if((this.movingLeft || this.movingRight) && this.isShooting) {
-            if (this.direction === -1) {
-                context.save();
-                context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.run_shoot["sprite" + this.runShootAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
-                context.restore();
-            } else {
-                context.drawImage(Assets.hero.run_shoot["sprite" + this.runShootAnimation.getFrame()], this.x, this.y, this.width, this.height);
-            }
+            key = "run_shoot" + (this.runShootAnimation.getFrame() + 1);
         } else if (this.movingLeft || this.movingRight) {
+            key = "run" + (this.runAnimation.getFrame() + 1);
+        }
+        
+        if (key !== "") {
             if (this.direction === -1) {
                 context.save();
                 context.scale(this.direction, 1);
-                context.drawImage(Assets.hero.run["sprite" + this.runAnimation.getFrame()], - this.x - this.width, this.y, this.width, this.height);
+                context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, - this.x - this.width, this.y, this.width, this.height);
                 context.restore();
             } else {
-                context.drawImage(Assets.hero.run["sprite" + this.runAnimation.getFrame()], this.x, this.y, this.width, this.height);
+                context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x, this.y, this.width, this.height);
             }
         }
         

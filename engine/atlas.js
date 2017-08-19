@@ -1,12 +1,41 @@
-Atlas = {
-  tiles: {
-      acid: {x:516, y:0, width:256, height:256},
-      acid_background: {x:258, y:0, width:256, height:256}, 
-      background: {x:258, y:516, width:256, height:256},
-      platform: {x:0, y:258, width:256, height:256}, 
-      platform_center: {x:258, y:258, width:256, height:256}, 
-      platform_left: {x:516, y:258, width:256, height:256}, 
-      platform_right: {x:0, y:516, width:256, height:256}, 
-      wall: {x:0, y:0, width:256, height:256}, 
-  }  
+Atlas = {};
+Atlas.tiles = {};
+Atlas.hero = {};
+
+var xmlRequest = new XMLHttpRequest();
+xmlRequest.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+       var xml = xmlRequest.responseXML;
+       var elements = xml.getElementsByTagName("SubTexture");
+       for (var i = 0; i < elements.length; i++) {
+           var name = elements[i].getAttribute("name");
+           name = name.replace(".png", "");
+           var x = elements[i].getAttribute("x");
+           var y = elements[i].getAttribute("y");
+           var width = elements[i].getAttribute("width");
+           var height = elements[i].getAttribute("height");
+           Atlas.tiles[name] = {x: x, y: y, width: width, height: height};
+       }
+    }
 };
+xmlRequest.open("GET", "assets/tiles/sprites.xml", true);
+xmlRequest.send();
+
+var xmlRequest2 = new XMLHttpRequest();
+xmlRequest2.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+       var xml = xmlRequest2.responseXML;
+       var elements = xml.getElementsByTagName("SubTexture");
+       for (var i = 0; i < elements.length; i++) {
+           var name = elements[i].getAttribute("name");
+           name = name.replace(".png", "");
+           var x = elements[i].getAttribute("x");
+           var y = elements[i].getAttribute("y");
+           var width = elements[i].getAttribute("width");
+           var height = elements[i].getAttribute("height");
+           Atlas.hero[name] = {x: x, y: y, width: width, height: height};
+       }
+    }
+};
+xmlRequest2.open("GET", "assets/hero/sprites.xml", true);
+xmlRequest2.send();

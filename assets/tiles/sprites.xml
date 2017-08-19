@@ -1,10 +1,10 @@
 <TextureAtlas imagePath="sprites.png">
-	<SubTexture name="acid.png" x="516" y="0" width="256" height="256"/>
-	<SubTexture name="acid_background.png" x="258" y="0" width="256" height="256"/>
-	<SubTexture name="background.png" x="258" y="516" width="256" height="256"/>
-	<SubTexture name="platform.png" x="0" y="258" width="256" height="256"/>
-	<SubTexture name="platform_center.png" x="258" y="258" width="256" height="256"/>
-	<SubTexture name="platform_left.png" x="516" y="258" width="256" height="256"/>
-	<SubTexture name="platform_right.png" x="0" y="516" width="256" height="256"/>
-	<SubTexture name="wall.png" x="0" y="0" width="256" height="256"/>
+    <SubTexture name="acid.png" x="516" y="0" width="256" height="256"/>
+    <SubTexture name="acid_background.png" x="258" y="0" width="256" height="256"/>
+    <SubTexture name="background.png" x="258" y="516" width="256" height="256"/>
+    <SubTexture name="platform.png" x="0" y="258" width="256" height="256"/>
+    <SubTexture name="platform_center.png" x="258" y="258" width="256" height="256"/>
+    <SubTexture name="platform_left.png" x="516" y="258" width="256" height="256"/>
+    <SubTexture name="platform_right.png" x="0" y="516" width="256" height="256"/>
+    <SubTexture name="wall.png" x="0" y="0" width="256" height="256"/>
 </TextureAtlas>

@@ -40,9 +40,11 @@ HeroBlast.prototype.draw = function(context) {
     if (!this.isDisposable) {
         var y = this.y - (this.camera.y - this.y);
         if (this.collided) {
-            context.drawImage(Assets.hero.blast_explosion["sprite" + this.blastExplosionAnimation.getFrame()], this.x - this.traveled, y, this.width, this.height); 
+            var key = "blast_explosion" + (this.blastExplosionAnimation.getFrame() + 1);
+            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x - this.traveled, y, this.width, this.height); 
         } else {
-            context.drawImage(Assets.hero.blast["sprite" + this.blastAnimation.getFrame()], this.x - this.traveled, y, this.width, this.height);
+            var key = "blast" + (this.blastAnimation.getFrame() + 1);
+            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x - this.traveled, y, this.width, this.height);
         }
     }
 };
