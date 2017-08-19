@@ -1,42 +1,10 @@
 function Controller() {
-    
-    this.map = [
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,4,0,0,0,0,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,3,3,3,4,0,0,0,0,1,
-        1,1,1,1,1,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-    ];
-    
-    this.enemyMap = [
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    ];
-    
-    this.tiles = [];
-    this.enemies = [];
     this.camera = new Camera();
-    this.hero = new Hero(60, 260, 60, 60, this.camera);
+    var level1 = new Level1(this.camera);
+    this.tiles = level1.tiles;
+    this.enemies = level1.enemies;
+    this.hero = new Hero(level1.startX, level1.startY, Config.heroSize, Config.heroSize, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
-    for (var i = 0; i < this.map.length; i++) {
-        this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
-    }
-    for (var i = 0; i < this.enemyMap.length; i++) {
-        if (this.enemyMap[i] === BlockEnemy.TYPE) {
-            this.enemies[i] = new BlockEnemy(i % Config.mapWidth, parseInt(i / Config.mapWidth), this.camera);
-        } else if (this.enemyMap[i] === BlockEnemyHorizontal.TYPE) {
-            this.enemies[i] = new BlockEnemyHorizontal(i % Config.mapWidth, parseInt(i / Config.mapWidth), this.camera);
-        }
-    }
 }
 
 Controller.prototype.update = function(deltatime) {
@@ -139,7 +107,7 @@ Controller.prototype.getTile = function(index) {
 };
 
 Controller.prototype.getEnemy = function(index) {
-    if (index >= 0 && index < this.enemies.length && this.enemies[index] !== undefined) {
+    if (index >= 0 && index < this.enemies.length && this.enemies[index] !== null) {
         return this.enemies[index];
     }
     return null;
