@@ -1,8 +1,7 @@
-function Hero(x, y, width, height, camera) {
+function Hero(x, y, width, height, collisionSteps, camera) {
     this.x = x;
     this.y = y;
-    this.oldX = 0;
-    this.oldY = 0; 
+    this.collisionSteps = collisionSteps;
     this.width = width;
     this.height = height;
     this.friction = 0.92;
@@ -10,7 +9,8 @@ function Hero(x, y, width, height, camera) {
     this.movingRight = false;
     this.velocityX = 0;
     this.velocityY = 0;
-    this.velocityXOrig = 50;
+    this.velocityXOrig = 70 / this.collisionSteps;
+    this.velocityYOrig = 30;
     this.isJumping = false;
     this.isShooting = false;
     this.shootingTime = 0;
@@ -55,15 +55,6 @@ Hero.prototype.update = function(deltatime) {
         this.shootAnimation.update(deltatime);
     }
     
-    this.oldY = this.y;
-    if (!this.isJumping) {
-        this.y += Config.gravity * deltatime;
-        this.velocityY = 0;
-    } else {
-        this.y -= this.velocityY * deltatime;
-        this.velocityY -= Config.gravity * deltatime;
-    }
-    
     for (var i = 0; i < this.blasts.length; i++) {
         if (this.blasts[i].isDisposable) {
             this.blasts.splice(i, 1);
@@ -80,9 +71,17 @@ Hero.prototype.update = function(deltatime) {
     }
     if (this.movingLeft) {
         this.velocityX = -Math.abs(this.velocityX);
+    } 
+};
+
+Hero.prototype.updateCollision = function(deltatime) {
+    if (!this.isJumping) {
+        this.y += (Config.gravity / this.collisionSteps) * deltatime;
+        this.velocityY = 0;
+    } else {
+        this.y -= this.velocityY * deltatime;
+        this.velocityY -= (Config.gravity / this.collisionSteps) * deltatime;
     }
-    
-    this.oldX = this.x;
     this.x += this.velocityX * deltatime;
     this.velocityX *= this.friction;
 };
@@ -93,7 +92,7 @@ Hero.prototype.jump = function() {
     }
     if (!this.isJumping) {
         this.isJumping = true;
-        this.velocityY = 100;
+        this.velocityY = this.velocityYOrig;
     }
 }
 
