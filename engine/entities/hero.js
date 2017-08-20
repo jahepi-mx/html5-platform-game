@@ -104,7 +104,7 @@ Hero.prototype.shoot = function() {
     if (!this.isShooting) {
         this.shootingTime = 0;
         this.isShooting = true;
-        this.blasts.push(new HeroBlast(this.x, this.y, this.camera, this.direction));
+        this.blasts.push(new HeroBlast(this.x, this.y + this.height / 2, this.camera, this.direction));
     }
 };
 

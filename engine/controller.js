@@ -9,7 +9,6 @@ function Controller() {
 
 Controller.prototype.update = function(deltatime) {
     var hero = this.hero;
-    var camera = this.camera;
     var mapWidth = Config.mapWidth;
     
     hero.update(deltatime);
