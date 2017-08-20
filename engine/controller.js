@@ -13,7 +13,8 @@ Controller.prototype.update = function(deltatime) {
     var mapWidth = Config.mapWidth;
     
     hero.update(deltatime);
-
+    this.camera.move(hero.x, hero.y);
+    
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
             
@@ -37,50 +38,50 @@ Controller.prototype.update = function(deltatime) {
                 if (tile.type === Tile.WALL_TYPE && hero.right() >= tile.left() && hero.left() < tile.left()) {
                     //console.log(tile.type);
                     if (hero.bottom() - hero.height / 2 > tile.top() && hero.top() < tile.top())
-                        hero.resetTraveledX(-0.2);
+                        hero.x = hero.oldX;
                     if (hero.top() + hero.height / 2 < tile.bottom() && hero.bottom() > tile.bottom())
-                        hero.resetTraveledX(-0.2);
+                        hero.x = hero.oldX;
                     if (hero.top() >= tile.top() && hero.bottom() <= tile.bottom())
-                        hero.resetTraveledX(-0.2);
+                        hero.x = hero.oldX;
                 }
 
                 // Right
                 if (tile.type === Tile.WALL_TYPE && hero.left() <= tile.right() && hero.right() > tile.right()) {
                     if (hero.bottom() - hero.height / 2 > tile.top() && hero.top() < tile.top())
-                        hero.resetTraveledX(0.2);
+                        hero.x = hero.oldX;
                     if (hero.top() + hero.height / 2 < tile.bottom() && hero.bottom() > tile.bottom())
-                        hero.resetTraveledX(0.2);
+                        hero.x = hero.oldX;
                     if (hero.top() >= tile.top() && hero.bottom() <= tile.bottom())
-                        hero.resetTraveledX(0.2);
+                        hero.x = hero.oldX;
                 }
 
                 // Up
                 if (tile.type === Tile.WALL_TYPE && hero.bottom() >= tile.top() && hero.top() < tile.top()) {
                     if (hero.right() - hero.width / 2 > tile.left() && hero.left() < tile.left()) {
-                        hero.y = tile.top() - hero.height;
+                        hero.y = hero.oldY;
                         hero.isJumping = false;
                     }
                     if (hero.left() + hero.width / 2 < tile.right() && hero.right() > tile.right()) {
-                        hero.y = tile.top() - hero.height;
+                        hero.y = hero.oldY;
                         hero.isJumping = false;
                     }
                     if (hero.left() >= tile.left() && hero.right() <= tile.right()) {
-                        hero.y = tile.top() - hero.height;
+                        hero.y = hero.oldY;
                         hero.isJumping = false;
                     }
                 }
                 // Up
                 if (tile.type === Tile.PLATFORM_TYPE && hero.velocityY <= 0 && hero.bottom() >= tile.top() && (hero.top() + hero.height / 2) < tile.top()) {
                     if (hero.right() - hero.width / 2 > tile.left() && hero.left() < tile.left()) {
-                        hero.y = tile.top() - hero.height;
+                        hero.y = hero.oldY;
                         hero.isJumping = false;
                     }
                     if (hero.left() + hero.width / 2 < tile.right() && hero.right() > tile.right()) {
-                        hero.y = tile.top() - hero.height;
+                        hero.y = hero.oldY;
                         hero.isJumping = false;
                     }
                     if (hero.left() >= tile.left() && hero.right() <= tile.right()) {
-                        hero.y = tile.top() - hero.height;
+                        hero.y = hero.oldY;
                         hero.isJumping = false;
                     }
                 }
@@ -88,17 +89,15 @@ Controller.prototype.update = function(deltatime) {
                 // Bottom
                 if (tile.type === Tile.WALL_TYPE && hero.top() <= tile.bottom() && hero.bottom() > tile.bottom()) {
                     if (hero.right() - hero.width / 2 > tile.left() && hero.left() < tile.left())
-                        hero.y = tile.bottom();
+                        hero.y = hero.oldY;
                     if (hero.left() + hero.width / 2 < tile.right() && hero.right() > tile.right())
-                        hero.y = tile.bottom();
+                        hero.y = hero.oldY;
                     if (hero.left() >= tile.left() && hero.right() <= tile.right())
-                        hero.y = tile.bottom();
+                        hero.y = hero.oldY;
                 }
             }
         } 
     }
-    
-    this.camera.move(hero.traveledX, hero.y);
 };
 
 Controller.prototype.getTile = function(index) {
