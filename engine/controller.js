@@ -1,4 +1,5 @@
 function Controller() {
+    this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
     this.collisionPrecision = 10;
     var level1 = new Level1(this.camera);
@@ -17,52 +18,54 @@ Controller.prototype.update = function(deltatime) {
     var offset = 5;
     for (var i = 0; i < this.collisionPrecision; i++) {
         this.hero.updateCollision(deltatime);
-        for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
-            for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
-                var tile = this.getTile(y * Config.mapWidth + x);
-                if (tile !== null) {
-                    // Left collision
-                    if (tile.type === Tile.WALL_TYPE && this.hero.right() >= tile.left() - offset && this.hero.left() < tile.left()) {
-                        if (this.hero.bottom() >= tile.top() && this.hero.bottom() <= tile.bottom())
-                            this.hero.x = tile.left() - this.hero.width - offset;
-                        if (this.hero.top() >= tile.top() && this.hero.top() <= tile.bottom())
-                            this.hero.x = tile.left() - this.hero.width - offset;
+        var currentX = parseInt(Math.ceil((this.camera.x + this.hero.x) / Config.tileSize));
+        var currentY = parseInt(Math.ceil((this.camera.y + this.hero.y) / Config.tileSize));
+        for (var v = 0; v < this.vectorMoves.length; v++) {
+            var tmpX = currentX + this.vectorMoves[v][0];
+            var tmpY = currentY + this.vectorMoves[v][1];
+            var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
+            if (tile !== null) {
+                // Left collision
+                if (tile.type === Tile.WALL_TYPE && this.hero.right() >= tile.left() - offset && this.hero.left() < tile.left()) {
+                    if (this.hero.bottom() >= tile.top() && this.hero.bottom() <= tile.bottom())
+                        this.hero.x = tile.left() - this.hero.width - offset;
+                    if (this.hero.top() >= tile.top() && this.hero.top() <= tile.bottom())
+                        this.hero.x = tile.left() - this.hero.width - offset;
+                }
+                // Right collision
+                if (tile.type === Tile.WALL_TYPE && this.hero.left() <= tile.right() + offset && this.hero.right() > tile.right()) {
+                    if (this.hero.bottom() >= tile.top() && this.hero.bottom() <= tile.bottom())
+                        this.hero.x = tile.right() + offset;
+                    if (this.hero.top() >= tile.top() && this.hero.top() <= tile.bottom())
+                        this.hero.x = tile.right() + offset;
+                }
+                // Down collision
+                if (tile.type === Tile.WALL_TYPE && this.hero.top() <= tile.bottom() + offset && this.hero.bottom() > tile.bottom()) {
+                    if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right())
+                        this.hero.y = tile.bottom() + offset;
+                    if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right())
+                        this.hero.y = tile.bottom() + offset;
+                }
+                // Up collision
+                if (tile.type === Tile.WALL_TYPE && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
+                    if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
+                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.setJumping(false);
                     }
-                    // Right collision
-                    if (tile.type === Tile.WALL_TYPE && this.hero.left() <= tile.right() + offset && this.hero.right() > tile.right()) {
-                        if (this.hero.bottom() >= tile.top() && this.hero.bottom() <= tile.bottom())
-                            this.hero.x = tile.right() + offset;
-                        if (this.hero.top() >= tile.top() && this.hero.top() <= tile.bottom())
-                            this.hero.x = tile.right() + offset;
+                    if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
+                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.setJumping(false);
                     }
-                    // Down collision
-                    if (tile.type === Tile.WALL_TYPE && this.hero.top() <= tile.bottom() + offset && this.hero.bottom() > tile.bottom()) {
-                        if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right())
-                            this.hero.y = tile.bottom() + offset;
-                        if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right())
-                            this.hero.y = tile.bottom() + offset;
+                }
+                // Up platform collision
+                if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
+                    if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
+                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.setJumping(false);
                     }
-                    // Up collision
-                    if (tile.type === Tile.WALL_TYPE && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
-                        if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
-                            this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.setJumping(false);
-                        }
-                        if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
-                            this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.setJumping(false);
-                        }
-                    }
-                    // Up platform collision
-                    if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
-                        if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
-                            this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.setJumping(false);
-                        }
-                        if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
-                            this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.setJumping(false);
-                        }
+                    if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
+                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.setJumping(false);
                     }
                 }
             }
