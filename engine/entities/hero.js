@@ -162,11 +162,11 @@ Hero.prototype.die = function() {
     this.isDead = true;
 }
 
-Hero.prototype.collide = function(object) {
+Hero.prototype.collide = function(entity) {
     var centerX = this.left() + this.width / 2;
     var centerY = this.top() + this.height / 2;
-    var objectCenterX = object.left() + object.width / 2;
-    var objectCenterY = object.top() + object.height / 2;
+    var objectCenterX = entity.left() + entity.width / 2;
+    var objectCenterY = entity.top() + entity.height / 2;
     var diffX = centerX - objectCenterX;
     var diffY = centerY - objectCenterY;
     var dist = diffX * diffX + diffY * diffY;

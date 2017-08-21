@@ -49,11 +49,11 @@ HeroBlast.prototype.draw = function(context) {
     }
 };
 
-HeroBlast.prototype.collide = function(object) {
+HeroBlast.prototype.collide = function(entity) {
     var blastCenterX = this.left() + this.width / 2;
     var blastCenterY = this.top() + this.height / 2;
-    var objectCenterX = object.left() + object.width / 2;
-    var objectCenterY = object.top() + object.height / 2;
+    var objectCenterX = entity.left() + entity.width / 2;
+    var objectCenterY = entity.top() + entity.height / 2;
     var diffX = blastCenterX - objectCenterX;
     var diffY = blastCenterY - objectCenterY;
     var dist = diffX * diffX + diffY * diffY;
