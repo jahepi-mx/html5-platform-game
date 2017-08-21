@@ -1,20 +1,21 @@
 function Controller() {
     this.camera = new Camera();
+    this.collisionPrecision = 10;
     var level1 = new Level1(this.camera);
     this.tiles = level1.tiles;
     this.enemies = level1.enemies;
-    this.hero = new Hero(level1.startX, level1.startY, Config.heroSize, Config.heroSize, 10, this.camera);
+    this.hero = new Hero(level1.startX, level1.startY, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
 }
 
 Controller.prototype.update = function(deltatime) {
-
+    
     this.camera.move(this.hero.x, this.hero.y);
     this.hero.update(deltatime);
     
     // Hero collision detection
     var offset = 5;
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < this.collisionPrecision; i++) {
         this.hero.updateCollision(deltatime);
         for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
             for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
@@ -42,25 +43,25 @@ Controller.prototype.update = function(deltatime) {
                             this.hero.y = tile.bottom() + offset;
                     }
                     // Up collision
-                    if (tile.type === Tile.WALL_TYPE && this.hero.bottom() >= tile.top() - offset && this.hero.top() < tile.top()) {
+                    if (tile.type === Tile.WALL_TYPE && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
                         if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
                             this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.isJumping = false;
+                            this.hero.setJumping(false);
                         }
                         if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
                             this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.isJumping = false;
+                            this.hero.setJumping(false);
                         }
                     }
                     // Up platform collision
                     if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
                         if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
                             this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.isJumping = false;
+                            this.hero.setJumping(false);
                         }
                         if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
                             this.hero.y = tile.top() - this.hero.height - offset;
-                            this.hero.isJumping = false;
+                            this.hero.setJumping(false);
                         }
                     }
                 }

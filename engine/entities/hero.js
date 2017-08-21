@@ -1,7 +1,6 @@
 function Hero(x, y, width, height, collisionSteps, camera) {
     this.x = x;
     this.y = y;
-    this.collisionSteps = collisionSteps;
     this.width = width;
     this.height = height;
     this.friction = 0.92;
@@ -9,14 +8,17 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.movingRight = false;
     this.velocityX = 0;
     this.velocityY = 0;
-    this.velocityXOrig = 70 / this.collisionSteps;
-    this.velocityYOrig = 30;
+    this.velocityXOrig = 70 / collisionSteps;
+    this.velocityYOrig = 100 / collisionSteps;
     this.isJumping = false;
+    this.jumpingTime = 0;
+    this.jumpingTimeLimit = 30 / 60;
     this.isShooting = false;
     this.shootingTime = 0;
     this.shootingTimeLimit = 30 / 60;
     this.direction = 1;
     this.camera = camera;
+    this.gravityForce = Config.gravity / collisionSteps;
     this.isDead = false;
     this.blasts = [];
     
@@ -30,6 +32,14 @@ function Hero(x, y, width, height, collisionSteps, camera) {
 }
 
 Hero.prototype.update = function(deltatime) {
+    
+    if (this.isJumping) {
+        this.jumpingTime += deltatime;
+    }
+    
+    if (this.jumpingTime >= this.jumpingTimeLimit) {
+        this.velocityY = -Math.abs(this.velocityY);
+    }
     
     if (this.isShooting) {
         this.shootingTime += deltatime;
@@ -72,18 +82,18 @@ Hero.prototype.update = function(deltatime) {
     if (this.movingLeft) {
         this.velocityX = -Math.abs(this.velocityX);
     } 
+    this.velocityX *= this.friction;
 };
 
 Hero.prototype.updateCollision = function(deltatime) {
     if (!this.isJumping) {
-        this.y += (Config.gravity / this.collisionSteps) * deltatime;
+        this.y += this.gravityForce * deltatime;
         this.velocityY = 0;
     } else {
         this.y -= this.velocityY * deltatime;
-        this.velocityY -= (Config.gravity / this.collisionSteps) * deltatime;
+        //this.velocityY -= this.gravityForce * deltatime;
     }
     this.x += this.velocityX * deltatime;
-    this.velocityX *= this.friction;
 };
 
 Hero.prototype.jump = function() {
@@ -94,7 +104,12 @@ Hero.prototype.jump = function() {
         this.isJumping = true;
         this.velocityY = this.velocityYOrig;
     }
-}
+};
+
+Hero.prototype.setJumping = function(bool) {
+    this.jumpingTime = 0;
+    this.isJumping = bool;
+};
 
 Hero.prototype.shoot = function() {
     if (this.isDead) {
