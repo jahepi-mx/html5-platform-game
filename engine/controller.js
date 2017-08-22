@@ -86,7 +86,7 @@ Controller.prototype.update = function(deltatime) {
                     }
                 }
                 if (enemy.isDisposable) {
-                    this.enemies.splice(enemy.origY * Config.mapWidth + enemy.origX, 1);
+                    this.enemies[y * Config.mapWidth + x] = null;
                 } 
             }
             var tile = this.getTile(y * Config.mapWidth + x);

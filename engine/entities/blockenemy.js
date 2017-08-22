@@ -7,8 +7,6 @@ function BlockEnemy(x, y, width, height, type, velocity, maxDistance, camera, di
     this.height = height;
     this.type = type;
     this.isDisposable = false;
-    this.origX = x;
-    this.origY = y;
     this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
     if (this.type === BlockEnemy.VERTICAL) {
         this.y = y * Config.tileSize + (Config.tileSize - this.height) / 2;

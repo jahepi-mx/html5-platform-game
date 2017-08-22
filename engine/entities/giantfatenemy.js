@@ -1,8 +1,6 @@
 function GiantFatEnemy(x, y, width, height, health, camera) {
-    this.origX = x;
-    this.origY = y;
     this.x = x * Config.tileSize - (width / 2) + (Config.tileSize / 2);
-    this.y = y * Config.tileSize - (height / 2) + (Config.tileSize / 2);
+    this.y = y * Config.tileSize - (height - Config.tileSize);
     this.width = width;
     this.height = height;
     this.camera = camera;
@@ -10,19 +8,29 @@ function GiantFatEnemy(x, y, width, height, health, camera) {
     this.isDisposable = false;
     this.isDead = false;
     this.isDamage = false;
+    this.isShooting = false;
     this.blasts = [];
     this.direction = -1;
+    this.nextShootTime = 0;
+    this.nextShootTimeCount = 0;
     
     this.idleAnimation = new Animation(7, 1);
-    this.shootAnimation = new Animation(3, 1);
+    this.shootAnimation = new Animation(3, 2);
     this.deadAnimation = new Animation(9, 2);
     this.damageAnimation = new Animation(4, 2);
     this.damageAnimation.stopAtSequenceNumber(1, this.onStopDamageAnimation.bind(this));
     this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
+    this.shootAnimation.stopAtSequenceNumber(1, this.onStopShootAnimation.bind(this));
 }
+
+GiantFatEnemy.prototype.onStopShootAnimation = function() {
+    this.shootAnimation.reset();
+    this.isShooting = false;
+};
 
 GiantFatEnemy.prototype.onStopDeadAnimation = function() {
     this.isDisposable = true;
+    console.log("disposable!");
 };
 
 GiantFatEnemy.prototype.onStopDamageAnimation = function() {
@@ -30,14 +38,26 @@ GiantFatEnemy.prototype.onStopDamageAnimation = function() {
 };
 
 GiantFatEnemy.prototype.update = function(deltatime) {
+    this.nextShootTimeCount += deltatime;
+    if (this.nextShootTime === 0) {
+        // Shoots randomly in a 5 seconds interval
+        this.nextShootTime = Math.random() * 8;
+    }
+    if (this.nextShootTimeCount >= this.nextShootTime && !this.isDead && !this.isDamage) {
+        this.nextShootTime = 0;
+        this.nextShootTimeCount = 0;
+        this.isShooting = true;
+    }
+    
     if (this.isDamage && !this.damageAnimation.isStopped()) {
         this.damageAnimation.update(deltatime);
     } else if (this.isDead) {
         this.deadAnimation.update(deltatime);
+    } else if (this.isShooting) {
+        this.shootAnimation.update(deltatime);
     } else {
        this.idleAnimation.update(deltatime); 
     }
-    //this.shootAnimation.update(deltatime);
 };
 
 GiantFatEnemy.prototype.draw = function(context) {
@@ -46,6 +66,8 @@ GiantFatEnemy.prototype.draw = function(context) {
         key = "boss1_damage" + (this.damageAnimation.getFrame() + 1);
     } else if (this.isDead) {
         key = "explosion" + (this.deadAnimation.getFrame() + 1);
+    }  else if (this.isShooting) {
+        key = "boss1_hit" + (this.shootAnimation.getFrame() + 1);
     } else {
         key = "boss1_idle" + (this.idleAnimation.getFrame() + 1);
     }
