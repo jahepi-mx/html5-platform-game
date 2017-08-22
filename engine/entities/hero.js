@@ -29,6 +29,7 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.runShootAnimation = new Animation(9, 1);
     this.shootAnimation = new Animation(4, 1);
     this.deadAnimation = new Animation(10, 1);
+    this.deadAnimation.stopAtSequenceNumber(1, null);
 }
 
 Hero.prototype.update = function(deltatime) {
@@ -51,11 +52,7 @@ Hero.prototype.update = function(deltatime) {
     
     if (this.isDead) {
         this.movingLeft = this.movingRight = false;
-        if (this.deadAnimation.count === this.deadAnimation.lastFrame()) {
-            this.deadAnimation.stop();
-        } else {
-            this.deadAnimation.update(deltatime);
-        }
+        this.deadAnimation.update(deltatime);
     } else {
         this.idleAnimation.update(deltatime);
         this.runAnimation.update(deltatime);

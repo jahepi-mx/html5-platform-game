@@ -1,4 +1,6 @@
 function GiantFatEnemy(x, y, width, height, health, camera) {
+    this.origX = x;
+    this.origY = y;
     this.x = x * Config.tileSize - (width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize - (height / 2) + (Config.tileSize / 2);
     this.width = width;
@@ -13,19 +15,23 @@ function GiantFatEnemy(x, y, width, height, health, camera) {
     
     this.idleAnimation = new Animation(7, 1);
     this.shootAnimation = new Animation(3, 1);
-    this.deadAnimation = new Animation(9, 1);
-    this.damageAnimation = new Animation(4, 1);
+    this.deadAnimation = new Animation(9, 2);
+    this.damageAnimation = new Animation(4, 2);
+    this.damageAnimation.stopAtSequenceNumber(1, this.onStopDamageAnimation.bind(this));
+    this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
 }
 
+GiantFatEnemy.prototype.onStopDeadAnimation = function() {
+    this.isDisposable = true;
+};
+
+GiantFatEnemy.prototype.onStopDamageAnimation = function() {
+    this.isDamage = false;
+};
+
 GiantFatEnemy.prototype.update = function(deltatime) {
-    if (this.isDamage) {
+    if (this.isDamage && !this.damageAnimation.isStopped()) {
         this.damageAnimation.update(deltatime);
-        if (this.damageAnimation.count === this.damageAnimation.lastFrame()) {
-            this.isDamage = false;
-            this.damageAnimation.reset();
-        } else {
-            this.damageAnimation.update(deltatime);
-        }
     } else if (this.isDead) {
         this.deadAnimation.update(deltatime);
     } else {
@@ -36,8 +42,10 @@ GiantFatEnemy.prototype.update = function(deltatime) {
 
 GiantFatEnemy.prototype.draw = function(context) {
     var key = "";
-    if (this.isDamage) {
+    if (this.isDamage && !this.damageAnimation.isStopped()) {
         key = "boss1_damage" + (this.damageAnimation.getFrame() + 1);
+    } else if (this.isDead) {
+        key = "explosion" + (this.deadAnimation.getFrame() + 1);
     } else {
         key = "boss1_idle" + (this.idleAnimation.getFrame() + 1);
     }
@@ -54,7 +62,6 @@ GiantFatEnemy.prototype.draw = function(context) {
 };
 
 GiantFatEnemy.prototype.collide = function(entity) {
-    console.log("hit");
     if (this.isDead) {
         return false;
     }
@@ -66,12 +73,15 @@ GiantFatEnemy.prototype.collide = function(entity) {
     var diffY = centerY - objectCenterY;
     var dist = diffX * diffX + diffY * diffY;
     if (dist < (this.width / 2) * (this.width / 2)) {
-        var tmpHealth = this.health - 1;
-        if (tmpHealth <= 0) {
-            this.isDead = true;
-        } else {
-            this.health--;
-            this.isDamage = true;
+        if (!this.isDamage) {
+            var tmpHealth = this.health - 1;
+            if (tmpHealth <= 0) {
+                this.isDead = true;
+            } else {
+                this.health--;
+                this.damageAnimation.reset();
+                this.isDamage = true;
+            }
         }
         return true;
     }

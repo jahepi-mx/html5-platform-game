@@ -10,8 +10,13 @@ function HeroBlast(x, y, camera, direction) {
     this.isDisposable = false;
     this.blastAnimation = new Animation(5, 1.5);
     this.blastExplosionAnimation = new Animation(6, 2);
+    this.blastExplosionAnimation.stopAtSequenceNumber(1, this.onStopExplosionAnimation.bind(this));
     this.traveled = 0;
 }
+
+HeroBlast.prototype.onStopExplosionAnimation = function() {
+    this.isDisposable = true;
+};
 
 HeroBlast.prototype.update = function(deltatime) {
     
@@ -22,9 +27,6 @@ HeroBlast.prototype.update = function(deltatime) {
     if (!this.isDisposable) {
         if (this.collided) {
             this.blastExplosionAnimation.update(deltatime);
-            if (this.blastExplosionAnimation.getNumberOfSequences() >= 1) {
-                this.isDisposable = true;
-            }
         } else {
             this.blastAnimation.update(deltatime);
             if (this.direction === -1) {

@@ -80,11 +80,14 @@ Controller.prototype.update = function(deltatime) {
                 this.hero.collide(enemy);
                 if (enemy instanceof GiantFatEnemy) {
                     for (var i = 0; i < this.hero.blasts.length; i++) {
-                        if (enemy.collide(this.hero.blasts[i]) && !this.hero.blasts[i].collided) {
+                        if (!this.hero.blasts[i].collided && enemy.collide(this.hero.blasts[i])) {
                             this.hero.blasts[i].collided = true;
                         }
                     }
                 }
+                if (enemy.isDisposable) {
+                    this.enemies.splice(enemy.origY * Config.mapWidth + enemy.origX, 1);
+                } 
             }
             var tile = this.getTile(y * Config.mapWidth + x);
             if (tile !== null) {
