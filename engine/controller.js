@@ -78,10 +78,17 @@ Controller.prototype.update = function(deltatime) {
             if (enemy !== null) {
                 enemy.update(deltatime);
                 this.hero.collide(enemy);
+                if (enemy instanceof GiantFatEnemy) {
+                    for (var i = 0; i < this.hero.blasts.length; i++) {
+                        if (enemy.collide(this.hero.blasts[i]) && !this.hero.blasts[i].collided) {
+                            this.hero.blasts[i].collided = true;
+                        }
+                    }
+                }
             }
             var tile = this.getTile(y * Config.mapWidth + x);
             if (tile !== null) {
-                // Verify if hero blasts dont collide with WALL type tiles
+                // Verify if hero blasts collide with wall tiles
                 if (tile.type === Tile.WALL_TYPE) {
                     for (var i = 0; i < this.hero.blasts.length; i++) {
                         this.hero.blasts[i].collide(tile);

@@ -38,3 +38,7 @@ Animation.prototype.lastFrame = function() {
 Animation.prototype.getNumberOfSequences = function() {
     return this.sequences;
 };
+
+Animation.prototype.reset = function() {
+    this.count = 0;  
+};
