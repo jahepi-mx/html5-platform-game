@@ -28,6 +28,6 @@ Render.prototype.update = function(deltatime) {
         }
     }
 
-    this.context.fillText("Fps: " + 1 / deltatime, 10, 10);
+    this.context.fillText("Fps: " + parseInt(1 / deltatime), 10, 10);
     this.controller.hero.draw(this.context);
 };
