@@ -1,13 +1,13 @@
 function EnemyBlast(enemy, radians, camera) {
-    this.x = enemy.left() + enemy.width / 2;
-    this.y = enemy.top() + enemy.height / 2;
-    this.width = 30;
-    this.height = 30;
+    this.width = enemy.width * 0.15;
+    this.height = enemy.width * 0.15;
+    this.x = enemy.left() + enemy.width / 2 - this.width / 2;
+    this.y = enemy.top() + enemy.height / 2 - this.height / 2;
     this.ratioX = Math.cos(radians);
     this.ratioY = Math.sin(radians);
     this.camera = camera;
     this.enemy = enemy;
-    this.velocity = 300;
+    this.velocity = 200 + parseInt(Math.random() * 100);
     this.collided = false;
     this.isDisposable = false;
     this.blastAnimation = new Animation(5, 1.5);
@@ -23,8 +23,8 @@ EnemyBlast.prototype.onStopExplosionAnimation = function() {
 
 EnemyBlast.prototype.update = function(deltatime) {
     
-    this.x = this.enemy.left() + this.enemy.width / 2;
-    this.y = this.enemy.top() + this.enemy.height / 2;
+    this.x = this.enemy.left() + this.enemy.width / 2 - this.width / 2;
+    this.y = this.enemy.top() + this.enemy.height / 2 - this.height / 2;
     
     if (Math.abs(this.traveled) >= Config.worldWidth) {
         this.collided = true;

@@ -90,6 +90,9 @@ Controller.prototype.update = function(deltatime) {
                             this.hero.blasts[i].collided = true;
                         }
                     }
+                    for (var i = 0; i < enemy.blasts.length; i++) {
+                        this.hero.collide(enemy.blasts[i]);
+                    }
                 }
                 if (enemy.isDisposable) {
                     this.enemies[y * Config.mapWidth + x] = null;
