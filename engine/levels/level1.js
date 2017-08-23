@@ -29,5 +29,5 @@ function Level1(camera) {
     this.enemies[4 * Config.mapWidth + 20] = new BlockEnemy(20, 4, 50, 50, BlockEnemy.HORIZONTAL, 50, 150, this.camera, -1);
     this.enemies[6 * Config.mapWidth + 7] = new GiantFatEnemy(7, 6, 100 * 2, 100, 4, this.camera);
     this.enemies[6 * Config.mapWidth + 26] = new GiantFatEnemy(26, 6, 125 * 2, 125, 4, this.camera);
-    this.enemies[6 * Config.mapWidth + 3] = new GiantFatEnemy(30, 6, 150 * 2, 150, 4, this.camera);
+    this.enemies[6 * Config.mapWidth + 30] = new GiantFatEnemy(30, 6, 150 * 2, 150, 4, this.camera);
 }

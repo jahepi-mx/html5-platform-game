@@ -81,6 +81,9 @@ Controller.prototype.update = function(deltatime) {
                 enemy.update(deltatime);
                 this.hero.collide(enemy);
                 if (enemy instanceof GiantFatEnemy) {
+                    if (enemy.isShooting) {
+                        enemy.fireBlast(this.hero.left() + this.hero.width / 2, this.hero.top() + this.hero.height / 2);
+                    }
                     enemy.changeDirection(this.hero.x);
                     for (var i = 0; i < this.hero.blasts.length; i++) {
                         if (!this.hero.blasts[i].collided && enemy.collide(this.hero.blasts[i])) {
@@ -94,10 +97,22 @@ Controller.prototype.update = function(deltatime) {
             }
             var tile = this.getTile(y * Config.mapWidth + x);
             if (tile !== null) {
-                // Verify if hero blasts collide with wall tiles
+                
                 if (tile.type === Tile.WALL_TYPE) {
+                    // Verify if any hero blast collide with the tile
                     for (var i = 0; i < this.hero.blasts.length; i++) {
                         this.hero.blasts[i].collide(tile);
+                    }                  
+                    // Verify if any enemy blast collide with the tile
+                    for (var y2 = this.getMinY(); y2 <= this.getMaxY(); y2++) {
+                        for (var x2 = this.getMinX(); x2 <= this.getMaxX(); x2++) {
+                            var enemy2 = this.getEnemy(y2 * Config.mapWidth + x2);
+                            if (enemy2 instanceof GiantFatEnemy) {
+                                for (var i = 0; i < enemy2.blasts.length; i++) {
+                                    enemy2.blasts[i].collide(tile);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -120,21 +135,23 @@ Controller.prototype.getEnemy = function(index) {
 };
 
 Controller.prototype.getMinX = function() {
-    var minX = parseInt((this.camera.x - this.camera.width) / Config.tileSize);
+    var minX = parseInt(((this.camera.x + this.hero.x) / Config.tileSize) - (this.camera.width / Config.tileSize));
     return Math.max(0, minX);
 };
 
 Controller.prototype.getMaxX = function() {
-    return parseInt((this.camera.x + this.camera.width) / Config.tileSize);
+    var maxX = parseInt(((this.camera.x + this.hero.x) / Config.tileSize) + (this.camera.width / Config.tileSize));
+    return maxX;
 };
 
 Controller.prototype.getMinY = function() {
-    var minY = parseInt((this.camera.y - this.camera.height) / Config.tileSize);
+    var minY = parseInt(((this.camera.y + this.hero.y) / Config.tileSize) - (this.camera.height / Config.tileSize));
     return Math.max(0, minY);
 };
 
 Controller.prototype.getMaxY = function() {
-    return parseInt((this.camera.y + this.camera.height) / Config.tileSize);
+    var maxY = parseInt(((this.camera.y + this.hero.y) / Config.tileSize) + (this.camera.height / Config.tileSize));
+    return maxY;
 };
 
 Controller.prototype.jump = function() {
