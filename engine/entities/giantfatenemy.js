@@ -37,6 +37,11 @@ GiantFatEnemy.prototype.onStopDamageAnimation = function() {
     this.isDamage = false;
 };
 
+GiantFatEnemy.prototype.changeDirection = function(x) {
+    var diff = x - this.left();
+    this.direction = diff < 0 ? -1 : 1;
+};
+
 GiantFatEnemy.prototype.update = function(deltatime) {
     this.nextShootTimeCount += deltatime;
     if (this.nextShootTime === 0) {

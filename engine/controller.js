@@ -2,9 +2,9 @@ function Controller() {
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
     this.collisionPrecision = 10;
-    this.hero = new Hero(Level1.START_X, Level1.START_Y, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
+    var level1 = new Level1(this.camera);
+    this.hero = new Hero(level1.startX, level1.startY, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
-    var level1 = new Level1(this.camera, this.hero);
     this.tiles = level1.tiles;
     this.enemies = level1.enemies;
 }
@@ -18,41 +18,43 @@ Controller.prototype.update = function(deltatime) {
     var offset = 5;
     for (var i = 0; i < this.collisionPrecision; i++) {
         this.hero.updateCollision(deltatime);
-        var currentX = parseInt(Math.ceil((this.camera.x + this.hero.x) / Config.tileSize));
-        var currentY = parseInt(Math.ceil((this.camera.y + this.hero.y) / Config.tileSize));
+        var currentX = parseInt(Math.round((this.camera.x + this.hero.x) / Config.tileSize));
+        var currentY = parseInt(Math.round((this.camera.y + this.hero.y) / Config.tileSize));
         for (var v = 0; v < this.vectorMoves.length; v++) {
             var tmpX = currentX + this.vectorMoves[v][0];
             var tmpY = currentY + this.vectorMoves[v][1];
             var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
             if (tile !== null) {
                 // Left collision
-                if (tile.type === Tile.WALL_TYPE && this.hero.right() >= tile.left() - offset && this.hero.left() < tile.left()) {
-                    if (this.hero.bottom() >= tile.top() && this.hero.bottom() <= tile.bottom())
+                if (tile.type === Tile.WALL_TYPE && this.hero.right() >= tile.left() - offset && this.hero.right() <= tile.left()) {
+                    //console.log("left " + this.hero.right() + ", " + tile.left() + " x:" + tmpX + " y:" + tmpY);
+                    if (this.hero.bottom() > tile.top() && this.hero.bottom() < tile.bottom())
                         this.hero.x = tile.left() - this.hero.width - offset;
-                    if (this.hero.top() >= tile.top() && this.hero.top() <= tile.bottom())
+                    if (this.hero.top() > tile.top() && this.hero.top() < tile.bottom())
                         this.hero.x = tile.left() - this.hero.width - offset;
                 }
                 // Right collision
-                if (tile.type === Tile.WALL_TYPE && this.hero.left() <= tile.right() + offset && this.hero.right() > tile.right()) {
-                    if (this.hero.bottom() >= tile.top() && this.hero.bottom() <= tile.bottom())
+                if (tile.type === Tile.WALL_TYPE && this.hero.left() <= tile.right() + offset && this.hero.left() >= tile.right()) {
+                    //console.log("right " + this.hero.left() + ", " + tile.right() + " x:" + tmpX + " y:" + tmpY);
+                    if (this.hero.bottom() > tile.top() && this.hero.bottom() < tile.bottom())
                         this.hero.x = tile.right() + offset;
-                    if (this.hero.top() >= tile.top() && this.hero.top() <= tile.bottom())
+                    if (this.hero.top() > tile.top() && this.hero.top() < tile.bottom())
                         this.hero.x = tile.right() + offset;
                 }
                 // Down collision
                 if (tile.type === Tile.WALL_TYPE && this.hero.top() <= tile.bottom() + offset && this.hero.bottom() > tile.bottom()) {
-                    if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right())
+                    if (this.hero.right() > tile.left() && this.hero.right() < tile.right())
                         this.hero.y = tile.bottom() + offset;
-                    if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right())
+                    if (this.hero.left() > tile.left() && this.hero.left() < tile.right())
                         this.hero.y = tile.bottom() + offset;
                 }
                 // Up collision
                 if (tile.type === Tile.WALL_TYPE && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
-                    if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
+                    if (this.hero.right() > tile.left() && this.hero.right() < tile.right()) {
                         this.hero.y = tile.top() - this.hero.height - offset;
                         this.hero.setJumping(false);
                     }
-                    if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
+                    if (this.hero.left() > tile.left() && this.hero.left() < tile.right()) {
                         this.hero.y = tile.top() - this.hero.height - offset;
                         this.hero.setJumping(false);
                     }
@@ -79,6 +81,7 @@ Controller.prototype.update = function(deltatime) {
                 enemy.update(deltatime);
                 this.hero.collide(enemy);
                 if (enemy instanceof GiantFatEnemy) {
+                    enemy.changeDirection(this.hero.x);
                     for (var i = 0; i < this.hero.blasts.length; i++) {
                         if (!this.hero.blasts[i].collided && enemy.collide(this.hero.blasts[i])) {
                             this.hero.blasts[i].collided = true;
