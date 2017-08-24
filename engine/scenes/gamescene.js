@@ -29,10 +29,7 @@ GameScene.prototype.onMouseClick = function(event) {
 
 GameScene.prototype.onKeyDown = function(e) {
     e = e || window.event;
-    if (e.keyCode === 38) {
-        console.log("jump");
-        this.controller.jump();
-    }
+    if (e.keyCode === 38) this.controller.jump();
     if (e.keyCode === 37) this.controller.moveLeft(true);
     if (e.keyCode === 39) this.controller.moveRight(true);
     if (e.keyCode === 32) this.controller.shoot();

@@ -57,7 +57,7 @@ GiantFatEnemy.prototype.fireBlast = function(x, y) {
 GiantFatEnemy.prototype.update = function(deltatime) {
     this.nextShootTimeCount += deltatime;
     if (this.nextShootTime === 0) {
-        // Shoots randomly in a X seconds interval
+        // Shoots randomly in X seconds interval
         this.nextShootTime = Math.random() * this.shootInterval;
     }
     if (this.nextShootTimeCount >= this.nextShootTime && !this.isDead && !this.isDamage) {
