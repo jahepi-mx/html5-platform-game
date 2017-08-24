@@ -14,11 +14,15 @@ function Level1(camera) {
         1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,2,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,2,3,3,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-        1,1,1,1,1,1,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        1,1,1,1,1,1,0,1,1,1,1,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
     ];
     
     for (var i = 0; i < this.map.length; i++) {
-        this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
+        if (this.map[i] === 0) {
+            this.tiles[i] = null;
+        } else {
+            this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
+        }
         this.enemies[i] = null;
     }
     
@@ -30,4 +34,8 @@ function Level1(camera) {
     this.enemies[6 * Config.mapWidth + 7] = new GiantFatEnemy(7, 6, 100 * 2, 100, 4, this.camera);
     this.enemies[6 * Config.mapWidth + 26] = new GiantFatEnemy(26, 6, 125 * 2, 125, 4, this.camera);
     this.enemies[6 * Config.mapWidth + 30] = new GiantFatEnemy(30, 6, 150 * 2, 150, 4, this.camera);
+    this.enemies[7 * Config.mapWidth + 6] = new LavaEnemy(6, 7, this.camera);
+    this.enemies[7 * Config.mapWidth + 12] = new LavaEnemy(12, 7, this.camera);
+    this.enemies[7 * Config.mapWidth + 13] = new LavaEnemy(13, 7, this.camera);
+    this.enemies[7 * Config.mapWidth + 15] = new StingEnemy(15, 7, this.camera);
 }

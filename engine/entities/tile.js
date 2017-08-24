@@ -1,6 +1,44 @@
-Object.defineProperty(Tile, "WALL_TYPE", { value: "WALL_TYPE" });
-Object.defineProperty(Tile, "PLATFORM_TYPE", { value: "PLATFORM_TYPE" });
-Object.defineProperty(Tile, "TEXTURE_TYPE", { value: "TEXTURE" });
+// Static class members
+Tile.WALL_TYPE = 1;
+Tile.PLATFORM_TYPE = 2;
+Tile.TEXTURE_TYPE = 4;
+
+Tile.TYPE = [];
+Tile.TYPE[1] = {asset: "rock", type: Tile.WALL_TYPE};
+Tile.TYPE[2] = {asset: "rock_left_grass", type: Tile.WALL_TYPE};
+Tile.TYPE[3] = {asset: "rock_right_grass", type: Tile.WALL_TYPE};
+Tile.TYPE[4] = {asset: "ice_center", type: Tile.WALL_TYPE};
+Tile.TYPE[5] = {asset: "grass_left_ice", type: Tile.WALL_TYPE};
+Tile.TYPE[6] = {asset: "grass_right_ice", type: Tile.WALL_TYPE};
+Tile.TYPE[7] = {asset: "grass_left_lava", type: Tile.WALL_TYPE};
+Tile.TYPE[8] = {asset: "grass_right_lava", type: Tile.WALL_TYPE};
+Tile.TYPE[9] = {asset: "rock_left_lava", type: Tile.WALL_TYPE};
+Tile.TYPE[10] = {asset: "rock_right_lava", type: Tile.WALL_TYPE};
+Tile.TYPE[11] = {asset: "grass_right_platform", type: Tile.PLATFORM_TYPE};
+Tile.TYPE[12] = {asset: "grass_center_platform", type: Tile.PLATFORM_TYPE};
+Tile.TYPE[13] = {asset: "grass_left_platform", type: Tile.PLATFORM_TYPE};
+Tile.TYPE[14] = {asset: "rock_right", type: Tile.WALL_TYPE};
+Tile.TYPE[15] = {asset: "rock_center", type: Tile.WALL_TYPE};
+Tile.TYPE[16] = {asset: "rock_left", type: Tile.WALL_TYPE};
+Tile.TYPE[17] = {asset: "grass_left", type: Tile.WALL_TYPE};
+Tile.TYPE[18] = {asset: "grass_center", type: Tile.WALL_TYPE};
+Tile.TYPE[19] = {asset: "grass_right", type: Tile.WALL_TYPE};
+Tile.TYPE[20] = {asset: "flower", type: Tile.TEXTURE};
+Tile.TYPE[21] = {asset: "mushroom", type: Tile.TEXTURE};
+Tile.TYPE[22] = {asset: "grass", type: Tile.TEXTURE};
+Tile.TYPE[23] = {asset: "rocks", type: Tile.TEXTURE};
+Tile.TYPE[24] = {asset: "top_shadow_round_left", type: Tile.TEXTURE};
+Tile.TYPE[25] = {asset: "top_shadow_round_center", type: Tile.TEXTURE};
+Tile.TYPE[26] = {asset: "top_shadow_round_right", type: Tile.TEXTURE};
+Tile.TYPE[27] = {asset: "center_shadow_right", type: Tile.TEXTURE};
+Tile.TYPE[28] = {asset: "center_shadow_center", type: Tile.TEXTURE};
+Tile.TYPE[29] = {asset: "center_shadow_left", type: Tile.TEXTURE};
+Tile.TYPE[30] = {asset: "bottom_shadow_round_left", type: Tile.TEXTURE};
+Tile.TYPE[31] = {asset: "bottom_shadow_round_center", type: Tile.TEXTURE};
+Tile.TYPE[32] = {asset: "bottom_shadow_round_right", type: Tile.TEXTURE};
+Tile.TYPE[33] = {asset: "shadow_right", type: Tile.TEXTURE};
+Tile.TYPE[34] = {asset: "shadow_center", type: Tile.TEXTURE};
+Tile.TYPE[35] = {asset: "shadow_left", type: Tile.TEXTURE};
 
 function Tile(x, y, width, height, typeIndex, camera) {
     this.x = x * width;
@@ -9,16 +47,8 @@ function Tile(x, y, width, height, typeIndex, camera) {
     this.height = height;
     this.typeIndex = typeIndex;
     this.camera = camera;
-    this.type = Tile.WALL_TYPE;
-    if (this.typeIndex === 2 
-            || this.typeIndex === 3 
-            || this.typeIndex === 4 
-            || this.typeIndex === 5) {
-        this.type = Tile.PLATFORM_TYPE;
-    } else if (this.typeIndex === 0 
-            || this.typeIndex === 6) {
-        this.type = Tile.TEXTURE_TYPE;
-    }
+    this.type = Tile.TYPE[typeIndex].type;
+    this.asset = Tile.TYPE[typeIndex].asset; 
 }
 
 Tile.prototype.left = function() {
@@ -42,20 +72,6 @@ Tile.prototype.draw = function(context) {
         context.fillStyle = "white";
         context.fillRect(this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
     } else {
-        if (this.typeIndex === 1) {
-            context.drawImage(Assets.tilesAtlas, Atlas.tiles.wall.x, Atlas.tiles.wall.y, Atlas.tiles.wall.width, Atlas.tiles.wall.height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
-        } else if (this.typeIndex === 2) {
-            context.drawImage(Assets.tilesAtlas, Atlas.tiles.platform_left.x, Atlas.tiles.platform_left.y, Atlas.tiles.platform_left.width, Atlas.tiles.platform_left.height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
-        } else if (this.typeIndex === 3) {
-            context.drawImage(Assets.tilesAtlas, Atlas.tiles.platform_center.x, Atlas.tiles.platform_center.y, Atlas.tiles.platform_center.width, Atlas.tiles.platform_center.height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
-        } else if (this.typeIndex === 4) {
-            context.drawImage(Assets.tilesAtlas, Atlas.tiles.platform_right.x, Atlas.tiles.platform_right.y, Atlas.tiles.platform_right.width, Atlas.tiles.platform_right.height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
-        } else if (this.typeIndex === 5) {
-            context.drawImage(Assets.tilesAtlas, Atlas.tiles.platform.x, Atlas.tiles.platform.y, Atlas.tiles.platform.width, Atlas.tiles.platform.height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
-        } else if (this.typeIndex === 6) {
-            context.drawImage(Assets.tilesAtlas, Atlas.tiles.acid.x, Atlas.tiles.acid.y, Atlas.tiles.acid.width, Atlas.tiles.acid.height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
-        } else if (this.typeIndex === 0) {
-            context.drawImage(Assets.tilesAtlas, Atlas.tiles.background.x, Atlas.tiles.background.y, Atlas.tiles.background.width, Atlas.tiles.background.height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
-        }
+        context.drawImage(Assets.tilesAtlas1, Atlas.tiles1[this.asset].x, Atlas.tiles1[this.asset].y, Atlas.tiles1[this.asset].width, Atlas.tiles1[this.asset].height, this.x - this.camera.x, this.y - this.camera.y, this.width + 1, this.height + 1);
     }
 };

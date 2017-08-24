@@ -1,5 +1,6 @@
-Object.defineProperty(BlockEnemy, "VERTICAL", { value: 1 });
-Object.defineProperty(BlockEnemy, "HORIZONTAL", { value: 2 });
+// Static class members
+BlockEnemy.VERTICAL = 1;
+BlockEnemy.HORIZONTAL = 2;
 
 function BlockEnemy(x, y, width, height, type, velocity, maxDistance, camera, direction) {
     this.camera = camera;
