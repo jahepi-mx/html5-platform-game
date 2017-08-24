@@ -1,14 +1,25 @@
 Atlas = {};
 
-Atlas.tiles = {};
-Atlas.hero = {};
-Atlas.enemies = {};
-Atlas.gui = {};
+Atlas.xmls = [
+    "assets/tiles/sprites1.xml", 
+    "assets/tiles/sprites.xml", 
+    "assets/hero/sprites.xml", 
+    "assets/enemies/sprites.xml", 
+    "assets/gui/sprites.xml"
+];
 
-Atlas.xmls = ["assets/tiles/sprites.xml", "assets/hero/sprites.xml", "assets/enemies/sprites.xml", "assets/gui/sprites.xml"];
-Atlas.keys = ["tiles", "hero", "enemies", "gui"];
+Atlas.keys = [
+    "tiles1", 
+    "tiles", 
+    "hero", 
+    "enemies", 
+    "gui"
+];
 
 Atlas.loadAll = function(callback) {
+    for (var i = 0; i < Atlas.keys.length; i++) {
+        Atlas[Atlas.keys[i]] = {};
+    }
     Atlas.load(0, callback);
 };
 

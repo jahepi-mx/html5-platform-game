@@ -1,14 +1,25 @@
-Assets = {
-    tilesAtlas: new Image(),
-    heroAtlas: new Image(),
-    enemiesAtlas: new Image(),
-    guiAtlas: new Image(),
-};
+Assets = {};
 
-Assets.srcs = ["assets/tiles/sprites.png", "assets/hero/sprites.png", "assets/enemies/sprites.png", "assets/gui/sprites.png"];
-Assets.keys = ["tilesAtlas", "heroAtlas", "enemiesAtlas", "guiAtlas"];
+Assets.srcs = [
+    "assets/tiles/sprites1.png", 
+    "assets/tiles/sprites.png", 
+    "assets/hero/sprites.png", 
+    "assets/enemies/sprites.png", 
+    "assets/gui/sprites.png"
+];
+
+Assets.keys = [
+    "tilesAtlas1", 
+    "tilesAtlas", 
+    "heroAtlas", 
+    "enemiesAtlas", 
+    "guiAtlas"
+];
 
 Assets.loadAll = function(callback) {
+    for (var i = 0; i < Assets.keys.length; i++) {
+        Assets[Assets.keys[i]] = new Image();
+    }
     Assets.load(0, callback);
 };
 
