@@ -56,5 +56,10 @@ MainScene.prototype.update = function(deltatime) {
         } else {
             this.isClicked = false;
         }
+    } else {
+        this.context.font = "30px Comic Sans MS";
+        this.context.fillStyle = "white";
+        this.context.textAlign = "center";
+        this.context.fillText("Loading...", Config.worldWidth / 2, Config.worldHeight / 2);
     }      
 };

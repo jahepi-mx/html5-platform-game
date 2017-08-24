@@ -93,11 +93,16 @@ Hero.prototype.updateCollision = function(deltatime) {
     this.x += this.velocityX * deltatime;
 };
 
+Hero.prototype.isJumpReadyToInactive = function() {
+    return this.jumpingTime >= this.jumpingTimeLimit;
+};
+
 Hero.prototype.jump = function() {
     if (this.isDead) {
         return;
     }
     if (!this.isJumping) {
+        this.jumpingTime = 0;
         this.isJumping = true;
         this.velocityY = this.velocityYOrig;
     }

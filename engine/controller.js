@@ -52,22 +52,22 @@ Controller.prototype.update = function(deltatime) {
                 if (tile.type === Tile.WALL_TYPE && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
                     if (this.hero.right() > tile.left() && this.hero.right() < tile.right()) {
                         this.hero.y = tile.top() - this.hero.height - offset;
-                        this.hero.setJumping(false);
+                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                     if (this.hero.left() > tile.left() && this.hero.left() < tile.right()) {
                         this.hero.y = tile.top() - this.hero.height - offset;
-                        this.hero.setJumping(false);
+                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                 }
                 // Up platform collision
                 if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
                     if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
                         this.hero.y = tile.top() - this.hero.height - offset;
-                        this.hero.setJumping(false);
+                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                     if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
                         this.hero.y = tile.top() - this.hero.height - offset;
-                        this.hero.setJumping(false);
+                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                 }
             }
