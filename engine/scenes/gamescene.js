@@ -1,4 +1,4 @@
-function GameScene(context, canvas) {
+function GameScene(context, canvas, callback) {
     this.context = context;
     this.canvas = canvas;
     this.controller = new Controller();

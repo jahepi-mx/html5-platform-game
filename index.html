@@ -24,27 +24,37 @@ and open the template in the editor.
         <script src="engine/controller.js"></script>
         <script src="engine/animation.js"></script>
         <script src="engine/scenes/gamescene.js"></script>
+        <script src="engine/scenes/mainscene.js"></script>
         
         <script>
-            var gameScene;
-            var prevTimestamp = 0; 
+            var scene;
+            var context;
+            var canvas;
+            var prevTimestamp = 0;
+            
             window.onload = function() {
-                Assets.loadAll(null);
-                Atlas.loadAll(null, null);
                 canvas = document.getElementById("game");
                 context = canvas.getContext("2d");
                 canvas.width = Config.worldWidth;
                 canvas.height = Config.worldHeight;
-                gameScene = new GameScene(context, canvas);
+                scene = new MainScene(context, canvas, changeSceneCallback);
                 window.requestAnimationFrame(onUpdate);    
             };
             
             function onUpdate(timestamp) {
                 var deltatime = (timestamp - prevTimestamp) / 1000;
-                gameScene.update(deltatime);
+                scene.update(deltatime);
                 prevTimestamp = timestamp;
                 window.requestAnimationFrame(onUpdate);
-            } 
+            }
+            
+            function changeSceneCallback(sceneName) {
+                if (sceneName === "main") {
+                    scene = new MainScene(context, canvas, changeSceneCallback);
+                } else if (sceneName === "game") {
+                    scene = new GameScene(context, canvas, changeSceneCallback);
+                }
+            }
         </script>
     </head>
     <body style="background-color: black">
