@@ -172,3 +172,7 @@ Controller.prototype.moveLeft = function(bool) {
 Controller.prototype.shoot = function() {
     this.hero.shoot();
 };
+
+Controller.prototype.isFinish = function() {
+    return this.hero.isDead;
+};

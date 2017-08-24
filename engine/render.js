@@ -6,6 +6,10 @@ function Render(context, canvas, controller) {
     this.context.font = "12px Arial";
 }
 
+Render.prototype.isFinish = function() {
+    return this.controller.isFinish();
+};
+
 Render.prototype.update = function(deltatime) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.controller.update(deltatime);
