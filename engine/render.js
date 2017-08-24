@@ -12,6 +12,8 @@ Render.prototype.isFinish = function() {
 
 Render.prototype.update = function(deltatime) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.imageSmoothingEnabled = false;
+    
     this.controller.update(deltatime);
     
     this.context.drawImage(Assets.tilesAtlas1, Atlas.tiles1.sky.x, Atlas.tiles1.sky.y, Atlas.tiles1.sky.width, Atlas.tiles1.sky.height, 0, 0, Config.worldWidth, Config.worldHeight);
