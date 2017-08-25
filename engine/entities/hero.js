@@ -1,6 +1,8 @@
 function Hero(x, y, width, height, collisionSteps, camera) {
     this.x = x;
     this.y = y;
+    this.oldX = x;
+    this.oldY = y;
     this.width = width;
     this.height = height;
     this.friction = 0.92;
@@ -83,6 +85,7 @@ Hero.prototype.update = function(deltatime) {
 };
 
 Hero.prototype.updateCollision = function(deltatime) {
+    this.oldY = this.y;
     if (!this.isJumping) {
         this.y += this.gravityForce * deltatime;
         this.velocityY = 0;
@@ -90,6 +93,7 @@ Hero.prototype.updateCollision = function(deltatime) {
         this.y -= this.velocityY * deltatime;
         //this.velocityY -= this.gravityForce * deltatime;
     }
+    this.oldX = this.x;
     this.x += this.velocityX * deltatime;
 };
 
@@ -146,6 +150,7 @@ Hero.prototype.moveRight = function(bool) {
     }
     if (bool) {
         this.direction = 1;
+        this.velocityX = this.velocityXOrig;
     }
     this.movingRight = bool;
 };
@@ -156,6 +161,7 @@ Hero.prototype.moveLeft = function(bool) {
     }
     if (bool) {
         this.direction = -1;
+        this.velocityX = this.velocityXOrig;
     }
     this.movingLeft = bool;
 };

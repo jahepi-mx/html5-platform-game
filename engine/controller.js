@@ -11,7 +11,6 @@ function Controller() {
 
 Controller.prototype.update = function(deltatime) {
     
-    this.camera.move(this.hero.x, this.hero.y);
     this.hero.update(deltatime);
     
     // Hero collision detection
@@ -29,50 +28,52 @@ Controller.prototype.update = function(deltatime) {
                 if (tile.type === Tile.WALL_TYPE && this.hero.right() >= tile.left() - offset && this.hero.right() <= tile.left()) {
                     //console.log("left " + this.hero.right() + ", " + tile.left() + " x:" + tmpX + " y:" + tmpY);
                     if (this.hero.bottom() > tile.top() && this.hero.bottom() < tile.bottom())
-                        this.hero.x = tile.left() - this.hero.width - offset;
+                        this.hero.x = this.hero.oldX - 0.001; //this.hero.x = tile.left() - this.hero.width - offset;
                     if (this.hero.top() > tile.top() && this.hero.top() < tile.bottom())
-                        this.hero.x = tile.left() - this.hero.width - offset;
+                        this.hero.x = this.hero.oldX - 0.001; //this.hero.x = tile.left() - this.hero.width - offset;
                 }
                 // Right collision
                 if (tile.type === Tile.WALL_TYPE && this.hero.left() <= tile.right() + offset && this.hero.left() >= tile.right()) {
                     //console.log("right " + this.hero.left() + ", " + tile.right() + " x:" + tmpX + " y:" + tmpY);
                     if (this.hero.bottom() > tile.top() && this.hero.bottom() < tile.bottom())
-                        this.hero.x = tile.right() + offset;
+                        this.hero.x = this.hero.oldX + 0.001; //this.hero.x = tile.right() + offset;
                     if (this.hero.top() > tile.top() && this.hero.top() < tile.bottom())
-                        this.hero.x = tile.right() + offset;
+                        this.hero.x = this.hero.oldX + 0.001; //this.hero.x = tile.right() + offset;
                 }
                 // Down collision
                 if (tile.type === Tile.WALL_TYPE && this.hero.top() <= tile.bottom() + offset && this.hero.bottom() > tile.bottom()) {
                     if (this.hero.right() > tile.left() && this.hero.right() < tile.right())
-                        this.hero.y = tile.bottom() + offset;
+                        this.hero.y = this.hero.oldY + 0.001; //this.hero.y = tile.bottom() + offset;
                     if (this.hero.left() > tile.left() && this.hero.left() < tile.right())
-                        this.hero.y = tile.bottom() + offset;
+                        this.hero.y = this.hero.oldY + 0.001; //this.hero.y = tile.bottom() + offset;
                 }
                 // Up collision
                 if (tile.type === Tile.WALL_TYPE && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
                     if (this.hero.right() > tile.left() && this.hero.right() < tile.right()) {
-                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.y = this.hero.oldY - 0.001; //this.hero.y = tile.top() - this.hero.height - offset;
                         if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                     if (this.hero.left() > tile.left() && this.hero.left() < tile.right()) {
-                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.y = this.hero.oldY - 0.001; //this.hero.y = tile.top() - this.hero.height - offset;
                         if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                 }
                 // Up platform collision
                 if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
                     if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
-                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.y = this.hero.oldY - 0.001; //this.hero.y = tile.top() - this.hero.height - offset;
                         if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                     if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
-                        this.hero.y = tile.top() - this.hero.height - offset;
+                        this.hero.y = this.hero.oldY - 0.001; //this.hero.y = tile.top() - this.hero.height - offset;
                         if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                     }
                 }
             }
         }
     }
+    
+    this.camera.move(this.hero.x, this.hero.y);
     
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {

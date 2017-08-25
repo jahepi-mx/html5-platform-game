@@ -1,7 +1,7 @@
 function Level1(camera) {
     
     this.startX = Config.tileSize * 0.3;
-    this.startY = Config.tileSize * 3.5;
+    this.startY = Config.tileSize * 3.4;
     this.camera = camera;
     this.tiles = [];
     this.enemies = [];
