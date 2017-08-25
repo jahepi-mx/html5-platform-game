@@ -8,7 +8,7 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.movingRight = false;
     this.velocityX = 0;
     this.velocityY = 0;
-    this.velocityXOrig = 70 / collisionSteps;
+    this.velocityXOrig = 30 / collisionSteps;
     this.velocityYOrig = 100 / collisionSteps;
     this.isJumping = false;
     this.jumpingTime = 0;
@@ -120,7 +120,7 @@ Hero.prototype.shoot = function() {
     if (!this.isShooting) {
         this.shootingTime = 0;
         this.isShooting = true;
-        this.blasts.push(new HeroBlast(this.x, this.y + this.height / 2, this.camera, this.direction));
+        this.blasts.push(new HeroBlast(this.x, this.y + this.height / 2 - 115, this.camera, this.direction));
     }
 };
 

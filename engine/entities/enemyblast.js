@@ -47,8 +47,8 @@ EnemyBlast.prototype.draw = function(context) {
             var key = "blast_explosion" + (this.blastExplosionAnimation.getFrame() + 1);
             context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height); 
         } else {
-            var key = "bullet" + (this.blastAnimation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+            var key = "blast" + (this.blastAnimation.getFrame() + 1);
+            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
         }
     }
 };

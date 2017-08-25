@@ -9,7 +9,7 @@ function Camera() {
 
 Camera.prototype.move = function(x, y) {
     var newX = (x / Config.worldWidth) * this.fullWidth;
-    var newY = (y / Config.worldHeight) * this.fullHeight;
+    var newY = ((y / Config.worldHeight) * this.fullHeight) - 250;
     this.x = newX;
     this.y = newY;
 };

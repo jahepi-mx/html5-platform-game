@@ -1,7 +1,7 @@
 function Controller() {
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
-    this.collisionPrecision = 10;
+    this.collisionPrecision = 20;
     var level1 = new Level1(this.camera);
     this.hero = new Hero(level1.startX, level1.startY, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
