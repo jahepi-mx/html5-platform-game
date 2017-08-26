@@ -53,15 +53,13 @@ EnemyBlast.prototype.draw = function(context) {
     }
 };
 
-EnemyBlast.prototype.collide = function(entity) {
-    var blastCenterX = this.left() + this.width / 2;
-    var blastCenterY = this.top() + this.height / 2;
-    var objectCenterX = entity.left() + entity.width / 2;
-    var objectCenterY = entity.top() + entity.height / 2;
-    var diffX = blastCenterX - objectCenterX;
-    var diffY = blastCenterY - objectCenterY;
-    var dist = diffX * diffX + diffY * diffY;
-    if (dist < this.width * this.width) {
+EnemyBlast.prototype.collide = function(entity) { 
+    // AABB Collision detection
+    var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
+    var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
+    var sizeX = this.width / 2 + entity.width / 2;
+    var sizeY = this.height / 2 + entity.height / 2;
+    if (diffX < sizeX && diffY < sizeY) {
         this.collided = true;
     }
 };

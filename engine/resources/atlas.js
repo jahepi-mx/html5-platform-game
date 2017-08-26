@@ -1,7 +1,6 @@
 Atlas = {};
 
 Atlas.xmls = [
-    "assets/tiles/sprites1.xml", 
     "assets/tiles/sprites.xml", 
     "assets/hero/sprites.xml", 
     "assets/enemies/sprites.xml", 
@@ -9,7 +8,6 @@ Atlas.xmls = [
 ];
 
 Atlas.keys = [
-    "tiles1", 
     "tiles", 
     "hero", 
     "enemies", 

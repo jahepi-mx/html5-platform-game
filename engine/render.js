@@ -16,8 +16,8 @@ Render.prototype.update = function(deltatime) {
     
     this.controller.update(deltatime);
     
-    this.context.drawImage(Assets.tilesAtlas1, Atlas.tiles1.sky.x, Atlas.tiles1.sky.y, Atlas.tiles1.sky.width, Atlas.tiles1.sky.height, 0, 0, this.canvas.width, this.canvas.height);
-    this.context.drawImage(Assets.tilesAtlas1, Atlas.tiles1.clouds.x, Atlas.tiles1.clouds.y, Atlas.tiles1.clouds.width, Atlas.tiles1.clouds.height, 0, 0, this.canvas.width, this.canvas.height);
+    this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.sky.x, Atlas.tiles.sky.y, Atlas.tiles.sky.width, Atlas.tiles.sky.height, 0, 0, this.canvas.width, this.canvas.height);
+    this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.clouds.x, Atlas.tiles.clouds.y, Atlas.tiles.clouds.width, Atlas.tiles.clouds.height, 0, 0, this.canvas.width, this.canvas.height);
     
     for (var y = this.controller.getMinY(); y <= this.controller.getMaxY(); y++) {
         for (var x = this.controller.getMinX(); x <= this.controller.getMaxX(); x++) {

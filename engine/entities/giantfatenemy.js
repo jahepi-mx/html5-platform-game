@@ -116,14 +116,12 @@ GiantFatEnemy.prototype.collide = function(entity) {
     if (this.isDead) {
         return false;
     }
-    var centerX = this.left() + this.width / 2;
-    var centerY = this.top() + this.height / 2;
-    var objectCenterX = entity.left() + entity.width / 2;
-    var objectCenterY = entity.top() + entity.height / 2;
-    var diffX = centerX - objectCenterX;
-    var diffY = centerY - objectCenterY;
-    var dist = diffX * diffX + diffY * diffY;
-    if (dist < (this.width / 2) * (this.width / 2)) {
+    // AABB Collision detection
+    var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
+    var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
+    var sizeX = this.width / 2 + entity.width / 2;
+    var sizeY = this.height / 2 + entity.height / 2;
+    if (diffX < sizeX && diffY < sizeY) {
         if (!this.isDamage) {
             var tmpHealth = this.health - 1;
             if (tmpHealth <= 0) {

@@ -1,7 +1,6 @@
 Assets = {};
 
 Assets.srcs = [
-    "assets/tiles/sprites1.png", 
     "assets/tiles/sprites.png", 
     "assets/hero/sprites.png", 
     "assets/enemies/sprites.png", 
@@ -9,7 +8,6 @@ Assets.srcs = [
 ];
 
 Assets.keys = [
-    "tilesAtlas1", 
     "tilesAtlas", 
     "heroAtlas", 
     "enemiesAtlas", 

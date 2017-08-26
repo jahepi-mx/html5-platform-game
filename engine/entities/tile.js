@@ -72,6 +72,6 @@ Tile.prototype.draw = function(context) {
         context.fillStyle = "white";
         context.fillRect(this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
     } else {
-        context.drawImage(Assets.tilesAtlas1, Atlas.tiles1[this.asset].x, Atlas.tiles1[this.asset].y, Atlas.tiles1[this.asset].width, Atlas.tiles1[this.asset].height, this.x - this.camera.x, this.y - this.camera.y, this.width + 1, this.height + 1);
+        context.drawImage(Assets.tilesAtlas, Atlas.tiles[this.asset].x, Atlas.tiles[this.asset].y, Atlas.tiles[this.asset].width, Atlas.tiles[this.asset].height, this.x - this.camera.x, this.y - this.camera.y, this.width + 1, this.height + 1);
     }
 };
