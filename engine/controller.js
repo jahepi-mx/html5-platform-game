@@ -12,7 +12,6 @@ function Controller() {
 Controller.prototype.update = function(deltatime) {
     
     this.hero.update(deltatime);
-    this.camera.move(this.hero.x, this.hero.y);
     
     // Hero collision detection
     for (var i = 0; i < this.collisionPrecision; i++) {
