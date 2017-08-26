@@ -1,8 +1,6 @@
 function Hero(x, y, width, height, collisionSteps, camera) {
     this.x = x;
     this.y = y;
-    this.oldX = x;
-    this.oldY = y;
     this.width = width;
     this.height = height;
     this.friction = 0.92;
@@ -84,18 +82,27 @@ Hero.prototype.update = function(deltatime) {
     this.velocityX *= this.friction;
 };
 
-Hero.prototype.updateCollision = function(deltatime) {
-    this.oldY = this.y;
+Hero.prototype.updateX = function(deltatime) {
+    this.x += this.velocityX * deltatime;
+};
+
+Hero.prototype.updateY = function(deltatime) {
     if (!this.isJumping) {
         this.y += this.gravityForce * deltatime;
         this.velocityY = 0;
     } else {
         this.y -= this.velocityY * deltatime;
-        //this.velocityY -= this.gravityForce * deltatime;
     }
-    this.oldX = this.x;
-    this.x += this.velocityX * deltatime;
 };
+
+Hero.prototype.collideTile = function(entity) {
+    // AABB Collision detection
+    var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
+    var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
+    var sizeX = (this.width / 2 + entity.width / 2);
+    var sizeY = (this.height / 2 + entity.height / 2);
+    return diffX < sizeX && diffY < sizeY;
+}
 
 Hero.prototype.isJumpReadyToInactive = function() {
     return this.jumpingTime >= this.jumpingTimeLimit;
