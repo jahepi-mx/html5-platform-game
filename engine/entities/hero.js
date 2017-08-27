@@ -1,6 +1,8 @@
 function Hero(x, y, width, height, collisionSteps, camera) {
     this.x = x;
     this.y = y;
+    this.centerX = Config.worldWidth / 2 - width / 2;
+    this.centerY = Config.worldHeight / 2 + height / 2;
     this.width = width;
     this.height = height;
     this.friction = 0.92;
@@ -8,11 +10,11 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.movingRight = false;
     this.velocityX = 0;
     this.velocityY = 0;
-    this.velocityXOrig = 30 / collisionSteps;
-    this.velocityYOrig = 100 / collisionSteps;
+    this.velocityXOrig = 200 / collisionSteps;
+    this.velocityYOrig = 200 / collisionSteps;
     this.isJumping = false;
     this.jumpingTime = 0;
-    this.jumpingTimeLimit = 30 / 60;
+    this.jumpingTimeLimit = 40 / 60;
     this.isShooting = false;
     this.shootingTime = 0;
     this.shootingTimeLimit = 30 / 60;
@@ -122,24 +124,24 @@ Hero.prototype.shoot = function() {
     if (!this.isShooting) {
         this.shootingTime = 0;
         this.isShooting = true;
-        this.blasts.push(new HeroBlast(this.x, this.y + this.height / 2 - 115, this.camera, this.direction));
+        this.blasts.push(new HeroBlast(this.centerX, this.centerY, this.camera, this.direction));
     }
 };
 
 Hero.prototype.left = function() {
-    return this.x;
+    return this.centerX;
 };
 
 Hero.prototype.right = function() {
-    return this.x + this.width;
+    return this.centerX + this.width;
 };
 
 Hero.prototype.top = function() {
-    return this.y;
+    return this.centerY;
 };
 
 Hero.prototype.bottom = function() {
-    return this.y + this.height;
+    return this.centerY + this.height;
 };
 
 Hero.prototype.moveRight = function(bool) {
@@ -205,10 +207,10 @@ Hero.prototype.draw = function(context) {
             if (this.direction === -1) {
                 context.save();
                 context.scale(this.direction, 1);
-                context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, - this.x - this.width, this.y, this.width, this.height);
+                context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, - this.centerX - this.width, this.centerY, this.width, this.height);
                 context.restore();
             } else {
-                context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x, this.y, this.width, this.height);
+                context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.centerX, this.centerY, this.width, this.height);
             }
         }
         
