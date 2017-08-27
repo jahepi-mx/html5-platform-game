@@ -12,7 +12,7 @@ function Controller() {
 Controller.prototype.update = function(deltatime) {
     
     this.hero.update(deltatime);
-    
+    var platformOffset = 3;
     // Hero collision detection
     for (var i = 0; i < this.collisionPrecision; i++) {
         var oldX = this.hero.x;
@@ -26,26 +26,13 @@ Controller.prototype.update = function(deltatime) {
             var tmpY = currentY + this.vectorMoves[v][1];
             var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
             if (tile !== null) {
-               if (tile.type === Tile.WALL_TYPE || tile.type === Tile.PLATFORM_TYPE){ 
+               if (tile.type === Tile.WALL_TYPE) { 
                     if (tile.collide(this.hero)) {
                         this.hero.x = oldX;
                         this.camera.move(this.hero.x, this.hero.y);
                         break;
                     }
                 }
-               /*
-                // Up platform collision
-                if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() >= tile.top() - offset && this.hero.bottom() <= tile.top()) {
-                    if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
-                        this.hero.y = this.hero.oldY - avoidStuck; //this.hero.y = tile.top() - this.hero.height - offset;
-                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
-                    }
-                    if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
-                        this.hero.y = this.hero.oldY - avoidStuck; //this.hero.y = tile.top() - this.hero.height - offset;
-                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
-                    }
-                }
-                */
             }
         }
         oldX = this.hero.x;
@@ -57,11 +44,25 @@ Controller.prototype.update = function(deltatime) {
             var tmpY = currentY + this.vectorMoves[v][1];
             var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
             if (tile !== null) {
-               if (tile.type === Tile.WALL_TYPE  || tile.type === Tile.PLATFORM_TYPE){ 
+               if (tile.type === Tile.WALL_TYPE){ 
                     if (tile.collide(this.hero)) {
                         this.hero.y = oldY;
                         if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                         this.camera.move(this.hero.x, this.hero.y);
+                        break;
+                    }
+                }
+                // Platform collision
+                if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() > tile.top() && this.hero.bottom() < tile.top() + platformOffset) {
+                    if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
+                        this.hero.y = oldY;
+                        this.camera.move(this.hero.x, this.hero.y);
+                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
+                        break;
+                    } else if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
+                        this.hero.y = oldY;
+                        this.camera.move(this.hero.x, this.hero.y);
+                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                         break;
                     }
                 }
@@ -97,11 +98,11 @@ Controller.prototype.update = function(deltatime) {
             if (tile !== null) {
                 
                 if (tile.type === Tile.WALL_TYPE) {
-                    // Verify if any hero blast collide with the tile
+                    // Verify if any hero blast collide with a tile
                     for (var i = 0; i < this.hero.blasts.length; i++) {
                         this.hero.blasts[i].collide(tile);
                     }                  
-                    // Verify if any enemy blast collide with the tile
+                    // Verify if any enemy blast collide with a tile
                     for (var y2 = this.getMinY(); y2 <= this.getMaxY(); y2++) {
                         for (var x2 = this.getMinX(); x2 <= this.getMaxX(); x2++) {
                             var enemy2 = this.getEnemy(y2 * Config.mapWidth + x2);
