@@ -27,7 +27,7 @@ Controller.prototype.update = function(deltatime) {
             var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
             if (tile !== null) {
                if (tile.type === Tile.WALL_TYPE || tile.type === Tile.PLATFORM_TYPE){ 
-                    if (this.hero.collideTile(tile)) {
+                    if (tile.collide(this.hero)) {
                         this.hero.x = oldX;
                         this.camera.move(this.hero.x, this.hero.y);
                         break;
@@ -58,7 +58,7 @@ Controller.prototype.update = function(deltatime) {
             var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
             if (tile !== null) {
                if (tile.type === Tile.WALL_TYPE  || tile.type === Tile.PLATFORM_TYPE){ 
-                    if (this.hero.collideTile(tile)) {
+                    if (tile.collide(this.hero)) {
                         this.hero.y = oldY;
                         if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
                         this.camera.move(this.hero.x, this.hero.y);

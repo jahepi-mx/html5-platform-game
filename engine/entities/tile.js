@@ -51,6 +51,15 @@ function Tile(x, y, width, height, typeIndex, camera) {
     this.asset = Tile.TYPE[typeIndex].asset; 
 }
 
+Tile.prototype.collide = function(entity) {
+    // AABB Collision detection
+    var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
+    var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
+    var sizeX = (this.width / 2 + entity.width / 2);
+    var sizeY = (this.height / 2 + entity.height / 2);
+    return diffX < sizeX && diffY < sizeY;
+}
+
 Tile.prototype.left = function() {
     return this.x - this.camera.x;
 };

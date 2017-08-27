@@ -95,15 +95,6 @@ Hero.prototype.updateY = function(deltatime) {
     }
 };
 
-Hero.prototype.collideTile = function(entity) {
-    // AABB Collision detection
-    var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
-    var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
-    var sizeX = (this.width / 2 + entity.width / 2);
-    var sizeY = (this.height / 2 + entity.height / 2);
-    return diffX < sizeX && diffY < sizeY;
-}
-
 Hero.prototype.isJumpReadyToInactive = function() {
     return this.jumpingTime >= this.jumpingTimeLimit;
 };
