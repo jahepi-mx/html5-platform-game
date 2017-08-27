@@ -6,6 +6,7 @@ function HeroBlast(x, y, camera, direction) {
     this.y = y + this.height / 2;
     this.camera = camera;
     this.cameraOrigY = this.camera.y;
+    this.cameraOrigX = this.camera.x;
     this.velocity = 300;
     this.collided = false;
     this.isDisposable = false;
@@ -42,12 +43,13 @@ HeroBlast.prototype.update = function(deltatime) {
 HeroBlast.prototype.draw = function(context) {
     if (!this.isDisposable) {
         var y = this.y - (this.camera.y - this.cameraOrigY);
+        var x = this.x - this.traveledX - (this.camera.x - this.cameraOrigX);
         if (this.collided) {
             var key = "blast_explosion" + (this.blastExplosionAnimation.getFrame() + 1);
-            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x - this.traveledX, y, this.width, this.height); 
+            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, x, y, this.width, this.height); 
         } else {
             var key = "blast" + (this.blastAnimation.getFrame() + 1);
-            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, this.x - this.traveledX, y, this.width, this.height);
+            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, x, y, this.width, this.height);
         }
     }
 };
@@ -64,11 +66,11 @@ HeroBlast.prototype.collide = function(entity) {
 };
 
 HeroBlast.prototype.left = function() {
-    return this.x - this.traveledX;
+    return this.x - this.traveledX - (this.camera.x - this.cameraOrigX);
 };
 
 HeroBlast.prototype.right = function() {
-    return (this.x + this.width) - this.traveledX;
+    return (this.x + this.width) - this.traveledX - (this.camera.x - this.cameraOrigX);
 };
 
 HeroBlast.prototype.top = function() {
