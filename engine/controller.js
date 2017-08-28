@@ -47,22 +47,22 @@ Controller.prototype.update = function(deltatime) {
                if (tile.type === Tile.WALL_TYPE){ 
                     if (tile.collide(this.hero)) {
                         this.hero.y = oldY;
-                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
+                        this.hero.setJumping(false);
                         this.camera.move(this.hero.x, this.hero.y);
                         break;
                     }
                 }
                 // Platform collision
-                if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY <= 0 && this.hero.bottom() > tile.top() && this.hero.bottom() < tile.top() + platformOffset) {
+                if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY >= 0 && this.hero.bottom() > tile.top() && this.hero.bottom() < tile.top() + platformOffset) {
                     if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
                         this.hero.y = oldY;
                         this.camera.move(this.hero.x, this.hero.y);
-                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
+                        this.hero.setJumping(false);
                         break;
                     } else if (this.hero.left() >= tile.left() && this.hero.left() <= tile.right()) {
                         this.hero.y = oldY;
                         this.camera.move(this.hero.x, this.hero.y);
-                        if (this.hero.isJumpReadyToInactive()) this.hero.setJumping(false);
+                        this.hero.setJumping(false);
                         break;
                     }
                 }

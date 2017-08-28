@@ -4,7 +4,7 @@ var Config = {
     mapWidth: 84,
     mapHeight: 8,
     tileSize: 80,
-    gravity: 100,
+    gravity: 180,
     heroSize: 60,
     debug: false,
 };
