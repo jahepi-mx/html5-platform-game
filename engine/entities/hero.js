@@ -171,7 +171,7 @@ Hero.prototype.collide = function(entity) {
 Hero.prototype.draw = function(context) {
     if (Config.debug) {
         context.fillStyle = "blue";
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.fillRect(this.centerX, this.centerY, this.width, this.height);
     } else {
         var key = "";
         if (this.isDead) {
