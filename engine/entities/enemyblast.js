@@ -7,7 +7,7 @@ function EnemyBlast(enemy, radians, camera) {
     this.ratioY = Math.sin(radians);
     this.camera = camera;
     this.enemy = enemy;
-    this.velocity = 200 + parseInt(Math.random() * 100);
+    this.velocity = 200 + Math.floor(Math.random() * 100);
     this.collided = false;
     this.isDisposable = false;
     this.blastAnimation = new Animation(5, 1.5);

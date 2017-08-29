@@ -21,7 +21,7 @@ function Level1(camera) {
         if (this.map[i] === 0) {
             this.tiles[i] = null;
         } else {
-            this.tiles[i] = new Tile(i % Config.mapWidth, parseInt(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
+            this.tiles[i] = new Tile(i % Config.mapWidth, Math.floor(i / Config.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
         }
         this.enemies[i] = null;
     }
