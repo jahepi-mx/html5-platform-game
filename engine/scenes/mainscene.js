@@ -15,6 +15,7 @@ function MainScene(context, canvas, callback) {
 
 MainScene.prototype.onLoadAssets = function() {
     Atlas.loadAll(this.onLoadAtlas.bind(this));
+    Assets.the_hero.play();
 };
 
 MainScene.prototype.onLoadAtlas = function() {
@@ -42,12 +43,23 @@ MainScene.prototype.update = function(deltatime) {
     
     if (!this.isLoading) {
         if (this.mouseX >= x && this.mouseX <= x + width 
-                && this.mouseY >= y && this.mouseY <= y + height) {
-            context.drawImage(Assets.guiAtlas, Atlas.gui.play1.x, Atlas.gui.play1.y, Atlas.gui.play1.width, Atlas.gui.play1.height, x, y, width, height);
+                && this.mouseY >= y && this.mouseY <= y + height) {          
+            this.context.font = "30px joystix";
+            this.context.fillStyle = "red";
+            this.context.textAlign = "center";
+            this.context.fillText("Play Game Demo", Config.worldWidth / 2, Config.worldHeight / 2);          
         } else  {
-            context.drawImage(Assets.guiAtlas, Atlas.gui.play2.x, Atlas.gui.play2.y, Atlas.gui.play2.width, Atlas.gui.play2.height, x, y, width, height);
+            this.context.font = "30px joystix";
+            this.context.fillStyle = "yellow";
+            this.context.textAlign = "center";
+            this.context.fillText("Play Game Demo", Config.worldWidth / 2, Config.worldHeight / 2);
         }
         
+        this.context.font = "15px joystix";
+        this.context.fillStyle = "white";
+        this.context.textAlign = "center";
+        this.context.fillText("The objetive of the game is to collect all the coins on each level", Config.worldWidth / 2, Config.worldHeight - 100);
+            
         if (this.isClicked && this.mouseX <= x + width 
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
@@ -57,7 +69,7 @@ MainScene.prototype.update = function(deltatime) {
             this.isClicked = false;
         }
     } else {
-        this.context.font = "30px Comic Sans MS";
+        this.context.font = "30px joystix";
         this.context.fillStyle = "white";
         this.context.textAlign = "center";
         this.context.fillText("Loading...", Config.worldWidth / 2, Config.worldHeight / 2);

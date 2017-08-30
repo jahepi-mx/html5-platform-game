@@ -9,6 +9,12 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+        @font-face {
+            font-family: 'joystix';
+            src: url('assets/fonts/joystix.ttf');
+        }
+        </style>
         <script src="engine/config/config.js"></script>
         <script src="engine/levels/level1.js"></script>
         <script src="engine/entities/tile.js"></script>
@@ -60,5 +66,6 @@ and open the template in the editor.
     </head>
     <body style="background-color: black">
         <canvas id="game" style="margin: 0 auto;"></canvas>
+        <span style="font-family: joystix; display: none">Hidden text just for loading font before canvas.</span>
     </body>
 </html>
