@@ -15,6 +15,9 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.collisionSteps = collisionSteps;
     this.isJumping = false;
     this.isShooting = false;
+    this.isOnLadder = false;
+    this.isUp = false;
+    this.isDown = false;
     this.shootingTime = 0;
     this.shootingTimeLimit = 30 / 60;
     this.direction = 1;
@@ -72,7 +75,10 @@ Hero.prototype.update = function(deltatime) {
         this.velocityX = -Math.abs(this.velocityX);
     } 
     this.velocityX *= this.friction;
-    this.velocityY += Config.gravity * deltatime;
+    
+    if (this.isOnLadder === false) {
+        this.velocityY += Config.gravity * deltatime;
+    }
 };
 
 Hero.prototype.updateX = function(deltatime) {
@@ -84,7 +90,7 @@ Hero.prototype.updateY = function(deltatime) {
 };
 
 Hero.prototype.jump = function() {
-    if (this.isDead) {
+    if (this.isDead || this.isOnLadder) {
         return;
     }
     if (!this.isJumping) {
@@ -129,6 +135,20 @@ Hero.prototype.top = function() {
 
 Hero.prototype.bottom = function() {
     return this.centerY + this.height;
+};
+
+Hero.prototype.moveUp = function(bool) {
+    this.isUp = bool;
+    if (this.isOnLadder) {
+        this.velocityY = bool ? -100 : 0;
+    }
+};
+
+Hero.prototype.moveDown = function(bool) {
+    this.isDown = bool;
+    if (this.isOnLadder) {
+        this.velocityY = bool ? 100 : 0;
+    }
 };
 
 Hero.prototype.moveRight = function(bool) {

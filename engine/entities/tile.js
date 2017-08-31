@@ -2,6 +2,7 @@
 Tile.WALL_TYPE = 1;
 Tile.PLATFORM_TYPE = 2;
 Tile.TEXTURE_TYPE = 4;
+Tile.LADDER_TYPE = 8;
 
 Tile.TYPE = [];
 Tile.TYPE[1] = {asset: "rock", type: Tile.WALL_TYPE};
@@ -39,6 +40,7 @@ Tile.TYPE[32] = {asset: "bottom_shadow_round_right", type: Tile.TEXTURE};
 Tile.TYPE[33] = {asset: "shadow_right", type: Tile.TEXTURE};
 Tile.TYPE[34] = {asset: "shadow_center", type: Tile.TEXTURE};
 Tile.TYPE[35] = {asset: "shadow_left", type: Tile.TEXTURE};
+Tile.TYPE[36] = {asset: "rock", type: Tile.LADDER_TYPE};
 
 function Tile(x, y, width, height, typeIndex, camera) {
     this.x = x * width;

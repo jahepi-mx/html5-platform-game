@@ -29,16 +29,20 @@ GameScene.prototype.onMouseClick = function(event) {
 
 GameScene.prototype.onKeyDown = function(e) {
     e = e || window.event;
-    if (e.keyCode === 38) this.controller.jump();
+    if (e.keyCode === 32) this.controller.jump();
     if (e.keyCode === 37) this.controller.moveLeft(true);
     if (e.keyCode === 39) this.controller.moveRight(true);
-    if (e.keyCode === 32) this.controller.shoot();
+    if (e.keyCode === 38) this.controller.moveUp(true);
+    if (e.keyCode === 40) this.controller.moveDown(true);
+    if (e.keyCode === 65) this.controller.shoot();
 };
 
 GameScene.prototype.onKeyUp = function(e) {
     e = e || window.event;
     if (e.keyCode === 37) this.controller.moveLeft(false);
     if (e.keyCode === 39) this.controller.moveRight(false);
+    if (e.keyCode === 38) this.controller.moveUp(false);
+    if (e.keyCode === 40) this.controller.moveDown(false);
 };
 
 GameScene.prototype.update = function(deltatime) {

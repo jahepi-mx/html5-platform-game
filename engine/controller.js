@@ -1,7 +1,7 @@
 function Controller() {
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
-    this.collisionPrecision = 10;
+    this.collisionPrecision = 7;
     var level1 = new Level1(this.camera);
     this.hero = new Hero(level1.startX, level1.startY, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
@@ -11,16 +11,40 @@ function Controller() {
 
 Controller.prototype.update = function(deltatime) {
     
+    // Ladder implementation, when the hero is nearby a ladder tile, he is able to climb it.
+    var currentX = Math.floor(Math.round((this.camera.x + this.hero.centerX) / Config.tileSize));
+    var currentY = Math.floor(Math.round((this.camera.y + this.hero.centerY) / Config.tileSize));
+    var foundOnLadder = false;
+    for (var v = 0; v < this.vectorMoves.length; v++) {
+        var tmpX = currentX + this.vectorMoves[v][0];
+        var tmpY = currentY + this.vectorMoves[v][1];
+        var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
+        if (tile !== null) {
+            if (tile.type === Tile.LADDER_TYPE && tile.collide(this.hero)) {
+                foundOnLadder = true;
+                if (!this.hero.isJumping && (this.hero.isUp || this.hero.isDown)) {
+                    this.hero.isOnLadder = true;
+                    break;
+                }
+            }
+        }
+    }
+    if (this.hero.isOnLadder && !foundOnLadder) {
+        this.hero.isOnLadder = false;
+    }
+    // End of ladder implementation
+    
     this.hero.update(deltatime);
     var platformOffset = 3;
+    
     // Hero collision detection
     for (var i = 0; i < this.collisionPrecision; i++) {
         var oldX = this.hero.x;
         var oldY = this.hero.y;
         this.hero.updateX(deltatime);
         this.camera.move(this.hero.x, this.hero.y);
-        var currentX = Math.floor(Math.round((this.camera.x + this.hero.centerX) / Config.tileSize));
-        var currentY = Math.floor(Math.round((this.camera.y + this.hero.centerY) / Config.tileSize));
+        currentX = Math.floor(Math.round((this.camera.x + this.hero.centerX) / Config.tileSize));
+        currentY = Math.floor(Math.round((this.camera.y + this.hero.centerY) / Config.tileSize));
         for (var v = 0; v < this.vectorMoves.length; v++) {
             var tmpX = currentX + this.vectorMoves[v][0];
             var tmpY = currentY + this.vectorMoves[v][1];
@@ -32,7 +56,7 @@ Controller.prototype.update = function(deltatime) {
                         this.camera.move(this.hero.x, this.hero.y);
                         break;
                     }
-                }
+                } 
             }
         }
         oldX = this.hero.x;
@@ -69,7 +93,7 @@ Controller.prototype.update = function(deltatime) {
             }
         }
     }
-
+    
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
             var enemy = this.getEnemy(y * Config.mapWidth + x);
@@ -155,6 +179,14 @@ Controller.prototype.getMaxY = function() {
 
 Controller.prototype.jump = function() {
     this.hero.jump();
+};
+
+Controller.prototype.moveUp = function(bool) {
+    this.hero.moveUp(bool);
+};
+
+Controller.prototype.moveDown = function(bool) {
+    this.hero.moveDown(bool);
 };
 
 Controller.prototype.moveRight = function(bool) {
