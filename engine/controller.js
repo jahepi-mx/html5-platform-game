@@ -2,11 +2,11 @@ function Controller() {
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
     this.collisionPrecision = 7;
-    var level1 = new Level1(this.camera);
-    this.hero = new Hero(level1.startX, level1.startY, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
+    this.currentLevel = new Level1(this.camera);
+    this.hero = new Hero(this.currentLevel.startX, this.currentLevel.startY, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.camera.move(this.hero.x, this.hero.y);
-    this.tiles = level1.tiles;
-    this.enemies = level1.enemies;
+    this.tiles = this.currentLevel.tiles;
+    this.enemies = this.currentLevel.enemies;
 }
 
 Controller.prototype.update = function(deltatime) {
@@ -18,7 +18,7 @@ Controller.prototype.update = function(deltatime) {
     for (var v = 0; v < this.vectorMoves.length; v++) {
         var tmpX = currentX + this.vectorMoves[v][0];
         var tmpY = currentY + this.vectorMoves[v][1];
-        var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
+        var tile = this.getTile(tmpY * this.currentLevel.mapWidth + tmpX);
         if (tile !== null) {
             if (tile.type === Tile.LADDER_TYPE && tile.collide(this.hero)) {
                 foundOnLadder = true;
@@ -48,7 +48,7 @@ Controller.prototype.update = function(deltatime) {
         for (var v = 0; v < this.vectorMoves.length; v++) {
             var tmpX = currentX + this.vectorMoves[v][0];
             var tmpY = currentY + this.vectorMoves[v][1];
-            var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
+            var tile = this.getTile(tmpY * this.currentLevel.mapWidth + tmpX);
             if (tile !== null) {
                if (tile.type === Tile.WALL_TYPE) { 
                     if (tile.collide(this.hero)) {
@@ -66,7 +66,7 @@ Controller.prototype.update = function(deltatime) {
         for (var v = 0; v < this.vectorMoves.length; v++) {
             var tmpX = currentX + this.vectorMoves[v][0];
             var tmpY = currentY + this.vectorMoves[v][1];
-            var tile = this.getTile(tmpY * Config.mapWidth + tmpX);
+            var tile = this.getTile(tmpY * this.currentLevel.mapWidth + tmpX);
             if (tile !== null) {
                if (tile.type === Tile.WALL_TYPE){ 
                     if (tile.collide(this.hero)) {
@@ -96,7 +96,7 @@ Controller.prototype.update = function(deltatime) {
     
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
-            var enemy = this.getEnemy(y * Config.mapWidth + x);
+            var enemy = this.getEnemy(y * this.currentLevel.mapWidth + x);
             if (enemy !== null) {
                 enemy.update(deltatime);
                 this.hero.collide(enemy);
@@ -115,10 +115,10 @@ Controller.prototype.update = function(deltatime) {
                     }
                 }
                 if (enemy.isDisposable) {
-                    this.enemies[y * Config.mapWidth + x] = null;
+                    this.enemies[y * this.currentLevel.mapWidth + x] = null;
                 } 
             }
-            var tile = this.getTile(y * Config.mapWidth + x);
+            var tile = this.getTile(y * this.currentLevel.mapWidth + x);
             if (tile !== null) {
                 
                 if (tile.type === Tile.WALL_TYPE) {
@@ -129,7 +129,7 @@ Controller.prototype.update = function(deltatime) {
                     // Verify if any enemy blast collide with a tile
                     for (var y2 = this.getMinY(); y2 <= this.getMaxY(); y2++) {
                         for (var x2 = this.getMinX(); x2 <= this.getMaxX(); x2++) {
-                            var enemy2 = this.getEnemy(y2 * Config.mapWidth + x2);
+                            var enemy2 = this.getEnemy(y2 * this.currentLevel.mapWidth + x2);
                             if (enemy2 instanceof GiantFatEnemy) {
                                 for (var i = 0; i < enemy2.blasts.length; i++) {
                                     enemy2.blasts[i].collide(tile);
