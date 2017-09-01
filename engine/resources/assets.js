@@ -11,7 +11,7 @@ Assets.srcs = [
 Assets.keys = [
     "tilesAtlas", 
     "heroAtlas", 
-    "enemiesAtlas", 
+    "enemiesAtlas2", 
     "enemiesAtlas",
     "guiAtlas"
 ];

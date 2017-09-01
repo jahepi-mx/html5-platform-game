@@ -1,0 +1,92 @@
+// Static class members
+BeetleEnemy.VERTICAL = 1;
+BeetleEnemy.HORIZONTAL = 2;
+
+function BeetleEnemy(x, y, width, height, type, velocity, maxDistance, camera, direction) {
+    this.camera = camera;
+    this.width = width;
+    this.height = height;
+    this.type = type;
+    this.isDisposable = false;
+    
+    this.animation = new Animation(3, 2);
+    
+    this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
+    if (this.type === BeetleEnemy.VERTICAL) {
+        this.y = y * Config.tileSize + (Config.tileSize - this.height) / 2;
+    }
+    if (this.type === BeetleEnemy.HORIZONTAL) {
+        this.y = y * Config.tileSize + (Config.tileSize - this.height);
+    }
+    this.maxDistance = maxDistance;
+    this.velocity = velocity;
+    this.traveled = 0;
+    this.direction = direction;
+    if (this.direction === 1) {
+        this.traveled = this.maxDistance;
+    }
+}
+
+BeetleEnemy.prototype.draw = function(context) {
+    if (this.type === BeetleEnemy.VERTICAL) {
+        if (this.direction === -1) {
+            var name = "beetle_up" + (this.animation.getFrame() + 1);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
+        } else {
+            var name = "beetle_down" + (this.animation.getFrame() + 1);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
+        }
+    }
+    if (this.type === BeetleEnemy.HORIZONTAL) {
+        if (this.direction === -1) {
+            var name = "beetle_left" + (this.animation.getFrame() + 1);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+        } else {
+            var name = "beetle_right" + (this.animation.getFrame() + 1);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+        }
+    }
+};
+
+BeetleEnemy.prototype.update = function(deltatime) {
+    this.animation.update(deltatime);
+    if (this.direction === -1) {
+        this.traveled += this.velocity * deltatime;
+        if (this.traveled >= this.maxDistance) {
+            this.direction = 1;
+        }
+    } else {
+        this.traveled -= this.velocity * deltatime;
+        if (this.traveled <= 0) {
+            this.direction = -1;
+        }
+    }
+};
+
+BeetleEnemy.prototype.left = function() {
+    if (this.type === BeetleEnemy.VERTICAL) {
+        return this.x - this.camera.x;
+    }
+    return this.x - this.traveled - this.camera.x;
+};
+
+BeetleEnemy.prototype.right = function() {
+    if (this.type === BeetleEnemy.VERTICAL) {
+        return (this.x + this.width) - this.camera.x;
+    }
+    return (this.x + this.width) - (this.traveled - this.camera.x);
+};
+
+BeetleEnemy.prototype.top = function() {
+    if (this.type === BeetleEnemy.VERTICAL) {
+        return this.y - this.traveled - this.camera.y;
+    }
+    return this.y - this.camera.y;
+};
+
+BeetleEnemy.prototype.bottom = function() {
+    if (this.type === BeetleEnemy.VERTICAL) {
+        return (this.y + this.height) - (this.traveled - this.camera.y);
+    }
+    return (this.y + this.height) - this.camera.y;
+};

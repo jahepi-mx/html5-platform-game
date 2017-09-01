@@ -17,9 +17,9 @@ function GiantFatEnemy(x, y, width, height, health, camera) {
     this.shootInterval = 8;
     
     this.idleAnimation = new Animation(7, 1);
-    this.shootAnimation = new Animation(3, 2);
-    this.deadAnimation = new Animation(9, 2);
-    this.damageAnimation = new Animation(4, 2);
+    this.shootAnimation = new Animation(8, 2);
+    this.deadAnimation = new Animation(6, 1);
+    this.damageAnimation = new Animation(5, 2);
     this.damageAnimation.stopAtSequenceNumber(1, this.onStopDamageAnimation.bind(this));
     this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
     this.shootAnimation.stopAtSequenceNumber(1, this.onStopShootAnimation.bind(this));
@@ -88,22 +88,22 @@ GiantFatEnemy.prototype.update = function(deltatime) {
 GiantFatEnemy.prototype.draw = function(context) {
     var key = "";
     if (this.isDamage && !this.damageAnimation.isStopped()) {
-        key = "boss1_damage" + (this.damageAnimation.getFrame() + 1);
+        key = "giant_hit" + (this.damageAnimation.getFrame() + 1);
     } else if (this.isDead) {
-        key = "explosion" + (this.deadAnimation.getFrame() + 1);
+        key = "explo_" + (this.deadAnimation.getFrame() + 1);
     }  else if (this.isShooting) {
-        key = "boss1_hit" + (this.shootAnimation.getFrame() + 1);
+        key = "giant_attack" + (this.shootAnimation.getFrame() + 1);
     } else {
-        key = "boss1_idle" + (this.idleAnimation.getFrame() + 1);
+        key = "giant_idle" + (this.idleAnimation.getFrame() + 1);
     }
     if (key !== "") {
         if (this.direction === -1) {
             context.save();
             context.scale(this.direction, 1);
-            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, - (this.x - this.camera.x) - this.width, this.y - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, - (this.x - this.camera.x) - this.width, this.y - this.camera.y, this.width, this.height);
             context.restore();
         } else {
-            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
         }
     }
     

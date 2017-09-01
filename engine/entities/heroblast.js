@@ -45,11 +45,11 @@ HeroBlast.prototype.draw = function(context) {
         var y = this.y - (this.camera.y - this.cameraOrigY);
         var x = this.x - this.traveledX - (this.camera.x - this.cameraOrigX);
         if (this.collided) {
-            var key = "blast_explosion" + (this.blastExplosionAnimation.getFrame() + 1);
-            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, x, y, this.width, this.height); 
+            var key = "explo_" + (this.blastExplosionAnimation.getFrame() + 1);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, x, y, this.width, this.height); 
         } else {
-            var key = "blast" + (this.blastAnimation.getFrame() + 1);
-            context.drawImage(Assets.heroAtlas, Atlas.hero[key].x, Atlas.hero[key].y, Atlas.hero[key].width, Atlas.hero[key].height, x, y, this.width, this.height);
+            var key = "spin_" + (this.blastAnimation.getFrame() + 1);
+            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, x, y, this.width, this.height);
         }
     }
 };

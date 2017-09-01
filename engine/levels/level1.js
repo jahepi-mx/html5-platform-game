@@ -38,8 +38,8 @@ function Level1(camera) {
     this.enemies[6 * this.mapWidth + 18] = new LavaEnemy(18, 6, this.camera);
     this.enemies[6 * this.mapWidth + 20] = new LavaEnemy(20, 6, this.camera);
     this.enemies[6 * this.mapWidth + 38] = new StingEnemy(38, 6, this.camera);
-    this.enemies[4 * this.mapWidth + 32] = new BlockEnemy(32, 4, 50, 50, BlockEnemy.HORIZONTAL, 100, 310, this.camera, 1);
-    this.enemies[5 * this.mapWidth + 41] = new BlockEnemy(41, 5, 50, 50, BlockEnemy.VERTICAL, 50, 250, this.camera, -1);
+    this.enemies[4 * this.mapWidth + 32] = new BeetleEnemy(32, 4, 80, 80, BeetleEnemy.HORIZONTAL, 100, 310, this.camera, 1);
+    this.enemies[5 * this.mapWidth + 41] = new BeetleEnemy(41, 5, 80, 80, BeetleEnemy.VERTICAL, 50, 250, this.camera, -1);
     this.enemies[5 * this.mapWidth + 49] = new GiantFatEnemy(49, 5, 70 * 2, 70, 1, this.camera);
     this.enemies[2 * this.mapWidth + 63] = new GiantFatEnemy(63, 2, 90 * 2, 90, 2, this.camera);
     this.enemies[5 * this.mapWidth + 72] = new GiantFatEnemy(72, 5, 200 * 2, 200, 20, this.camera);
