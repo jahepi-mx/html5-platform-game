@@ -20,7 +20,7 @@ Controller.prototype.update = function(deltatime) {
         var tmpY = currentY + this.vectorMoves[v][1];
         var tile = this.getTile(tmpY * this.currentLevel.mapWidth + tmpX);
         if (tile !== null) {
-            if (tile.type === Tile.LADDER_TYPE && tile.collide(this.hero)) {
+            if ((tile.type === Tile.LADDER_TYPE || tile.type === Tile.LADDER_TOP_TYPE) && tile.collide(this.hero)) {
                 foundOnLadder = true;
                 if (!this.hero.isJumping && (this.hero.isUp || this.hero.isDown)) {
                     this.hero.isOnLadder = true;
@@ -76,8 +76,11 @@ Controller.prototype.update = function(deltatime) {
                         break;
                     }
                 }
-                // Platform collision
-                if (tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY >= 0 && this.hero.bottom() > tile.top() && this.hero.bottom() < tile.top() + platformOffset) {
+                // Platform collision condition
+                var isPlatformCollision = tile.type === Tile.PLATFORM_TYPE && this.hero.velocityY >= 0 && this.hero.bottom() > tile.top() && this.hero.bottom() < tile.top() + platformOffset;
+                var isLadderTopCollision = tile.type === Tile.LADDER_TOP_TYPE && !this.hero.isDown && !this.hero.isOnLadder && this.hero.velocityY >= 0 && this.hero.bottom() > tile.top() && this.hero.bottom() < tile.top() + platformOffset;
+                
+                if (isPlatformCollision || isLadderTopCollision) {
                     if (this.hero.right() >= tile.left() && this.hero.right() <= tile.right()) {
                         this.hero.y = oldY;
                         this.camera.move(this.hero.x, this.hero.y);
