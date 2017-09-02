@@ -104,6 +104,7 @@ Controller.prototype.update = function(deltatime) {
             if (coin !== null) {
                 coin.update(deltatime);
                 if (coin.collide(this.hero)) {
+                    coin.playSound();
                     this.coins[y * this.currentLevel.mapWidth + x] = null;
                     this.currentLevel.currentNumberOfCoins++;
                 }

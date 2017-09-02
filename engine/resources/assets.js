@@ -17,11 +17,13 @@ Assets.keys = [
 Assets.audio = {};
 
 Assets.audio.srcs = [
-    "assets/audio/the_hero.ogg", 
+    "assets/audio/the_hero.ogg",
+    "assets/audio/coin.mp3",
 ];
 
 Assets.audio.keys = [
     "the_hero", 
+    "coin_sound",
 ];
 
 Assets.callback = null;
