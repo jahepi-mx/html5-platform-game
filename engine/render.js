@@ -4,8 +4,16 @@ function Render(context, canvas, controller) {
     this.canvas = canvas;
 }
 
-Render.prototype.isFinish = function() {
-    return this.controller.isFinish();
+Render.prototype.isHeroDead = function() {
+    return this.controller.isHeroDead();
+};
+
+Render.prototype.isCurrentLevelFinish = function() {
+    return this.controller.isCurrentLevelFinish();
+};
+
+Render.prototype.playNextLevel = function() {
+    return this.controller.initNextLevel();
 };
 
 Render.prototype.update = function(deltatime) {

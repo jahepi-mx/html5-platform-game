@@ -49,7 +49,7 @@ GameScene.prototype.update = function(deltatime) {
     
     this.render.update(deltatime);
     
-    if (this.render.isFinish()) {
+    if (this.render.isHeroDead()) {
         
         var width = 252;
         var height = 100;
@@ -65,11 +65,11 @@ GameScene.prototype.update = function(deltatime) {
         
         if (this.isClicked && this.mouseX <= x + width 
                 && this.mouseY >= y && this.mouseY <= y + height) {
-            this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
-            this.canvas.removeEventListener("click", this.onMouseClickRef);
-            document.onkeydown = null;
-            document.onkeyup = null;
-            this.callback("game");
+            //this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
+            //this.canvas.removeEventListener("click", this.onMouseClickRef);
+            //document.onkeydown = null;
+            //document.onkeyup = null;
+            this.controller.initLevel();
         } else {
             this.isClicked = false;
         }

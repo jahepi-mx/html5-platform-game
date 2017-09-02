@@ -1,5 +1,8 @@
-function Level1(camera) {
-    
+function Level1() {
+}
+
+Level1.prototype.init = function(camera) {
+    this.levelName = "Level 1: Forgotten Forest";
     this.mapWidth = 94;
     this.mapHeight = 11;
     this.startX = Config.tileSize * 1.3;
@@ -55,4 +58,4 @@ function Level1(camera) {
     
     this.levelSound.loop = true;
     this.levelSound.play();
-}
+};

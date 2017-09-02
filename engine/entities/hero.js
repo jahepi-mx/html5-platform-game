@@ -228,3 +228,12 @@ Hero.prototype.draw = function(context) {
         }
     }    
 };
+
+Hero.prototype.resetState = function() {
+    this.isDead = false;
+    this.isJumping = false;
+    this.isOnLadder = false;
+    this.isDown = false;
+    this.isUp = false;
+    this.isShooting = false;
+};

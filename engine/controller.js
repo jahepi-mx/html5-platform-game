@@ -2,9 +2,9 @@ function Controller() {
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
     this.collisionPrecision = 7;
-    this.currentLevel = new Level1(this.camera);
-    this.hero = new Hero(this.currentLevel.startX, this.currentLevel.startY, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
-    this.camera.move(this.hero.x, this.hero.y);
+    this.levelManager = new LevelManager();
+    this.hero = new Hero(0, 0, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
+    this.initLevel();
     this.tiles = this.currentLevel.tiles;
     this.enemies = this.currentLevel.enemies;
     this.coins = this.currentLevel.coins;
@@ -221,6 +221,24 @@ Controller.prototype.shoot = function() {
     this.hero.shoot();
 };
 
-Controller.prototype.isFinish = function() {
+Controller.prototype.isHeroDead = function() {
     return this.hero.isDead;
+};
+
+Controller.prototype.isCurrentLevelFinish = function() {
+    return this.currentLevel.currentNumberOfCoins === this.currentLevel.totalNumberOfCoins;
+};
+
+Controller.prototype.nextLevel = function() {
+    this.levelManager.nextLevel();
+    this.initLevel();
+};
+
+Controller.prototype.initLevel = function() {
+    this.currentLevel = this.levelManager.getCurrentLevel();
+    this.currentLevel.init(this.camera);
+    this.hero.x = this.currentLevel.startX;
+    this.hero.y = this.currentLevel.startY;
+    this.camera.move(this.hero.x, this.hero.y);
+    this.hero.resetState();
 };
