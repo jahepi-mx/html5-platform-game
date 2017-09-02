@@ -45,10 +45,10 @@ EnemyBlast.prototype.draw = function(context) {
     if (!this.isDisposable) {
         if (this.collided) {
             var key = "explo_" + (this.blastExplosionAnimation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height); 
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height); 
         } else {
             var key = "spin_" + (this.blastAnimation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
         }
     }
 };

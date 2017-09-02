@@ -7,6 +7,7 @@ function Level1(camera) {
     this.camera = camera;
     this.tiles = [];
     this.enemies = [];
+    this.coins = [];
     
     this.map = [
         15,15,15,15,15,15,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,16,15,15,15,15,15,15,
@@ -29,7 +30,12 @@ function Level1(camera) {
             this.tiles[i] = new Tile(i % this.mapWidth, Math.floor(i / this.mapWidth), Config.tileSize, Config.tileSize, this.map[i], this.camera);
         }
         this.enemies[i] = null;
+        this.coins[i] = null;
     }
+    
+    this.coins[1 * this.mapWidth + 9] = new Coin(9, 1, this.camera);
+    this.coins[2 * this.mapWidth + 9] = new Coin(9, 2, this.camera);
+    
     this.enemies[6 * this.mapWidth + 12] = new LavaEnemy(12, 6, this.camera);
     this.enemies[6 * this.mapWidth + 47] = new LavaEnemy(47, 6, this.camera);
     this.enemies[6 * this.mapWidth + 48] = new LavaEnemy(48, 6, this.camera);
@@ -38,8 +44,8 @@ function Level1(camera) {
     this.enemies[6 * this.mapWidth + 18] = new LavaEnemy(18, 6, this.camera);
     this.enemies[6 * this.mapWidth + 20] = new LavaEnemy(20, 6, this.camera);
     this.enemies[6 * this.mapWidth + 38] = new StingEnemy(38, 6, this.camera);
-    this.enemies[4 * this.mapWidth + 32] = new BeetleEnemy(32, 4, 80, 80, BeetleEnemy.HORIZONTAL, 100, 310, this.camera, 1);
-    this.enemies[5 * this.mapWidth + 41] = new BeetleEnemy(41, 5, 80, 80, BeetleEnemy.VERTICAL, 50, 250, this.camera, -1);
+    this.enemies[4 * this.mapWidth + 32] = new BeetleEnemy(32, 4, 50, 60, BeetleEnemy.HORIZONTAL, 100, 310, this.camera, 1);
+    this.enemies[5 * this.mapWidth + 41] = new BeetleEnemy(41, 5, 60, 60, BeetleEnemy.VERTICAL, 50, 250, this.camera, -1);
     this.enemies[5 * this.mapWidth + 49] = new GiantFatEnemy(49, 5, 70 * 2, 70, 1, this.camera);
     this.enemies[2 * this.mapWidth + 63] = new GiantFatEnemy(63, 2, 90 * 2, 90, 2, this.camera);
     this.enemies[5 * this.mapWidth + 72] = new GiantFatEnemy(72, 5, 200 * 2, 200, 20, this.camera);

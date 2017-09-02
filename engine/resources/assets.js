@@ -4,14 +4,12 @@ Assets.srcs = [
     "assets/tiles/sprites.png", 
     "assets/hero/sprites.png", 
     "assets/enemies/sprites.png", 
-    "assets/enemies/sprites.old.png", 
     "assets/gui/sprites.png"
 ];
 
 Assets.keys = [
     "tilesAtlas", 
     "heroAtlas", 
-    "enemiesAtlas2", 
     "enemiesAtlas",
     "guiAtlas"
 ];

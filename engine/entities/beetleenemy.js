@@ -31,19 +31,19 @@ BeetleEnemy.prototype.draw = function(context) {
     if (this.type === BeetleEnemy.VERTICAL) {
         if (this.direction === -1) {
             var name = "beetle_up" + (this.animation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
         } else {
             var name = "beetle_down" + (this.animation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
         }
     }
     if (this.type === BeetleEnemy.HORIZONTAL) {
         if (this.direction === -1) {
             var name = "beetle_left" + (this.animation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
         } else {
             var name = "beetle_right" + (this.animation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas2, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
         }
     }
 };

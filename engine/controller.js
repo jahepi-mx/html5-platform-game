@@ -7,6 +7,7 @@ function Controller() {
     this.camera.move(this.hero.x, this.hero.y);
     this.tiles = this.currentLevel.tiles;
     this.enemies = this.currentLevel.enemies;
+    this.coins = this.currentLevel.coins;
 }
 
 Controller.prototype.update = function(deltatime) {
@@ -99,6 +100,10 @@ Controller.prototype.update = function(deltatime) {
     
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
         for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
+            var coin = this.getCoin(y * this.currentLevel.mapWidth + x);
+            if (coin !== null) {
+                coin.update(deltatime);
+            }
             var enemy = this.getEnemy(y * this.currentLevel.mapWidth + x);
             if (enemy !== null) {
                 enemy.update(deltatime);
@@ -156,6 +161,13 @@ Controller.prototype.getTile = function(index) {
 Controller.prototype.getEnemy = function(index) {
     if (index >= 0 && index < this.enemies.length && this.enemies[index] !== null) {
         return this.enemies[index];
+    }
+    return null;
+};
+
+Controller.prototype.getCoin = function(index) {
+    if (index >= 0 && index < this.coins.length && this.coins[index] !== null) {
+        return this.coins[index];
     }
     return null;
 };

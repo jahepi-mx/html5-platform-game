@@ -4,14 +4,12 @@ Atlas.xmls = [
     "assets/tiles/sprites.xml", 
     "assets/hero/sprites.xml", 
     "assets/enemies/sprites.xml",
-    "assets/enemies/sprites.old.xml", 
     "assets/gui/sprites.xml"
 ];
 
 Atlas.keys = [
     "tiles", 
     "hero", 
-    "enemies",
     "enemies", 
     "gui"
 ];

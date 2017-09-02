@@ -30,6 +30,10 @@ Render.prototype.update = function(deltatime) {
     
     for (var y = this.controller.getMinY(); y <= this.controller.getMaxY(); y++) {
         for (var x = this.controller.getMinX(); x <= this.controller.getMaxX(); x++) {
+            var coin = this.controller.getCoin(y * this.controller.currentLevel.mapWidth + x);
+            if (coin !== null) {
+                coin.draw(this.context);
+            }
             var enemy = this.controller.getEnemy(y * this.controller.currentLevel.mapWidth + x);
             if (enemy !== null) {
                 enemy.draw(this.context);
