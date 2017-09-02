@@ -15,7 +15,6 @@ function MainScene(context, canvas, callback) {
 
 MainScene.prototype.onLoadAssets = function() {
     Atlas.loadAll(this.onLoadAtlas.bind(this));
-    Assets.the_hero.play();
 };
 
 MainScene.prototype.onLoadAtlas = function() {

@@ -10,6 +10,7 @@ function Level1(camera) {
     this.coins = [];
     this.totalNumberOfCoins = 2;
     this.currentNumberOfCoins = 0;
+    this.levelSound = Assets.level1_music;
     
     this.map = [
         15,15,15,15,15,15,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,16,15,15,15,15,15,15,
@@ -51,4 +52,7 @@ function Level1(camera) {
     this.enemies[5 * this.mapWidth + 49] = new GiantFatEnemy(49, 5, 70 * 2, 70, 1, this.camera);
     this.enemies[2 * this.mapWidth + 63] = new GiantFatEnemy(63, 2, 90 * 2, 90, 2, this.camera);
     this.enemies[5 * this.mapWidth + 72] = new GiantFatEnemy(72, 5, 200 * 2, 200, 20, this.camera);
+    
+    this.levelSound.loop = true;
+    this.levelSound.play();
 }

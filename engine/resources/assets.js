@@ -17,13 +17,21 @@ Assets.keys = [
 Assets.audio = {};
 
 Assets.audio.srcs = [
-    "assets/audio/the_hero.ogg",
-    "assets/audio/coin.mp3",
+    "assets/audio/level1_music.mp3",
+    "assets/audio/coin_sound.mp3",
+    "assets/audio/enemy_laser_sound.mp3",
+    "assets/audio/hero_laser_sound.mp3",
+    "assets/audio/explosion_sound.mp3",
+    "assets/audio/jump_sound.mp3",
 ];
 
 Assets.audio.keys = [
-    "the_hero", 
+    "level1_music", 
     "coin_sound",
+    "enemy_laser_sound",
+    "hero_laser_sound",
+    "explosion_sound",
+    "jump_sound",
 ];
 
 Assets.callback = null;
