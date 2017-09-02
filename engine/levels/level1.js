@@ -1,7 +1,7 @@
 function Level1() {
 }
 
-Level1.prototype.init = function(camera) {
+Level1.prototype.setup = function(camera) {
     this.levelName = "Level 1: Forgotten Forest";
     this.mapWidth = 94;
     this.mapHeight = 11;
@@ -41,8 +41,9 @@ Level1.prototype.init = function(camera) {
     
     this.coins[1 * this.mapWidth + 9] = new Coin(9, 1, this.camera);
     this.coins[2 * this.mapWidth + 9] = new Coin(9, 2, this.camera);
-    
+    console.log(this.coins[1 * this.mapWidth + 9]);
     this.enemies[6 * this.mapWidth + 12] = new LavaEnemy(12, 6, this.camera);
+    this.enemies[5 * this.mapWidth + 8] = new GiantFatEnemy(8, 5, 70 * 2, 70, 1, this.camera);
     this.enemies[6 * this.mapWidth + 47] = new LavaEnemy(47, 6, this.camera);
     this.enemies[6 * this.mapWidth + 48] = new LavaEnemy(48, 6, this.camera);
     this.enemies[6 * this.mapWidth + 50] = new LavaEnemy(50, 6, this.camera);

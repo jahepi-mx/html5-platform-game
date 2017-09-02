@@ -5,9 +5,6 @@ function Controller() {
     this.levelManager = new LevelManager();
     this.hero = new Hero(0, 0, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.initLevel();
-    this.tiles = this.currentLevel.tiles;
-    this.enemies = this.currentLevel.enemies;
-    this.coins = this.currentLevel.coins;
 }
 
 Controller.prototype.update = function(deltatime) {
@@ -198,27 +195,27 @@ Controller.prototype.getMaxY = function() {
 };
 
 Controller.prototype.jump = function() {
-    this.hero.jump();
+    if (!this.isCurrentLevelFinish()) this.hero.jump();
 };
 
 Controller.prototype.moveUp = function(bool) {
-    this.hero.moveUp(bool);
+    if (!this.isCurrentLevelFinish()) this.hero.moveUp(bool);
 };
 
 Controller.prototype.moveDown = function(bool) {
-    this.hero.moveDown(bool);
+    if (!this.isCurrentLevelFinish()) this.hero.moveDown(bool);
 };
 
 Controller.prototype.moveRight = function(bool) {
-    this.hero.moveRight(bool);
+    if (!this.isCurrentLevelFinish()) this.hero.moveRight(bool);
 };
 
 Controller.prototype.moveLeft = function(bool) {
-    this.hero.moveLeft(bool);
+    if (!this.isCurrentLevelFinish()) this.hero.moveLeft(bool);
 };
 
 Controller.prototype.shoot = function() {
-    this.hero.shoot();
+    if (!this.isCurrentLevelFinish()) this.hero.shoot();
 };
 
 Controller.prototype.isHeroDead = function() {
@@ -236,7 +233,10 @@ Controller.prototype.nextLevel = function() {
 
 Controller.prototype.initLevel = function() {
     this.currentLevel = this.levelManager.getCurrentLevel();
-    this.currentLevel.init(this.camera);
+    this.currentLevel.setup(this.camera);
+    this.tiles = this.currentLevel.tiles;
+    this.enemies = this.currentLevel.enemies;
+    this.coins = this.currentLevel.coins;
     this.hero.x = this.currentLevel.startX;
     this.hero.y = this.currentLevel.startY;
     this.camera.move(this.hero.x, this.hero.y);

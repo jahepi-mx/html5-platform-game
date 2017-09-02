@@ -20,7 +20,9 @@ Render.prototype.update = function(deltatime) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.imageSmoothingEnabled = false;
     
-    this.controller.update(deltatime);
+    if (!this.controller.isCurrentLevelFinish()) {
+        this.controller.update(deltatime);
+    }
     
     this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.sky.x, Atlas.tiles.sky.y, Atlas.tiles.sky.width, Atlas.tiles.sky.height, 0, 0, this.canvas.width, this.canvas.height);
     this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.clouds.x, Atlas.tiles.clouds.y, Atlas.tiles.clouds.width, Atlas.tiles.clouds.height, 0, 0, this.canvas.width, this.canvas.height);

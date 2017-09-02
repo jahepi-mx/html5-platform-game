@@ -51,16 +51,20 @@ GameScene.prototype.update = function(deltatime) {
     
     if (this.render.isHeroDead()) {
         
-        var width = 252;
-        var height = 100;
-        var x = Config.worldWidth / 2 - (width / 2);
-        var y = Config.worldHeight / 2 - (height * 2);
+        var width = Config.worldWidth * 0.7;
+        var height = Config.worldHeight * 0.2;
+        var x = Config.worldWidth / 2 - width / 2;
+        var y = Config.worldHeight / 2 - height / 2;
     
         if (this.mouseX >= x && this.mouseX <= x + width 
                 && this.mouseY >= y && this.mouseY <= y + height) {
-            context.drawImage(Assets.guiAtlas, Atlas.gui.restart1.x, Atlas.gui.restart1.y, Atlas.gui.restart1.width, Atlas.gui.restart1.height, x, y, width, height);
+            this.context.font = "30px joystix";
+            this.context.fillStyle = "yellow";
+            this.context.fillText("You loose, try again?", Config.worldWidth / 2, Config.worldHeight / 2); 
         } else  {
-            context.drawImage(Assets.guiAtlas, Atlas.gui.restart2.x, Atlas.gui.restart2.y, Atlas.gui.restart2.width, Atlas.gui.restart2.height, x, y, width, height);
+            this.context.font = "30px joystix";
+            this.context.fillStyle = "red";
+            this.context.fillText("You loose, try again?", Config.worldWidth / 2, Config.worldHeight / 2);
         }
         
         if (this.isClicked && this.mouseX <= x + width 
@@ -69,7 +73,33 @@ GameScene.prototype.update = function(deltatime) {
             //this.canvas.removeEventListener("click", this.onMouseClickRef);
             //document.onkeydown = null;
             //document.onkeyup = null;
+            this.isClicked = false;
             this.controller.initLevel();
+        } else {
+            this.isClicked = false;
+        }
+    } else if (this.controller.isCurrentLevelFinish()) {
+        
+        var width = Config.worldWidth * 0.7;
+        var height = Config.worldHeight * 0.2;
+        var x = Config.worldWidth / 2 - width / 2;
+        var y = Config.worldHeight / 2 - height / 2;
+    
+        if (this.mouseX >= x && this.mouseX <= x + width 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.context.font = "20px joystix";
+            this.context.fillStyle = "white";
+            this.context.fillText("You win!, ready for the next level?", Config.worldWidth / 2, Config.worldHeight / 2); 
+        } else  {
+            this.context.font = "20px joystix";
+            this.context.fillStyle = "green";
+            this.context.fillText("You win!, ready for the next level?", Config.worldWidth / 2, Config.worldHeight / 2);
+        }
+        
+        if (this.isClicked && this.mouseX <= x + width 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.isClicked = false;
+            this.controller.nextLevel();
         } else {
             this.isClicked = false;
         }

@@ -22,7 +22,6 @@ MainScene.prototype.onLoadAtlas = function() {
 };
 
 MainScene.prototype.onMouseMove = function(event) {
-    console.log("moving");
     var rect = this.canvas.getBoundingClientRect();
     this.mouseX = event.clientX - rect.left;
     this.mouseY = event.clientY - rect.top;
@@ -35,8 +34,8 @@ MainScene.prototype.onMouseClick = function(event) {
 MainScene.prototype.update = function(deltatime) {
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    var width = 252;
-    var height = 100;
+    var width = Config.worldWidth * 0.7;
+    var height = Config.worldHeight * 0.2;
     var x = Config.worldWidth / 2 - (width / 2);
     var y = Config.worldHeight / 2 - (height / 2);
     

@@ -236,4 +236,8 @@ Hero.prototype.resetState = function() {
     this.isDown = false;
     this.isUp = false;
     this.isShooting = false;
+    this.deadAnimation.reset();
+    this.direction = 1;
+    this.velocityX = 0;
+    this.velocityY = 0;
 };
