@@ -103,6 +103,10 @@ Controller.prototype.update = function(deltatime) {
             var coin = this.getCoin(y * this.currentLevel.mapWidth + x);
             if (coin !== null) {
                 coin.update(deltatime);
+                if (coin.collide(this.hero)) {
+                    this.coins[y * this.currentLevel.mapWidth + x] = null;
+                    this.currentLevel.currentNumberOfCoins++;
+                }
             }
             var enemy = this.getEnemy(y * this.currentLevel.mapWidth + x);
             if (enemy !== null) {

@@ -2,8 +2,6 @@ function Render(context, canvas, controller) {
     this.context = context;
     this.controller = controller;
     this.canvas = canvas;
-    this.context.fillStyle = 'green';
-    this.context.font = "12px Arial";
 }
 
 Render.prototype.isFinish = function() {
@@ -40,7 +38,13 @@ Render.prototype.update = function(deltatime) {
             }
         }
     }
-
-    this.context.fillText("Fps: " + Math.floor(1 / deltatime), 25, 15);
+    
+    this.context.fillStyle = 'white';
+    this.context.font = "30px joystix";
+    this.context.fillText(this.controller.currentLevel.currentNumberOfCoins + "/" + this.controller.currentLevel.totalNumberOfCoins, 120, 50);
+    this.context.drawImage(Assets.tilesAtlas, Atlas.tiles["coin_01"].x, Atlas.tiles["coin_01"].y, Atlas.tiles["coin_01"].width, Atlas.tiles["coin_01"].height, 10, 10, 60, 60);
+    this.context.fillStyle = 'green';
+    this.context.font = "12px joystix";
+    this.context.fillText("Fps: " + Math.floor(1 / deltatime), Config.worldWidth - 50, 15);
     this.controller.hero.draw(this.context);
 };
