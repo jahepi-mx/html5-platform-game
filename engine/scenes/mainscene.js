@@ -11,6 +11,7 @@ function MainScene(context, canvas, callback) {
     this.onMouseClickRef = this.onMouseClick.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
     this.canvas.addEventListener("click", this.onMouseClickRef);
+    this.playText = "Play Game";
 }
 
 MainScene.prototype.onLoadAssets = function() {
@@ -43,22 +44,28 @@ MainScene.prototype.update = function(deltatime) {
         if (this.mouseX >= x && this.mouseX <= x + width 
                 && this.mouseY >= y && this.mouseY <= y + height) {          
             this.context.font = "30px joystix";
-            this.context.fillStyle = "red";
+            this.context.strokeStyle = 'red';
+            this.context.lineWidth = 3;
+            this.context.strokeText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillStyle = "white";
             this.context.textAlign = "center";
-            this.context.fillText("Play Game Demo", Config.worldWidth / 2, Config.worldHeight / 2);          
+            this.context.fillText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);          
         } else  {
             this.context.font = "30px joystix";
-            this.context.fillStyle = "yellow";
+            this.context.strokeStyle = 'white';
+            this.context.lineWidth = 3;
+            this.context.strokeText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillStyle = "red";
             this.context.textAlign = "center";
-            this.context.fillText("Play Game Demo", Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
         }
         
         this.context.font = "15px joystix";
-        this.context.fillStyle = "white";
+        this.context.fillStyle = "yellow";
         this.context.textAlign = "center";
         this.context.fillText("The objetive of the game is to collect all the coins on each level", Config.worldWidth / 2, Config.worldHeight - 100);
             
-        if (this.isClicked && this.mouseX <= x + width 
+        if (this.isClicked && this.mouseX <= x + width && this.mouseX >= x 
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
             this.canvas.removeEventListener("click", this.onMouseClickRef);

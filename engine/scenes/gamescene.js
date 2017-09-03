@@ -8,13 +8,18 @@ function GameScene(context, canvas, callback) {
     this.onKeyUpRef = this.onKeyUp.bind(this);
     document.onkeydown = this.onKeyDownRef;
     document.onkeyup = this.onKeyUpRef;
-    this.isClicked = false;
+    this.isMouseDown = false;
+    this.isKeyDown = false;
     this.mouseX = 0;
     this.mouseY = 0;
     this.onMouseMoveRef = this.onMouseMove.bind(this);
-    this.onMouseClickRef = this.onMouseClick.bind(this);
+    this.onMouseDownRef = this.onMouseDown.bind(this);
+    this.onMouseUpRef = this.onMouseUp.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
-    this.canvas.addEventListener("click", this.onMouseClickRef);
+    this.canvas.addEventListener("mousedown", this.onMouseDownRef);
+    this.canvas.addEventListener("mouseup", this.onMouseUpRef);
+    this.looseText = "You loose, try again?";
+    this.winText = "You win!, ready for the next level?";
 }
 
 GameScene.prototype.onMouseMove = function(event) {
@@ -23,12 +28,17 @@ GameScene.prototype.onMouseMove = function(event) {
     this.mouseY = event.clientY - rect.top;
 };
 
-GameScene.prototype.onMouseClick = function(event) {
-    this.isClicked = true;
+GameScene.prototype.onMouseDown = function(event) {
+    this.isMouseDown = true;
+};
+
+GameScene.prototype.onMouseUp = function(event) {
+    this.isMouseDown = false;
 };
 
 GameScene.prototype.onKeyDown = function(e) {
     e = e || window.event;
+    this.isKeyDown = true;
     if (e.keyCode === 32) this.controller.jump();
     if (e.keyCode === 37) this.controller.moveLeft(true);
     if (e.keyCode === 39) this.controller.moveRight(true);
@@ -39,6 +49,7 @@ GameScene.prototype.onKeyDown = function(e) {
 
 GameScene.prototype.onKeyUp = function(e) {
     e = e || window.event;
+    this.isKeyDown = false;
     if (e.keyCode === 37) this.controller.moveLeft(false);
     if (e.keyCode === 39) this.controller.moveRight(false);
     if (e.keyCode === 38) this.controller.moveUp(false);
@@ -59,24 +70,27 @@ GameScene.prototype.update = function(deltatime) {
         if (this.mouseX >= x && this.mouseX <= x + width 
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.context.font = "30px joystix";
-            this.context.fillStyle = "yellow";
-            this.context.fillText("You loose, try again?", Config.worldWidth / 2, Config.worldHeight / 2); 
+            this.context.strokeStyle = 'red';
+            this.context.lineWidth = 20;
+            this.context.strokeText(this.looseText, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillStyle = "white";
+            this.context.fillText(this.looseText, Config.worldWidth / 2, Config.worldHeight / 2); 
         } else  {
             this.context.font = "30px joystix";
+            this.context.strokeStyle = 'white';
+            this.context.lineWidth = 20;
+            this.context.strokeText(this.looseText, Config.worldWidth / 2, Config.worldHeight / 2);
             this.context.fillStyle = "red";
-            this.context.fillText("You loose, try again?", Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillText(this.looseText, Config.worldWidth / 2, Config.worldHeight / 2);
         }
         
-        if (this.isClicked && this.mouseX <= x + width 
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x
                 && this.mouseY >= y && this.mouseY <= y + height) {
             //this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
             //this.canvas.removeEventListener("click", this.onMouseClickRef);
             //document.onkeydown = null;
             //document.onkeyup = null;
-            this.isClicked = false;
             this.controller.initLevel();
-        } else {
-            this.isClicked = false;
         }
     } else if (this.controller.isCurrentLevelFinish()) {
         
@@ -85,23 +99,95 @@ GameScene.prototype.update = function(deltatime) {
         var x = Config.worldWidth / 2 - width / 2;
         var y = Config.worldHeight / 2 - height / 2;
     
-        if (this.mouseX >= x && this.mouseX <= x + width 
+        if (this.mouseX >= x && this.mouseX <= x + width && this.mouseX >= x
                 && this.mouseY >= y && this.mouseY <= y + height) {
-            this.context.font = "20px joystix";
+            this.context.font = "30px joystix";
+            this.context.strokeStyle = '#00E500';
+            this.context.lineWidth = 20;
+            this.context.strokeText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
             this.context.fillStyle = "white";
-            this.context.fillText("You win!, ready for the next level?", Config.worldWidth / 2, Config.worldHeight / 2); 
+            this.context.fillText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2); 
         } else  {
-            this.context.font = "20px joystix";
-            this.context.fillStyle = "green";
-            this.context.fillText("You win!, ready for the next level?", Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.font = "30px joystix";
+            this.context.strokeStyle = 'white';
+            this.context.lineWidth = 20;
+            this.context.strokeText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillStyle = '#00E500';
+            this.context.fillText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
         }
         
-        if (this.isClicked && this.mouseX <= x + width 
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
                 && this.mouseY >= y && this.mouseY <= y + height) {
-            this.isClicked = false;
             this.controller.nextLevel();
+        }
+    } else {
+        
+        var width = 80;
+        var height = 80;
+        var x = Config.worldWidth - 180;
+        var y = Config.worldHeight - 90;
+        context.drawImage(Assets.guiAtlas, Atlas.gui["a_2"].x, Atlas.gui["a_2"].y, Atlas.gui["a_2"].width, Atlas.gui["a_2"].height, x, y, width, height);
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.controller.shoot();
+        }
+        
+        var width = 80;
+        var height = 80;
+        var x = Config.worldWidth - 90;
+        var y = Config.worldHeight - 90;
+        context.drawImage(Assets.guiAtlas, Atlas.gui["b_2"].x, Atlas.gui["b_2"].y, Atlas.gui["b_2"].width, Atlas.gui["b_2"].height, x, y, width, height);
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.controller.jump();
+        }
+        
+        var width = 60;
+        var height = 60;
+        var x = 10;
+        var y = Config.worldHeight - 110;
+        context.drawImage(Assets.guiAtlas, Atlas.gui["left_2"].x, Atlas.gui["left_2"].y, Atlas.gui["left_2"].width, Atlas.gui["left_2"].height, x, y, width, height);
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.controller.moveLeft(true);
         } else {
-            this.isClicked = false;
+            if (!this.isKeyDown) this.controller.moveLeft(false);
+        }
+        
+        var width = 60;
+        var height = 60;
+        var x = 100;
+        var y = Config.worldHeight - 110;
+        context.drawImage(Assets.guiAtlas, Atlas.gui["right_2"].x, Atlas.gui["right_2"].y, Atlas.gui["right_2"].width, Atlas.gui["right_2"].height, x, y, width, height);
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.controller.moveRight(true);
+        } else {
+            if (!this.isKeyDown) this.controller.moveRight(false);
+        }
+        
+        var width = 60;
+        var height = 60;
+        var x = 55;
+        var y = Config.worldHeight - 70;
+        context.drawImage(Assets.guiAtlas, Atlas.gui["down_2"].x, Atlas.gui["down_2"].y, Atlas.gui["down_2"].width, Atlas.gui["down_2"].height, x, y, width, height);
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.controller.moveDown(true);
+        } else {
+            if (!this.isKeyDown) this.controller.moveDown(false);
+        }
+        
+        var width = 60;
+        var height = 60;
+        var x = 55;
+        var y = Config.worldHeight - 150;
+        context.drawImage(Assets.guiAtlas, Atlas.gui["up_2"].x, Atlas.gui["up_2"].y, Atlas.gui["up_2"].width, Atlas.gui["up_2"].height, x, y, width, height);
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                && this.mouseY >= y && this.mouseY <= y + height) {
+            this.controller.moveUp(true);
+        } else {
+            if (!this.isKeyDown) this.controller.moveUp(false);
         }
     }
 };
