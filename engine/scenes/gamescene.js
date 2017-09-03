@@ -9,7 +9,10 @@ function GameScene(context, canvas, callback) {
     document.onkeydown = this.onKeyDownRef;
     document.onkeyup = this.onKeyUpRef;
     this.isMouseDown = false;
-    this.isKeyDown = false;
+    this.isKeyLeftDown = false;
+    this.isKeyRightDown = false;
+    this.isKeyUpDown = false;
+    this.isKeyDownDown = false;
     this.mouseX = 0;
     this.mouseY = 0;
     this.onMouseMoveRef = this.onMouseMove.bind(this);
@@ -38,22 +41,44 @@ GameScene.prototype.onMouseUp = function(event) {
 
 GameScene.prototype.onKeyDown = function(e) {
     e = e || window.event;
-    this.isKeyDown = true;
     if (e.keyCode === 32) this.controller.jump();
-    if (e.keyCode === 37) this.controller.moveLeft(true);
-    if (e.keyCode === 39) this.controller.moveRight(true);
-    if (e.keyCode === 38) this.controller.moveUp(true);
-    if (e.keyCode === 40) this.controller.moveDown(true);
+    if (e.keyCode === 37) {
+        this.isKeyLeftDown = true;
+        this.controller.moveLeft(true);
+    }
+    if (e.keyCode === 39) {
+        this.isKeyRightDown = true;
+        this.controller.moveRight(true);
+    }
+    if (e.keyCode === 38) {
+        this.isKeyUpDown = true;
+        this.controller.moveUp(true);
+    }
+    if (e.keyCode === 40) {
+        this.isKeyDownDown = true;
+        this.controller.moveDown(true);
+    }
     if (e.keyCode === 65) this.controller.shoot();
 };
 
 GameScene.prototype.onKeyUp = function(e) {
     e = e || window.event;
-    this.isKeyDown = false;
-    if (e.keyCode === 37) this.controller.moveLeft(false);
-    if (e.keyCode === 39) this.controller.moveRight(false);
-    if (e.keyCode === 38) this.controller.moveUp(false);
-    if (e.keyCode === 40) this.controller.moveDown(false);
+    if (e.keyCode === 37) {
+        this.isKeyLeftDown = false;
+        this.controller.moveLeft(false);
+    }
+    if (e.keyCode === 39) {
+        this.isKeyRightDown = false;
+        this.controller.moveRight(false);
+    }
+    if (e.keyCode === 38) {
+        this.isKeyUpDown = false;
+        this.controller.moveUp(false);
+    }
+    if (e.keyCode === 40) {
+        this.isKeyDownDown = false;
+        this.controller.moveDown(false);
+    }
 };
 
 GameScene.prototype.update = function(deltatime) {
@@ -92,7 +117,7 @@ GameScene.prototype.update = function(deltatime) {
             //document.onkeyup = null;
             this.controller.initLevel();
         }
-    } else if (this.controller.isCurrentLevelFinish()) {
+    } else if (this.render.isCurrentLevelFinish()) {
         
         var width = Config.worldWidth * 0.7;
         var height = Config.worldHeight * 0.2;
@@ -151,7 +176,7 @@ GameScene.prototype.update = function(deltatime) {
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.controller.moveLeft(true);
         } else {
-            if (!this.isKeyDown) this.controller.moveLeft(false);
+            if (!this.isKeyDown()) this.controller.moveLeft(false);
         }
         
         var width = 60;
@@ -163,7 +188,7 @@ GameScene.prototype.update = function(deltatime) {
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.controller.moveRight(true);
         } else {
-            if (!this.isKeyDown) this.controller.moveRight(false);
+            if (!this.isKeyDown()) this.controller.moveRight(false);
         }
         
         var width = 60;
@@ -175,7 +200,7 @@ GameScene.prototype.update = function(deltatime) {
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.controller.moveDown(true);
         } else {
-            if (!this.isKeyDown) this.controller.moveDown(false);
+            if (!this.isKeyDown()) this.controller.moveDown(false);
         }
         
         var width = 60;
@@ -187,7 +212,11 @@ GameScene.prototype.update = function(deltatime) {
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.controller.moveUp(true);
         } else {
-            if (!this.isKeyDown) this.controller.moveUp(false);
+            if (!this.isKeyDown()) this.controller.moveUp(false);
         }
     }
+};
+
+GameScene.prototype.isKeyDown = function() {
+    return this.isKeyLeftDown || this.isKeyRightDown || this.isKeyUpDown || this.isKeyDownDown;
 };
