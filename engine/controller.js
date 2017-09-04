@@ -226,6 +226,10 @@ Controller.prototype.isCurrentLevelFinish = function() {
     return this.currentLevel.currentNumberOfCoins === this.currentLevel.totalNumberOfCoins;
 };
 
+Controller.prototype.isLastLevel = function() {
+    return this.levelManager.isLastLevel();
+};
+
 Controller.prototype.nextLevel = function() {
     this.levelManager.nextLevel();
     this.initLevel();

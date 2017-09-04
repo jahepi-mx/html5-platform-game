@@ -1,4 +1,5 @@
 Atlas = {};
+Atlas.loaded = false;
 
 Atlas.xmls = [
     "assets/tiles/sprites.xml", 
@@ -39,6 +40,7 @@ Atlas.load = function(index, callback) {
            }
         }
         if (index + 1 >= Atlas.xmls.length) {
+            Atlas.loaded = true;
             if (callback !== null) {
                 callback();
             }

@@ -16,6 +16,10 @@ Render.prototype.playNextLevel = function() {
     return this.controller.initNextLevel();
 };
 
+Render.prototype.isLastLevel = function() {
+    return this.controller.isLastLevel();
+};
+
 Render.prototype.update = function(deltatime) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.imageSmoothingEnabled = false;

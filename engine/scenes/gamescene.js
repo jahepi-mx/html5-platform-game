@@ -23,6 +23,7 @@ function GameScene(context, canvas, callback) {
     this.canvas.addEventListener("mouseup", this.onMouseUpRef);
     this.looseText = "You loose, try again?";
     this.winText = "You win!, ready for the next level?";
+    this.lastLevelText = "You have the courage to made it to the last level";
 }
 
 GameScene.prototype.onMouseMove = function(event) {
@@ -111,10 +112,6 @@ GameScene.prototype.update = function(deltatime) {
         
         if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x
                 && this.mouseY >= y && this.mouseY <= y + height) {
-            //this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
-            //this.canvas.removeEventListener("click", this.onMouseClickRef);
-            //document.onkeydown = null;
-            //document.onkeyup = null;
             this.controller.initLevel();
         }
     } else if (this.render.isCurrentLevelFinish()) {
@@ -123,27 +120,60 @@ GameScene.prototype.update = function(deltatime) {
         var height = Config.worldHeight * 0.2;
         var x = Config.worldWidth / 2 - width / 2;
         var y = Config.worldHeight / 2 - height / 2;
-    
-        if (this.mouseX >= x && this.mouseX <= x + width && this.mouseX >= x
-                && this.mouseY >= y && this.mouseY <= y + height) {
-            this.context.font = "30px joystix";
-            this.context.strokeStyle = '#00E500';
-            this.context.lineWidth = 20;
-            this.context.strokeText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
-            this.context.fillStyle = "white";
-            this.context.fillText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2); 
-        } else  {
-            this.context.font = "30px joystix";
-            this.context.strokeStyle = 'white';
-            this.context.lineWidth = 20;
-            this.context.strokeText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
-            this.context.fillStyle = '#00E500';
-            this.context.fillText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
-        }
         
-        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
-                && this.mouseY >= y && this.mouseY <= y + height) {
-            this.controller.nextLevel();
+        if (this.render.isLastLevel()) {
+            
+            if (this.mouseX >= x && this.mouseX <= x + width && this.mouseX >= x
+                    && this.mouseY >= y && this.mouseY <= y + height) {
+                this.context.font = "30px joystix";
+                this.context.strokeStyle = '#00E500';
+                this.context.lineWidth = 20;
+                this.context.strokeText(this.lastLevelText, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.fillStyle = "white";
+                this.context.fillText(this.lastLevelText, Config.worldWidth / 2, Config.worldHeight / 2); 
+            } else  {
+                this.context.font = "30px joystix";
+                this.context.strokeStyle = 'white';
+                this.context.lineWidth = 20;
+                this.context.strokeText(this.lastLevelText, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.fillStyle = '#00E500';
+                this.context.fillText(this.lastLevelText, Config.worldWidth / 2, Config.worldHeight / 2);
+            }
+
+            if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                    && this.mouseY >= y && this.mouseY <= y + height) {
+                
+                this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
+                this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
+                this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
+                document.onkeydown = null;
+                document.onkeyup = null;
+            
+                this.callback("credits");
+            }
+        } else {
+        
+            if (this.mouseX >= x && this.mouseX <= x + width && this.mouseX >= x
+                    && this.mouseY >= y && this.mouseY <= y + height) {
+                this.context.font = "30px joystix";
+                this.context.strokeStyle = '#00E500';
+                this.context.lineWidth = 20;
+                this.context.strokeText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.fillStyle = "white";
+                this.context.fillText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2); 
+            } else  {
+                this.context.font = "30px joystix";
+                this.context.strokeStyle = 'white';
+                this.context.lineWidth = 20;
+                this.context.strokeText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.fillStyle = '#00E500';
+                this.context.fillText(this.winText, Config.worldWidth / 2, Config.worldHeight / 2);
+            }
+
+            if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
+                    && this.mouseY >= y && this.mouseY <= y + height) {
+                this.controller.nextLevel();
+            }
         }
     } else {
         

@@ -13,6 +13,6 @@ LevelManager.prototype.getCurrentLevel = function() {
 };
 
 LevelManager.prototype.isLastLevel = function() {
-    return this.currentLevel === this.levels.length;
+    return this.currentLevel === this.levels.length - 1;
 };
 

@@ -1,4 +1,5 @@
 Assets = {};
+Assets.loaded = false;
 
 Assets.srcs = [
     "assets/tiles/sprites.png", 
@@ -67,8 +68,8 @@ Assets.loadAllAudio = function() {
 Assets.audioCount = 0;
 Assets.onLoadAudio = function() {
     Assets.audioCount++;
-    console.log("audio loaded");
     if (Assets.audioCount === Assets.audio.srcs.length) {
+        Assets.loaded = true;
         if (Assets.callback !== null) {
             Assets.callback();
         }

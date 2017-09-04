@@ -35,6 +35,7 @@ and open the template in the editor.
         <script src="engine/animation.js"></script>
         <script src="engine/scenes/gamescene.js"></script>
         <script src="engine/scenes/mainscene.js"></script>
+        <script src="engine/scenes/creditsscene.js"></script>
         <script>
             var scene;
             var context;
@@ -62,6 +63,8 @@ and open the template in the editor.
                     scene = new MainScene(context, canvas, changeSceneCallback);
                 } else if (sceneName === "game") {
                     scene = new GameScene(context, canvas, changeSceneCallback);
+                }  else if (sceneName === "credits") {
+                    scene = new CreditsScene(context, canvas, changeSceneCallback);
                 }
             }
         </script>

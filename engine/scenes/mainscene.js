@@ -6,7 +6,11 @@ function MainScene(context, canvas, callback) {
     this.isClicked = false;
     this.mouseX = 0;
     this.mouseY = 0;
-    Assets.loadAll(this.onLoadAssets.bind(this));
+    if (Assets.loaded && Atlas.loaded) {
+        this.isLoading = false;
+    } else {
+        Assets.loadAll(this.onLoadAssets.bind(this));
+    }
     this.onMouseMoveRef = this.onMouseMove.bind(this);
     this.onMouseClickRef = this.onMouseClick.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
