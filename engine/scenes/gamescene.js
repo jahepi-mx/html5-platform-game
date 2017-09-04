@@ -102,7 +102,6 @@ GameScene.prototype.onTouchEvent = function(x, y, pressed) {
         var height = info.height;
         var buttonX = info.x;
         var buttonY = info.y;
-        var left = false, right = false, up = false, down = false;
         if (x <= buttonX + width && x >= buttonX && y >= buttonY && y <= buttonY + height) {
             if (i === "a_button" && pressed) {
                 this.controller.jump();
