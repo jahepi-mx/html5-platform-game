@@ -2,13 +2,15 @@ function CreditsScene(context, canvas, callback) {
     this.context = context;
     this.canvas = canvas;
     this.callback = callback;
-    this.isClicked = false;
+    this.isMouseDown = false;
     this.mouseX = 0;
     this.mouseY = 0;
     this.onMouseMoveRef = this.onMouseMove.bind(this);
-    this.onMouseClickRef = this.onMouseClick.bind(this);
+    this.onMouseDownRef = this.onMouseDown.bind(this);
+    this.onTouchStartRef = this.onTouchStart.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
-    this.canvas.addEventListener("click", this.onMouseClickRef);
+    this.canvas.addEventListener("mousedown", this.onMouseDownRef);
+    this.canvas.addEventListener("touchstart", this.onTouchStartRef);
     this.endText = "The End";
 }
 
@@ -18,8 +20,15 @@ CreditsScene.prototype.onMouseMove = function(event) {
     this.mouseY = event.clientY - rect.top;
 };
 
-CreditsScene.prototype.onMouseClick = function(event) {
-    this.isClicked = true;
+CreditsScene.prototype.onTouchStart = function(event) {
+    var rect = this.canvas.getBoundingClientRect();
+    this.mouseX = event.touches[0].clientX - rect.left;
+    this.mouseY = event.touches[0].clientY - rect.top;
+    this.isMouseDown = true;
+};
+
+CreditsScene.prototype.onMouseDown = function(event) {
+    this.isMouseDown = true;
 };
 
 CreditsScene.prototype.update = function(deltatime) {
@@ -48,12 +57,12 @@ CreditsScene.prototype.update = function(deltatime) {
         this.context.textAlign = "center";
         this.context.fillText(this.endText, Config.worldWidth / 2, Config.worldHeight / 2);
     }
-    if (this.isClicked && this.mouseX <= x + width && this.mouseX >= x 
+    if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
             && this.mouseY >= y && this.mouseY <= y + height) {
         this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
-        this.canvas.removeEventListener("click", this.onMouseClickRef);
+        this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
         this.callback("main");
     } else {
-        this.isClicked = false;
+        this.isMouseDown = false;
     }
 };
