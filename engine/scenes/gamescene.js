@@ -8,6 +8,7 @@ function GameScene(context, canvas, callback) {
     this.onKeyUpRef = this.onKeyUp.bind(this);
     this.mouseX = 0;
     this.mouseY = 0;
+    this.left = this.right = this.up = this.down = false;
     document.onkeydown = this.onKeyDownRef;
     document.onkeyup = this.onKeyUpRef;
     this.onMouseDownRef = this.onMouseDown.bind(this);
@@ -59,10 +60,15 @@ GameScene.prototype.onTouchStart = function(event) {
 };
 
 GameScene.prototype.onTouchEnd = function(event) {
+    this.left = this.right = this.up = this.down = false;
     var rect = this.canvas.getBoundingClientRect();
     for (var i = 0; i < event.touches.length; i++) {
         this.onTouchEvent(event.touches[i].clientX - rect.left, event.touches[i].clientY - rect.top, false);
     }
+    if (!this.left) this.controller.moveLeft(false);
+    if (!this.right) this.controller.moveRight(false);
+    if (!this.up) this.controller.moveUp(false);
+    if (!this.down) this.controller.moveDown(false);
 };
 
 GameScene.prototype.onTouchMove = function(event) {
@@ -96,18 +102,23 @@ GameScene.prototype.onTouchEvent = function(x, y, pressed) {
         var height = info.height;
         var buttonX = info.x;
         var buttonY = info.y;
+        var left = false, right = false, up = false, down = false;
         if (x <= buttonX + width && x >= buttonX && y >= buttonY && y <= buttonY + height) {
             if (i === "a_button" && pressed) {
                 this.controller.jump();
             } else if (i === "b_button" && pressed) {
                 this.controller.shoot();
             } else if (i === "left_button") {
+                if (!pressed) this.left = true;
                 this.controller.moveLeft(pressed);
             } else if (i === "right_button") {
+                if (!pressed) this.right = true;
                 this.controller.moveRight(pressed);
             } else if (i === "up_button") {
+                if (!pressed) this.up = true;
                 this.controller.moveUp(pressed);
             } else if (i === "down_button") {
+                if (!pressed) this.down = true;
                 this.controller.moveDown(pressed);
             }
         }
@@ -196,8 +207,7 @@ GameScene.prototype.update = function(deltatime) {
                 this.context.fillText(this.winBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
             }
         }
-    } else {
-        
+    } else {        
         for (var i in this.controlButtons) {
             var info = this.controlButtons[i];
             this.context.drawImage(Assets.guiAtlas, info.atlas.x, info.atlas.y, info.atlas.width, info.atlas.height, info.x, info.y, info.width, info.height);
