@@ -18,9 +18,13 @@ function GameScene(context, canvas, callback) {
     this.onMouseMoveRef = this.onMouseMove.bind(this);
     this.onMouseDownRef = this.onMouseDown.bind(this);
     this.onMouseUpRef = this.onMouseUp.bind(this);
+    this.onTouchStartRef = this.onTouchStart.bind(this);
+    this.onTouchEndRef = this.onTouchEnd.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
     this.canvas.addEventListener("mousedown", this.onMouseDownRef);
     this.canvas.addEventListener("mouseup", this.onMouseUpRef);
+    this.canvas.addEventListener("touchstart", this.onTouchStartRef);
+    this.canvas.addEventListener("touchend", this.onTouchEndRef);
     this.looseText = "You loose, try again?";
     this.winText = "You win!, ready for the next level?";
     this.lastLevelText = "You have the courage to made it to the last level";
@@ -30,6 +34,17 @@ GameScene.prototype.onMouseMove = function(event) {
     var rect = this.canvas.getBoundingClientRect();
     this.mouseX = event.clientX - rect.left;
     this.mouseY = event.clientY - rect.top;
+};
+
+GameScene.prototype.onTouchStart = function(event) {
+    var rect = this.canvas.getBoundingClientRect();
+    this.mouseX = event.touches[0].clientX - rect.left;
+    this.mouseY = event.touches[0].clientY - rect.top;
+    this.isMouseDown = true;
+};
+
+GameScene.prototype.onTouchEnd = function(event) {
+    this.isMouseDown = false;
 };
 
 GameScene.prototype.onMouseDown = function(event) {
@@ -146,6 +161,8 @@ GameScene.prototype.update = function(deltatime) {
                 this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
                 this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
                 this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
+                this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
+                this.canvas.removeEventListener("touchend", this.onTouchEndRef);
                 document.onkeydown = null;
                 document.onkeyup = null;
             

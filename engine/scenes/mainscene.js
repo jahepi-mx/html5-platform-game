@@ -3,7 +3,7 @@ function MainScene(context, canvas, callback) {
     this.canvas = canvas;
     this.callback = callback;
     this.isLoading = true;
-    this.isClicked = false;
+    this.isMouseDown = false;
     this.mouseX = 0;
     this.mouseY = 0;
     if (Assets.loaded && Atlas.loaded) {
@@ -12,9 +12,11 @@ function MainScene(context, canvas, callback) {
         Assets.loadAll(this.onLoadAssets.bind(this));
     }
     this.onMouseMoveRef = this.onMouseMove.bind(this);
-    this.onMouseClickRef = this.onMouseClick.bind(this);
+    this.onMouseDownRef = this.onMouseDown.bind(this);
+    this.onTouchStartRef = this.onTouchStart.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
-    this.canvas.addEventListener("click", this.onMouseClickRef);
+    this.canvas.addEventListener("mousedown", this.onMouseDownRef);
+    this.canvas.addEventListener("touchstart", this.onTouchStartRef);
     this.playText = "Play Game";
 }
 
@@ -32,8 +34,15 @@ MainScene.prototype.onMouseMove = function(event) {
     this.mouseY = event.clientY - rect.top;
 };
 
-MainScene.prototype.onMouseClick = function(event) {
-    this.isClicked = true;
+MainScene.prototype.onTouchStart = function(event) {
+    var rect = this.canvas.getBoundingClientRect();
+    this.mouseX = event.touches[0].clientX - rect.left;
+    this.mouseY = event.touches[0].clientY - rect.top;
+    this.isMouseDown = true;
+};
+
+MainScene.prototype.onMouseDown = function(event) {
+    this.isMouseDown = true;
 };
 
 MainScene.prototype.update = function(deltatime) {
@@ -69,13 +78,14 @@ MainScene.prototype.update = function(deltatime) {
         this.context.textAlign = "center";
         this.context.fillText("The objetive of the game is to collect all the coins on each level", Config.worldWidth / 2, Config.worldHeight - 100);
             
-        if (this.isClicked && this.mouseX <= x + width && this.mouseX >= x 
+        if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
                 && this.mouseY >= y && this.mouseY <= y + height) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
-            this.canvas.removeEventListener("click", this.onMouseClickRef);
+            this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
+            this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
             this.callback("game");
         } else {
-            this.isClicked = false;
+            this.isMouseDown = false;
         }
     } else {
         this.context.font = "30px joystix";
