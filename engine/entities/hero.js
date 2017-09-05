@@ -68,10 +68,10 @@ Hero.prototype.update = function(deltatime) {
     if (this.movingRight || this.movingLeft) {
         this.velocityX = this.velocityXOrig;
     }
-    if (this.movingRight) {
+    if (this.direction === 1) {
         this.velocityX = Math.abs(this.velocityX);
     }
-    if (this.movingLeft) {
+    if (this.direction === -1) {
         this.velocityX = -Math.abs(this.velocityX);
     } 
     this.velocityX *= this.friction;
