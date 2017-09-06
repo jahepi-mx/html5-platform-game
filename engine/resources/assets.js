@@ -87,5 +87,6 @@ Assets.playAudio = function(buffer, loop) {
     source.buffer = buffer;
     source.loop = loop;
     source.connect(Assets.audioContext.destination);
-    source.start(0); 
+    source.start(0);
+    return source;
 };

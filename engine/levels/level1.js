@@ -1,7 +1,9 @@
 function Level1() {
+    this.loaded = false;
 }
 
 Level1.prototype.setup = function(camera) {
+    this.loaded = true;
     this.levelName = "Level 1: Forgotten Forest";
     this.mapWidth = 94;
     this.mapHeight = 11;
@@ -13,6 +15,7 @@ Level1.prototype.setup = function(camera) {
     this.coins = [];
     this.totalNumberOfCoins = 2;
     this.currentNumberOfCoins = 0;
+    this.music = Assets.playAudio(Assets.level1_music, true);
     
     this.map = [
         15,15,15,15,15,15,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,16,15,15,15,15,15,15,
@@ -55,6 +58,15 @@ Level1.prototype.setup = function(camera) {
     this.enemies[5 * this.mapWidth + 49] = new GiantFatEnemy(49, 5, 70 * 2, 70, 1, this.camera);
     this.enemies[2 * this.mapWidth + 63] = new GiantFatEnemy(63, 2, 90 * 2, 90, 2, this.camera);
     this.enemies[5 * this.mapWidth + 72] = new GiantFatEnemy(72, 5, 200 * 2, 200, 20, this.camera);
-    
-    Assets.playAudio(Assets.level1_music, true);
+};
+
+Level1.prototype.dispose = function() {
+    if (this.loaded) {
+        this.loaded = false;
+        this.enemies = null;
+        this.tiles = null;
+        this.coins = null;
+        this.music.stop();
+        this.music = null;
+    }
 };

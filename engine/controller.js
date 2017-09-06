@@ -262,6 +262,7 @@ Controller.prototype.nextLevel = function() {
 
 Controller.prototype.initLevel = function() {
     this.currentLevel = this.levelManager.getCurrentLevel();
+    this.currentLevel.dispose();
     this.currentLevel.setup(this.camera);
     this.tiles = this.currentLevel.tiles;
     this.enemies = this.currentLevel.enemies;
