@@ -33,7 +33,7 @@ Coin.prototype.bottom = function() {
 };
 
 Coin.prototype.playSound = function() {
-    Assets.coin_sound.play();
+    Assets.playAudio(Assets.coin_sound, false);
 };
 
 Coin.prototype.collide = function(entity) { 

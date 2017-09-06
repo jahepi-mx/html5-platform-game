@@ -46,7 +46,7 @@ GiantFatEnemy.prototype.changeDirection = function(x) {
 
 GiantFatEnemy.prototype.fireBlast = function(x, y) {
     if (!this.blastFlag) {
-        Assets.enemy_laser_sound.play();
+        Assets.playAudio(Assets.enemy_laser_sound, false);
         this.blastFlag = true;
         var diffX = x - this.left();
         var diffY = y - (this.top() + this.height / 2);
@@ -124,7 +124,7 @@ GiantFatEnemy.prototype.collide = function(entity) {
     var sizeY = this.height / 2 + entity.height / 2;
     if (diffX < sizeX && diffY < sizeY) {
         if (!this.isDamage) {
-            Assets.explosion_sound.play();
+            Assets.playAudio(Assets.explosion_sound, false);
             var tmpHealth = this.health - 1;
             if (tmpHealth <= 0) {
                 this.isDead = true;

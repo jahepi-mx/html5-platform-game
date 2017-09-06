@@ -61,7 +61,7 @@ EnemyBlast.prototype.collide = function(entity) {
     var sizeY = this.height / 2 + entity.height / 2;
     if (diffX < sizeX && diffY < sizeY) {
         if (!this.collided) {
-            Assets.explosion_sound.play();
+            Assets.playAudio(Assets.explosion_sound, false);
         }
         this.collided = true;
     }

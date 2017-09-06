@@ -16,6 +16,8 @@ Assets.keys = [
 ];
 
 Assets.audio = {};
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+Assets.audioContext = new AudioContext();
 
 Assets.audio.srcs = [
     "assets/audio/level1_music.mp3",
@@ -48,8 +50,7 @@ Assets.loadAll = function(callback) {
 Assets.load = function(index) {
     Assets[Assets.keys[index]].onload = function() {
         if (index + 1 >= Assets.srcs.length) {
-            console.log("loaded");
-            Assets.loadAllAudio();
+            Assets.loadAllAudios();
         } else {
             Assets.load(index + 1);
         }
@@ -57,21 +58,35 @@ Assets.load = function(index) {
     Assets[Assets.keys[index]].src = Assets.srcs[index];
 };
 
-Assets.loadAllAudio = function() {
-    for (var i = 0; i < Assets.audio.keys.length; i++) {
-        Assets[Assets.audio.keys[i]] = new Audio();
-        Assets[Assets.audio.keys[i]].addEventListener('canplaythrough', Assets.onLoadAudio, false);
-        Assets[Assets.audio.keys[i]].src = Assets.audio.srcs[i];
-    }
+Assets.loadAllAudios = function() {
+    Assets.loadAudio(0);
 };
 
-Assets.audioCount = 0;
-Assets.onLoadAudio = function() {
-    Assets.audioCount++;
-    if (Assets.audioCount === Assets.audio.srcs.length) {
-        Assets.loaded = true;
-        if (Assets.callback !== null) {
-            Assets.callback();
+Assets.loadAudio = function(index) {
+    var xmlRequest = new XMLHttpRequest();
+    xmlRequest.open("GET", Assets.audio.srcs[index], true);
+    xmlRequest.responseType = "arraybuffer";
+    xmlRequest.onload = function() {
+        Assets.audioContext.decodeAudioData(xmlRequest.response, function(buffer) {
+            Assets[Assets.audio.keys[index]] = buffer;
+            console.log(buffer);
+        }, null);
+        if (index + 1 >= Assets.audio.srcs.length) {
+            Assets.loaded = true;
+            if (Assets.callback !== null) {
+                Assets.callback();
+            }
+        } else {
+            Assets.loadAudio(index + 1);
         }
-    }
+    };
+    xmlRequest.send();
+};
+
+Assets.playAudio = function(buffer, loop) {
+    var source = Assets.audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.loop = loop;
+    source.connect(Assets.audioContext.destination);
+    source.start(0); 
 };

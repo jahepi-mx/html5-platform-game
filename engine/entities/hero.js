@@ -94,7 +94,7 @@ Hero.prototype.jump = function() {
         return;
     }
     if (!this.isJumping) {
-        Assets.jump_sound.play();
+        Assets.playAudio(Assets.jump_sound, false);
         this.isJumping = true;
         this.velocityY = this.velocityYOrig;
     }
@@ -116,7 +116,7 @@ Hero.prototype.shoot = function() {
         return;
     }
     if (!this.isShooting) {
-        Assets.hero_laser_sound.play();
+        Assets.playAudio(Assets.hero_laser_sound, false);
         this.shootingTime = 0;
         this.isShooting = true;
         this.blasts.push(new HeroBlast(this.centerX, this.centerY, this.camera, this.direction));
