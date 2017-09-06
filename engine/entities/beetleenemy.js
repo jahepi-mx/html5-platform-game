@@ -8,6 +8,8 @@ function BeetleEnemy(x, y, width, height, type, velocity, maxDistance, camera, d
     this.height = height;
     this.type = type;
     this.isDisposable = false;
+    this.isMortal = true;
+    this.hasGuns = false;
     
     this.animation = new Animation(3, 2);
     
@@ -61,6 +63,15 @@ BeetleEnemy.prototype.update = function(deltatime) {
             this.direction = -1;
         }
     }
+};
+
+BeetleEnemy.prototype.collide = function(entity) {
+    // AABB Collision detection
+    var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
+    var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
+    var sizeX = this.width / 2 + entity.width / 2;
+    var sizeY = this.height / 2 + entity.height / 2;
+    return diffX < sizeX && diffY < sizeY;
 };
 
 BeetleEnemy.prototype.left = function() {

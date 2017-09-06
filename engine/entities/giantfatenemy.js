@@ -9,6 +9,8 @@ function GiantFatEnemy(x, y, width, height, health, camera) {
     this.isDead = false;
     this.isDamage = false;
     this.isShooting = false;
+    this.isMortal = true;
+    this.hasGuns = true;
     this.blastFlag = false;
     this.blasts = [];
     this.direction = -1;

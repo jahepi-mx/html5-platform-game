@@ -4,6 +4,8 @@ function LavaEnemy(x, y, camera) {
     this.x = x * this.width;
     this.y = y * this.height;
     this.animation = new Animation(6, 1);
+    this.isMortal = false;
+    this.hasGuns = false;
     this.camera = camera;
 }
 

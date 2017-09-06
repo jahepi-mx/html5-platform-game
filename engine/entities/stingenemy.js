@@ -3,6 +3,8 @@ function StingEnemy(x, y, camera) {
     this.height = Config.tileSize;
     this.x = x * this.width;
     this.y = y * this.height;
+    this.isMortal = false;
+    this.hasGuns = false;
     this.camera = camera;
 }
 

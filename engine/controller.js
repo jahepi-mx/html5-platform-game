@@ -101,16 +101,20 @@ Controller.prototype.update = function(deltatime) {
             if (enemy !== null) {
                 enemy.update(deltatime);
                 this.hero.collide(enemy);
-                if (enemy instanceof GiantFatEnemy) {
-                    if (enemy.isShooting) {
-                        enemy.fireBlast(this.hero.left() + this.hero.width / 2, this.hero.top() + this.hero.height / 2);
-                    }
-                    enemy.changeDirection(this.hero.centerX);
+                
+                if (enemy.isMortal) {
                     for (var i = 0; i < this.hero.blasts.length; i++) {
                         if (!this.hero.blasts[i].collided && enemy.collide(this.hero.blasts[i])) {
                             this.hero.blasts[i].collided = true;
                         }
                     }
+                }
+                
+                if (enemy.hasGuns) {
+                    if (enemy.isShooting) {
+                        enemy.fireBlast(this.hero.left() + this.hero.width / 2, this.hero.top() + this.hero.height / 2);
+                    }
+                    enemy.changeDirection(this.hero.centerX);                    
                     for (var i = 0; i < enemy.blasts.length; i++) {
                         this.hero.collide(enemy.blasts[i]);
                     }
@@ -145,7 +149,7 @@ Controller.prototype.update = function(deltatime) {
                     for (var y2 = this.getMinEnemyY(); y2 <= this.getMaxEnemyY(); y2++) {
                         for (var x2 = this.getMinEnemyX(); x2 <= this.getMaxEnemyX(); x2++) {
                             var enemy2 = this.getEnemy(y2 * this.currentLevel.mapWidth + x2);
-                            if (enemy2 instanceof GiantFatEnemy) {
+                            if (enemy2 !== null && enemy2.hasGuns) {
                                 for (var i = 0; i < enemy2.blasts.length; i++) {
                                     enemy2.blasts[i].collide(tile);
                                 }
