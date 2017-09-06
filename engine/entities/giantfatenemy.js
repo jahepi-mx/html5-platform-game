@@ -48,7 +48,7 @@ GiantFatEnemy.prototype.fireBlast = function(x, y) {
     if (!this.blastFlag) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         this.blastFlag = true;
-        var diffX = x - this.left();
+        var diffX = x - (this.left() + this.width / 2);
         var diffY = y - (this.top() + this.height / 2);
         var radians = Math.atan2(diffY, diffX);
         this.blasts.push(new EnemyBlast(this, radians, this.camera));
@@ -69,6 +69,7 @@ GiantFatEnemy.prototype.update = function(deltatime) {
     
     for (var i = 0; i < this.blasts.length; i++) {
         if (this.blasts[i].isDisposable) {
+            this.blasts[i] = null;
             this.blasts.splice(i, 1);
         } else {
             this.blasts[i].update(deltatime);

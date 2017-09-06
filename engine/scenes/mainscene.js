@@ -76,7 +76,7 @@ MainScene.prototype.update = function(deltatime) {
         this.context.font = "15px joystix";
         this.context.fillStyle = "yellow";
         this.context.textAlign = "center";
-        this.context.fillText("The objetive of the game is to collect all the coins on each level", Config.worldWidth / 2, Config.worldHeight - 100);
+        this.context.fillText("Mission: Collect all coins from every level", Config.worldWidth / 2, Config.worldHeight - 100);
             
         if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
                 && this.mouseY >= y && this.mouseY <= y + height) {

@@ -69,7 +69,6 @@ Assets.loadAudio = function(index) {
     xmlRequest.onload = function() {
         Assets.audioContext.decodeAudioData(xmlRequest.response, function(buffer) {
             Assets[Assets.audio.keys[index]] = buffer;
-            console.log(buffer);
         }, null);
         if (index + 1 >= Assets.audio.srcs.length) {
             Assets.loaded = true;

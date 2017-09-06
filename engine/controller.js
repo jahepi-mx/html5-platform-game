@@ -1,7 +1,7 @@
 function Controller() {
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
-    this.collisionPrecision = 7;
+    this.collisionPrecision = 5;
     this.levelManager = new LevelManager();
     this.hero = new Hero(0, 0, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.initLevel();
@@ -95,17 +95,8 @@ Controller.prototype.update = function(deltatime) {
         }
     }
     
-    for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
-        for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
-            var coin = this.getCoin(y * this.currentLevel.mapWidth + x);
-            if (coin !== null) {
-                coin.update(deltatime);
-                if (coin.collide(this.hero)) {
-                    coin.playSound();
-                    this.coins[y * this.currentLevel.mapWidth + x] = null;
-                    this.currentLevel.currentNumberOfCoins++;
-                }
-            }
+    for (var y = this.getMinEnemyY(); y <= this.getMaxEnemyY(); y++) {
+        for (var x = this.getMinEnemyX(); x <= this.getMaxEnemyX(); x++) {
             var enemy = this.getEnemy(y * this.currentLevel.mapWidth + x);
             if (enemy !== null) {
                 enemy.update(deltatime);
@@ -128,6 +119,20 @@ Controller.prototype.update = function(deltatime) {
                     this.enemies[y * this.currentLevel.mapWidth + x] = null;
                 } 
             }
+        }
+    }
+    
+    for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
+        for (var x = this.getMinX(); x <= this.getMaxX(); x++) {
+            var coin = this.getCoin(y * this.currentLevel.mapWidth + x);
+            if (coin !== null) {
+                coin.update(deltatime);
+                if (coin.collide(this.hero)) {
+                    coin.playSound();
+                    this.coins[y * this.currentLevel.mapWidth + x] = null;
+                    this.currentLevel.currentNumberOfCoins++;
+                }
+            }           
             var tile = this.getTile(y * this.currentLevel.mapWidth + x);
             if (tile !== null) {
                 
@@ -137,8 +142,8 @@ Controller.prototype.update = function(deltatime) {
                         this.hero.blasts[i].collide(tile);
                     }                  
                     // Verify if any enemy blast collide with a tile
-                    for (var y2 = this.getMinY(); y2 <= this.getMaxY(); y2++) {
-                        for (var x2 = this.getMinX(); x2 <= this.getMaxX(); x2++) {
+                    for (var y2 = this.getMinEnemyY(); y2 <= this.getMaxEnemyY(); y2++) {
+                        for (var x2 = this.getMinEnemyX(); x2 <= this.getMaxEnemyX(); x2++) {
                             var enemy2 = this.getEnemy(y2 * this.currentLevel.mapWidth + x2);
                             if (enemy2 instanceof GiantFatEnemy) {
                                 for (var i = 0; i < enemy2.blasts.length; i++) {
@@ -175,22 +180,42 @@ Controller.prototype.getCoin = function(index) {
 };
 
 Controller.prototype.getMinX = function() {
-    var minX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) - (this.camera.width / Config.tileSize));
+    var minX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) - this.camera.width);
     return Math.max(0, minX);
 };
 
 Controller.prototype.getMaxX = function() {
-    var maxX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) + (this.camera.width / Config.tileSize));
+    var maxX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) + this.camera.width);
     return maxX;
 };
 
 Controller.prototype.getMinY = function() {
-    var minY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) - (this.camera.height / Config.tileSize));
+    var minY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) - this.camera.height);
     return Math.max(0, minY);
 };
 
 Controller.prototype.getMaxY = function() {
-    var maxY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) + (this.camera.height / Config.tileSize));
+    var maxY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) + this.camera.height);
+    return maxY;
+};
+
+Controller.prototype.getMinEnemyX = function() {
+    var minX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) - Config.visibilityEnemyRatioX);
+    return Math.max(0, minX);
+};
+
+Controller.prototype.getMaxEnemyX = function() {
+    var maxX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) + Config.visibilityEnemyRatioX);
+    return maxX;
+};
+
+Controller.prototype.getMinEnemyY = function() {
+    var minY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) - Config.visibilityEnemyRatioY);
+    return Math.max(0, minY);
+};
+
+Controller.prototype.getMaxEnemyY = function() {
+    var maxY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) + Config.visibilityEnemyRatioY);
     return maxY;
 };
 
