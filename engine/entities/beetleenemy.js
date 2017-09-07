@@ -85,7 +85,7 @@ BeetleEnemy.prototype.right = function() {
     if (this.type === BeetleEnemy.VERTICAL) {
         return (this.x + this.width) - this.camera.x;
     }
-    return (this.x + this.width) - (this.traveled - this.camera.x);
+    return (this.x + this.width) - this.traveled - this.camera.x;
 };
 
 BeetleEnemy.prototype.top = function() {
@@ -97,7 +97,7 @@ BeetleEnemy.prototype.top = function() {
 
 BeetleEnemy.prototype.bottom = function() {
     if (this.type === BeetleEnemy.VERTICAL) {
-        return (this.y + this.height) - (this.traveled - this.camera.y);
+        return (this.y + this.height) - this.traveled - this.camera.y;
     }
     return (this.y + this.height) - this.camera.y;
 };
