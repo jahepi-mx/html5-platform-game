@@ -1,4 +1,4 @@
-function ZombieEnemy(x, y, width, height, velocity, offset, health, camera) {
+function SkeletonEnemy(x, y, width, height, velocityX, offset, health, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -6,6 +6,7 @@ function ZombieEnemy(x, y, width, height, velocity, offset, health, camera) {
     this.health = health;
     this.isDead = false;
     this.isMortal = true;
+    this.isJumping = false;
     this.hasGuns = false;
     
     this.leftAnimation = new Animation(3, 1);
@@ -18,32 +19,53 @@ function ZombieEnemy(x, y, width, height, velocity, offset, health, camera) {
     this.offset = offset;
     this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
     this.y = y * Config.tileSize + (Config.tileSize - this.height);
-    this.velocity = velocity;
-    this.traveled = 0;
+    this.velocityX = velocityX;
+    this.velocityY = 0;
+    this.traveledX = 0;
+    this.traveledY = 0;
     this.direction = this.directions[Math.round(Math.random() * 2)];
     this.changeDirection = Math.random() * 2 + 2;
     this.changeDirectionTime = 0;
+    this.jumpTime = 0;
+    this.jumpTimeLimit = Math.random() * 3 + 2;
 }
 
-ZombieEnemy.prototype.onStopDeadAnimation = function() {
+SkeletonEnemy.prototype.onStopDeadAnimation = function() {
     this.isDisposable = true;
 };
 
-ZombieEnemy.prototype.draw = function(context) {
+SkeletonEnemy.prototype.draw = function(context) {
     var name = "";
     if (this.isDead) {
         name = "explo_" + (this.deadAnimation.getFrame() + 1);
     } else if (this.direction === 0) {
-        name = "zombie_" + (this.frontAnimation.getFrame() + 1);
+        name = "skeleton_" + (this.frontAnimation.getFrame() + 1);
     } else if (this.direction === -1) {
-        name = "zombie_left_" + (this.leftAnimation.getFrame() + 1);
+        name = "skeleton_left_" + (this.leftAnimation.getFrame() + 1);
     } else {
-        name = "zombie_right_" + (this.rightAnimation.getFrame() + 1);
+        name = "skeleton_right_" + (this.rightAnimation.getFrame() + 1);
     }
-    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveledX - this.camera.x, this.y + this.traveledY - this.camera.y, this.width, this.height);
 };
 
-ZombieEnemy.prototype.update = function(deltatime) {
+SkeletonEnemy.prototype.update = function(deltatime) {
+    
+    this.jumpTime += deltatime;
+    if (this.jumpTime >= this.jumpTimeLimit && !this.isJumping) {
+        this.jumpTimeLimit = Math.random() * 3 + 2;
+        this.jumpTime = 0;
+        this.isJumping = true;
+        this.velocityY = -200;
+    }
+    
+    if (this.isJumping) {
+        this.velocityY += Config.gravity * deltatime;
+        this.traveledY += this.velocityY * deltatime;
+        if (this.traveledY > 0) {
+            this.traveledY = 0;
+            this.isJumping = false;
+        }
+    }
     
     this.changeDirectionTime += deltatime;
     
@@ -75,19 +97,19 @@ ZombieEnemy.prototype.update = function(deltatime) {
     }
     
     if (this.direction === 1) {
-        this.velocity = -Math.abs(this.velocity);
+        this.velocityX = -Math.abs(this.velocityX);
     }
     
     if (this.direction === -1) {
-        this.velocity = Math.abs(this.velocity);
+        this.velocityX = Math.abs(this.velocityX);
     }
     
     if (this.direction !== 0) {
-        this.traveled += this.velocity * deltatime;
+        this.traveledX += this.velocityX * deltatime;
     }
 };
 
-ZombieEnemy.prototype.collide = function(entity) {
+SkeletonEnemy.prototype.collide = function(entity) {
     if (this.isDead) {
         return false;
     }
@@ -109,18 +131,18 @@ ZombieEnemy.prototype.collide = function(entity) {
     return false;
 };
 
-ZombieEnemy.prototype.left = function() {
-    return this.x - this.traveled - this.camera.x;
+SkeletonEnemy.prototype.left = function() {
+    return this.x - this.traveledX - this.camera.x;
 };
 
-ZombieEnemy.prototype.right = function() {
-    return (this.x + this.width) - this.traveled - this.camera.x;
+SkeletonEnemy.prototype.right = function() {
+    return (this.x + this.width) - this.traveledX - this.camera.x;
 };
 
-ZombieEnemy.prototype.top = function() {
-    return this.y - this.camera.y;
+SkeletonEnemy.prototype.top = function() {
+    return this.y + this.traveledY - this.camera.y;
 };
 
-ZombieEnemy.prototype.bottom = function() {
-    return (this.y + this.height) - this.camera.y;
+SkeletonEnemy.prototype.bottom = function() {
+    return (this.y + this.height) + this.traveledY - this.camera.y;
 };

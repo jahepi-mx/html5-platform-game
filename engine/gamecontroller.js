@@ -1,4 +1,4 @@
-function Controller() {
+function GameController() {
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
     this.collisionPrecision = 5;
@@ -7,7 +7,7 @@ function Controller() {
     this.initLevel();
 }
 
-Controller.prototype.update = function(deltatime) {
+GameController.prototype.update = function(deltatime) {
     
     // Ladder implementation, when the hero is nearby a ladder tile, he is able to climb it.
     var currentX = Math.floor(Math.round((this.camera.x + this.hero.centerX) / Config.tileSize));
@@ -162,109 +162,109 @@ Controller.prototype.update = function(deltatime) {
     }
 };
 
-Controller.prototype.getTile = function(index) {
+GameController.prototype.getTile = function(index) {
     if (index >= 0 && index < this.tiles.length && this.tiles[index] !== null) {
         return this.tiles[index];
     }
     return null;
 };
 
-Controller.prototype.getEnemy = function(index) {
+GameController.prototype.getEnemy = function(index) {
     if (index >= 0 && index < this.enemies.length && this.enemies[index] !== null) {
         return this.enemies[index];
     }
     return null;
 };
 
-Controller.prototype.getCoin = function(index) {
+GameController.prototype.getCoin = function(index) {
     if (index >= 0 && index < this.coins.length && this.coins[index] !== null) {
         return this.coins[index];
     }
     return null;
 };
 
-Controller.prototype.getMinX = function() {
+GameController.prototype.getMinX = function() {
     var minX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) - this.camera.width);
     return Math.max(0, minX);
 };
 
-Controller.prototype.getMaxX = function() {
+GameController.prototype.getMaxX = function() {
     var maxX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) + this.camera.width);
     return maxX;
 };
 
-Controller.prototype.getMinY = function() {
+GameController.prototype.getMinY = function() {
     var minY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) - this.camera.height);
     return Math.max(0, minY);
 };
 
-Controller.prototype.getMaxY = function() {
+GameController.prototype.getMaxY = function() {
     var maxY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) + this.camera.height);
     return maxY;
 };
 
-Controller.prototype.getMinEnemyX = function() {
+GameController.prototype.getMinEnemyX = function() {
     var minX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) - Config.visibilityEnemyRatioX);
     return Math.max(0, minX);
 };
 
-Controller.prototype.getMaxEnemyX = function() {
+GameController.prototype.getMaxEnemyX = function() {
     var maxX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) + Config.visibilityEnemyRatioX);
     return maxX;
 };
 
-Controller.prototype.getMinEnemyY = function() {
+GameController.prototype.getMinEnemyY = function() {
     var minY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) - Config.visibilityEnemyRatioY);
     return Math.max(0, minY);
 };
 
-Controller.prototype.getMaxEnemyY = function() {
+GameController.prototype.getMaxEnemyY = function() {
     var maxY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) + Config.visibilityEnemyRatioY);
     return maxY;
 };
 
-Controller.prototype.jump = function() {
+GameController.prototype.jump = function() {
     if (!this.isCurrentLevelFinish()) this.hero.jump();
 };
 
-Controller.prototype.moveUp = function(bool) {
+GameController.prototype.moveUp = function(bool) {
     if (!this.isCurrentLevelFinish()) this.hero.moveUp(bool);
 };
 
-Controller.prototype.moveDown = function(bool) {
+GameController.prototype.moveDown = function(bool) {
     if (!this.isCurrentLevelFinish()) this.hero.moveDown(bool);
 };
 
-Controller.prototype.moveRight = function(bool) {
+GameController.prototype.moveRight = function(bool) {
     if (!this.isCurrentLevelFinish()) this.hero.moveRight(bool);
 };
 
-Controller.prototype.moveLeft = function(bool) {
+GameController.prototype.moveLeft = function(bool) {
     if (!this.isCurrentLevelFinish()) this.hero.moveLeft(bool);
 };
 
-Controller.prototype.shoot = function() {
+GameController.prototype.shoot = function() {
     if (!this.isCurrentLevelFinish()) this.hero.shoot();
 };
 
-Controller.prototype.isHeroDead = function() {
+GameController.prototype.isHeroDead = function() {
     return this.hero.isDead;
 };
 
-Controller.prototype.isCurrentLevelFinish = function() {
+GameController.prototype.isCurrentLevelFinish = function() {
     return this.currentLevel.currentNumberOfCoins === this.currentLevel.totalNumberOfCoins;
 };
 
-Controller.prototype.isLastLevel = function() {
+GameController.prototype.isLastLevel = function() {
     return this.levelManager.isLastLevel();
 };
 
-Controller.prototype.nextLevel = function() {
+GameController.prototype.nextLevel = function() {
     this.levelManager.nextLevel();
     this.initLevel();
 };
 
-Controller.prototype.initLevel = function() {
+GameController.prototype.initLevel = function() {
     this.currentLevel = this.levelManager.getCurrentLevel();
     this.currentLevel.dispose();
     this.currentLevel.setup(this.camera);

@@ -1,26 +1,26 @@
-function Render(context, canvas, controller) {
+function GameRender(context, canvas, controller) {
     this.context = context;
     this.controller = controller;
     this.canvas = canvas;
 }
 
-Render.prototype.isHeroDead = function() {
+GameRender.prototype.isHeroDead = function() {
     return this.controller.isHeroDead();
 };
 
-Render.prototype.isCurrentLevelFinish = function() {
+GameRender.prototype.isCurrentLevelFinish = function() {
     return this.controller.isCurrentLevelFinish();
 };
 
-Render.prototype.playNextLevel = function() {
+GameRender.prototype.playNextLevel = function() {
     return this.controller.initNextLevel();
 };
 
-Render.prototype.isLastLevel = function() {
+GameRender.prototype.isLastLevel = function() {
     return this.controller.isLastLevel();
 };
 
-Render.prototype.update = function(deltatime) {
+GameRender.prototype.update = function(deltatime) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.imageSmoothingEnabled = false;
     

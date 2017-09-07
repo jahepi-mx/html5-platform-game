@@ -2,8 +2,8 @@ function GameScene(context, canvas, callback) {
     this.context = context;
     this.canvas = canvas;
     this.callback = callback;
-    this.controller = new Controller();
-    this.render = new Render(this.context, this.canvas, this.controller);
+    this.controller = new GameController();
+    this.render = new GameRender(this.context, this.canvas, this.controller);
     this.onKeyDownRef = this.onKeyDown.bind(this);
     this.onKeyUpRef = this.onKeyUp.bind(this);
     this.mouseX = 0;
