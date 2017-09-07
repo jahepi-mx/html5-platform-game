@@ -112,7 +112,7 @@ Controller.prototype.update = function(deltatime) {
                 
                 if (enemy.hasGuns) {
                     if (enemy.isShooting) {
-                        enemy.fireBlast(this.hero.left() + this.hero.width / 2, this.hero.top() + this.hero.height / 2);
+                        enemy.shoot(this.hero.left() + this.hero.width / 2, this.hero.top() + this.hero.height / 2);
                     }
                     enemy.changeDirection(this.hero.centerX);                    
                     for (var i = 0; i < enemy.blasts.length; i++) {

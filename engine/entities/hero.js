@@ -184,8 +184,8 @@ Hero.prototype.collide = function(entity) {
     // AABB Collision detection
     var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
     var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
-    var sizeX = (this.width / 2 + entity.width / 2) * 0.5;
-    var sizeY = (this.height / 2 + entity.height / 2) * 0.5;
+    var sizeX = (this.width / 2 + entity.width / 2) * 0.7;
+    var sizeY = (this.height / 2 + entity.height / 2) * 0.7;
     if (diffX < sizeX && diffY < sizeY) {
         this.die();
     }

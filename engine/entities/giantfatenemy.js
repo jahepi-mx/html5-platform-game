@@ -46,7 +46,7 @@ GiantFatEnemy.prototype.changeDirection = function(x) {
     this.direction = diff < 0 ? -1 : 1;
 };
 
-GiantFatEnemy.prototype.fireBlast = function(x, y) {
+GiantFatEnemy.prototype.shoot = function(x, y) {
     if (!this.blastFlag) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         this.blastFlag = true;
