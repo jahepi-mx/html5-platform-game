@@ -1,4 +1,4 @@
-function GiantFatEnemy(x, y, width, height, health, camera) {
+function DragonEnemy(x, y, width, height, health, camera) {
     this.x = x * Config.tileSize - (width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize - (height - Config.tileSize);
     this.width = width;
@@ -18,46 +18,47 @@ function GiantFatEnemy(x, y, width, height, health, camera) {
     this.nextShootTimeCount = 0;
     this.shootInterval = 8;
     
-    this.idleAnimation = new Animation(7, 1);
-    this.shootAnimation = new Animation(8, 2);
+    this.idleAnimation = new Animation(5, 1);
+    this.shootAnimation = new Animation(9, 2);
     this.deadAnimation = new Animation(6, 1);
-    this.damageAnimation = new Animation(5, 2);
+    this.damageAnimation = new Animation(3, 2);
     this.damageAnimation.stopAtSequenceNumber(1, this.onStopDamageAnimation.bind(this));
     this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
     this.shootAnimation.stopAtSequenceNumber(1, this.onStopShootAnimation.bind(this));
 }
 
-GiantFatEnemy.prototype.onStopShootAnimation = function() {
+DragonEnemy.prototype.onStopShootAnimation = function() {
     this.shootAnimation.reset();
     this.isShooting = false;
     this.blastFlag = false;
 };
 
-GiantFatEnemy.prototype.onStopDeadAnimation = function() {
+DragonEnemy.prototype.onStopDeadAnimation = function() {
     this.isDisposable = true;
 };
 
-GiantFatEnemy.prototype.onStopDamageAnimation = function() {
+DragonEnemy.prototype.onStopDamageAnimation = function() {
     this.isDamage = false;
 };
 
-GiantFatEnemy.prototype.changeDirection = function(x) {
+DragonEnemy.prototype.changeDirection = function(x) {
     var diff = x - this.left();
     this.direction = diff < 0 ? -1 : 1;
 };
 
-GiantFatEnemy.prototype.shoot = function(x, y) {
+DragonEnemy.prototype.shoot = function(x, y) {
     if (!this.blastFlag) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         this.blastFlag = true;
         var diffX = x - (this.left() + this.width / 2);
         var diffY = y - (this.top() + this.height / 2);
         var radians = Math.atan2(diffY, diffX);
-        this.blasts.push(new EnemyBlast(this, radians, 0.15, EnemyBlast.FIRE_TYPE, this.camera));
+        this.blasts.push(new EnemyBlast(this, radians, 0.30, EnemyBlast.SPHERE_TYPE, this.camera));
+        this.blasts.push(new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, this.camera));
     }
 };
 
-GiantFatEnemy.prototype.update = function(deltatime) {
+DragonEnemy.prototype.update = function(deltatime) {
     this.nextShootTimeCount += deltatime;
     if (this.nextShootTime === 0) {
         // Shoots randomly in X seconds interval
@@ -89,16 +90,16 @@ GiantFatEnemy.prototype.update = function(deltatime) {
     }
 };
 
-GiantFatEnemy.prototype.draw = function(context) {
+DragonEnemy.prototype.draw = function(context) {
     var key = "";
     if (this.isDamage && !this.damageAnimation.isStopped()) {
-        key = "giant_hit" + (this.damageAnimation.getFrame() + 1);
+        key = "dragon_hit" + (this.damageAnimation.getFrame() + 1);
     } else if (this.isDead) {
         key = "explo_" + (this.deadAnimation.getFrame() + 1);
     }  else if (this.isShooting) {
-        key = "giant_attack" + (this.shootAnimation.getFrame() + 1);
+        key = "dragon_attack" + (this.shootAnimation.getFrame() + 1);
     } else {
-        key = "giant_idle" + (this.idleAnimation.getFrame() + 1);
+        key = "dragon_idle" + (this.idleAnimation.getFrame() + 1);
     }
     if (key !== "") {
         if (this.direction === -1) {
@@ -116,7 +117,7 @@ GiantFatEnemy.prototype.draw = function(context) {
     }
 };
 
-GiantFatEnemy.prototype.collide = function(entity) {
+DragonEnemy.prototype.collide = function(entity) {
     if (this.isDead) {
         return false;
     }
@@ -142,19 +143,18 @@ GiantFatEnemy.prototype.collide = function(entity) {
     return false;
 };
 
-GiantFatEnemy.prototype.left = function() {
+DragonEnemy.prototype.left = function() {
     return this.x - this.camera.x;
 };
 
-GiantFatEnemy.prototype.right = function() {
+DragonEnemy.prototype.right = function() {
     return (this.x + this.width) - this.camera.x;
 };
 
-GiantFatEnemy.prototype.top = function() {
+DragonEnemy.prototype.top = function() {
     return this.y - this.camera.y;
 };
 
-GiantFatEnemy.prototype.bottom = function() {
+DragonEnemy.prototype.bottom = function() {
     return (this.y + this.height) - this.camera.y;
 };
-

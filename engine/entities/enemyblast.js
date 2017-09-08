@@ -1,6 +1,9 @@
-function EnemyBlast(enemy, radians, camera) {
-    this.width = enemy.width * 0.15;
-    this.height = enemy.width * 0.15;
+EnemyBlast.FIRE_TYPE = 1;
+EnemyBlast.SPHERE_TYPE = 2;
+
+function EnemyBlast(enemy, radians, sizeRatio, type, camera) {
+    this.width = enemy.width * sizeRatio;
+    this.height = enemy.width * sizeRatio;
     this.x = enemy.left() + enemy.width / 2 - this.width / 2;
     this.y = enemy.top() + enemy.height / 2 - this.height / 2;
     this.ratioX = Math.cos(radians);
@@ -15,6 +18,7 @@ function EnemyBlast(enemy, radians, camera) {
     this.blastExplosionAnimation.stopAtSequenceNumber(1, this.onStopExplosionAnimation.bind(this));
     this.traveledX = 0;
     this.traveledY = 0;
+    this.type = type;
 }
 
 EnemyBlast.prototype.onStopExplosionAnimation = function() {
@@ -47,8 +51,14 @@ EnemyBlast.prototype.draw = function(context) {
             var key = "explo_" + (this.blastExplosionAnimation.getFrame() + 1);
             context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height); 
         } else {
-            var key = "spin_" + (this.blastAnimation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+            if (this.type === EnemyBlast.FIRE_TYPE) {
+                var key = "spin_" + (this.blastAnimation.getFrame() + 1);
+                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+            }
+            if (this.type === EnemyBlast.SPHERE_TYPE) {
+                var key = "bomb";
+                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+            }
         }
     }
 };

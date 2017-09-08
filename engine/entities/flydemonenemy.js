@@ -22,7 +22,7 @@ function FlyDemonEnemy(x, y, width, height, velocityX, velocityY, health, offset
     this.velocityY = velocityY;
     this.traveledX = 0;
     this.traveledY = 0;
-    this.cosCurve = 0;
+    this.cosRatio = 0;
     this.direction = this.directions[Math.round(Math.random() * 2)];
     this.changeDirection = Math.random() * 2 + 2;
     this.changeDirectionTime = 0;
@@ -88,9 +88,9 @@ FlyDemonEnemy.prototype.update = function(deltatime) {
         this.traveledX += this.velocityX * deltatime;
     }
     
-    this.cosCurve += 60 * deltatime;
-    this.cosCurve %= 360;
-    this.traveledY += this.velocityY * Math.cos(Math.PI / 180 * this.cosCurve) * deltatime;
+    this.cosRatio += 60 * deltatime;
+    this.cosRatio %= 360;
+    this.traveledY += this.velocityY * Math.cos(Math.PI / 180 * this.cosRatio) * deltatime;
 };
 
 FlyDemonEnemy.prototype.collide = function(entity) {

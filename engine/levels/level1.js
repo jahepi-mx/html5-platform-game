@@ -45,9 +45,10 @@ Level1.prototype.setup = function(camera) {
     this.coins[2 * this.mapWidth + 9] = new Coin(9, 2, this.camera);
 
     this.enemies[6 * this.mapWidth + 12] = new LavaEnemy(12, 6, this.camera);
-    this.enemies[5 * this.mapWidth + 8] = new ZombieEnemy(8, 5, 70, 70, 30, 150, 2, this.camera);
-    this.enemies[5 * this.mapWidth + 9] = new SkeletonEnemy(9, 5, 70, 70, 50, 100, 4, this.camera);
-    this.enemies[5 * this.mapWidth + 7] = new FlyDemonEnemy(7, 5, 70, 70, 50, 50, 4, 300, -50, this.camera);
+    //this.enemies[5 * this.mapWidth + 8] = new ZombieEnemy(8, 5, 70, 70, 30, 150, 2, this.camera);
+    this.enemies[5 * this.mapWidth + 8] = new DragonEnemy(8, 5, 70 * 2, 70, 10, this.camera);
+    //this.enemies[5 * this.mapWidth + 9] = new SkeletonEnemy(9, 5, 70, 70, 50, 100, 4, this.camera);
+    //this.enemies[5 * this.mapWidth + 7] = new FlyDemonEnemy(7, 5, 70, 70, 50, 50, 4, 300, -50, this.camera);
     //this.enemies[5 * this.mapWidth + 6] = new ZombieEnemy(6, 5, 70, 70, 60, 90, 4, this.camera);
     this.enemies[6 * this.mapWidth + 47] = new LavaEnemy(47, 6, this.camera);
     this.enemies[6 * this.mapWidth + 48] = new LavaEnemy(48, 6, this.camera);
