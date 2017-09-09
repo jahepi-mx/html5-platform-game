@@ -5,6 +5,7 @@ function FlyDemonEnemy(x, y, width, height, velocityX, velocityY, health, offset
     this.isDisposable = false;
     this.isDead = false;
     this.health = health;
+    this.origHealth = health;
     this.isMortal = true;
     this.hasGuns = false;
     
@@ -33,6 +34,15 @@ FlyDemonEnemy.prototype.onStopDeadAnimation = function() {
 };
 
 FlyDemonEnemy.prototype.draw = function(context) {
+    
+    // Draw life bar
+    if (this.health > 0) {
+        context.fillStyle='#000';
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25), this.y - this.traveledY - this.camera.y - 20, 50, 6);
+        context.fillStyle='#ff0000';
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24), this.y - this.traveledY - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
+    }
+    
     var name = "";
     if (this.isDead) {
         name = "explo_" + (this.deadAnimation.getFrame() + 1);
@@ -104,11 +114,9 @@ FlyDemonEnemy.prototype.collide = function(entity) {
     var sizeY = this.height / 2 + entity.height / 2;
     if (diffX < sizeX && diffY < sizeY) {
         Assets.playAudio(Assets.explosion_sound, false);
-        var tmpHealth = this.health - 1;
-        if (tmpHealth <= 0) {
+        this.health--;
+        if (this.health <= 0) {
             this.isDead = true;
-        } else {
-            this.health--;
         }
         return true;
     }

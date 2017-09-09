@@ -9,6 +9,7 @@ function StaticEnemy(x, y, camera, type) {
     this.x = x * this.width;
     this.y = y * this.height;
     this.isMortal = false;
+    this.isDead = false;
     this.hasGuns = false;
     this.type = type;
     this.camera = camera;

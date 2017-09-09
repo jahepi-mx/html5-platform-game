@@ -5,6 +5,7 @@ function GiantFatEnemy(x, y, width, height, health, camera) {
     this.height = height;
     this.camera = camera;
     this.health = health;
+    this.origHealth = health;
     this.isDisposable = false;
     this.isDead = false;
     this.isDamage = false;
@@ -90,6 +91,14 @@ GiantFatEnemy.prototype.update = function(deltatime) {
 };
 
 GiantFatEnemy.prototype.draw = function(context) {
+    
+    // Draw life bar
+    if (this.health > 0) {
+        context.fillStyle='#000';
+        context.fillRect(this.x - this.camera.x + (this.width / 2 - 25), this.y - this.camera.y - 20, 50, 6);
+        context.fillStyle='#ff0000';
+        context.fillRect(this.x - this.camera.x + (this.width / 2 - 24), this.y - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
+    }
     var key = "";
     if (this.isDamage && !this.damageAnimation.isStopped()) {
         key = "giant_hit" + (this.damageAnimation.getFrame() + 1);
@@ -128,11 +137,10 @@ GiantFatEnemy.prototype.collide = function(entity) {
     if (diffX < sizeX && diffY < sizeY) {
         if (!this.isDamage) {
             Assets.playAudio(Assets.explosion_sound, false);
-            var tmpHealth = this.health - 1;
-            if (tmpHealth <= 0) {
+            this.health--;
+            if (this.health <= 0) {
                 this.isDead = true;
             } else {
-                this.health--;
                 this.damageAnimation.reset();
                 this.isDamage = true;
             }

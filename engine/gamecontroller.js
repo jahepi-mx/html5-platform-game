@@ -100,7 +100,9 @@ GameController.prototype.update = function(deltatime) {
             var enemy = this.getEnemy(y * this.currentLevel.mapWidth + x);
             if (enemy !== null) {
                 enemy.update(deltatime);
-                this.hero.collide(enemy);
+                if (!enemy.isDead) {
+                    this.hero.collide(enemy);
+                }
                 
                 if (enemy.isMortal) {
                     for (var i = 0; i < this.hero.blasts.length; i++) {
@@ -119,6 +121,7 @@ GameController.prototype.update = function(deltatime) {
                         this.hero.collide(enemy.blasts[i]);
                     }
                 }
+                
                 if (enemy.isDisposable) {
                     this.enemies[y * this.currentLevel.mapWidth + x] = null;
                 } 

@@ -46,6 +46,15 @@ and open the template in the editor.
             var context;
             var canvas;
             var prevTimestamp = 0;
+            var isPaused = false;
+            
+            document.addEventListener("visibilitychange", function() {
+                if (document.hidden) {
+                   isPaused = true;
+                } else {
+                   isPaused = false;
+                }
+            });
             
             window.onload = function() {
                 canvas = document.getElementById("game");
@@ -74,6 +83,7 @@ and open the template in the editor.
                     scene = new CreditsScene(context, canvas, changeSceneCallback);
                 }
             }
+
             /*
             function resize(canvas) {
                 var scale = {x: 1, y: 1};
