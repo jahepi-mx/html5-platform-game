@@ -50,9 +50,9 @@ SpiderEnemy.prototype.draw = function(context) {
         }
     } else {
         if (this.directionY === -1) {
-            name = "spider08_down" + (this.leftAnimation.getFrame() + 1);
+            name = "spider08_down" + (this.downAnimation.getFrame() + 1);
         } else {
-            name = "spider08_up" + (this.rightAnimation.getFrame() + 1);
+            name = "spider08_up" + (this.upAnimation.getFrame() + 1);
         }
     }
     context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveledX - this.camera.x, this.y + this.traveledY - this.camera.y, this.width, this.height);
