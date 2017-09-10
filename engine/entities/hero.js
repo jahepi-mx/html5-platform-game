@@ -120,7 +120,7 @@ Hero.prototype.shoot = function() {
         Assets.playAudio(Assets.hero_laser_sound, false);
         this.shootingTime = 0;
         this.isShooting = true;
-        this.blasts.push(new HeroBlast(this.centerX, this.centerY, this.camera, this.direction));
+        this.blasts.push(new HeroBlast(this.centerX, this.centerY, this.camera, this.direction, this.movingLeft, this.movingRight, this.isUp, this.isDown));
     }
 };
 

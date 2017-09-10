@@ -30,7 +30,7 @@ EnemyBlast.prototype.update = function(deltatime) {
     this.x = this.enemy.left() + this.enemy.width / 2 - this.width / 2;
     this.y = this.enemy.top() + this.enemy.height / 2 - this.height / 2;
     
-    if (Math.abs(this.traveled) >= Config.worldWidth) {
+    if (Math.abs(this.traveled) >= 600) {
         this.collided = true;
     }
     
