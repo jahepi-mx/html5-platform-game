@@ -75,6 +75,14 @@ Hero.prototype.update = function(deltatime) {
     if (this.direction === -1) {
         this.velocityX = -Math.abs(this.velocityX);
     } 
+    
+    var fps = 1 / deltatime;
+    if (fps > 30) {
+        this.friction = 0.92;
+    } else {
+        this.friction = 0.82;
+    }
+    
     this.velocityX *= this.friction;
     
     if (this.isOnLadder === false) {
