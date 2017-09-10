@@ -263,6 +263,8 @@ GameController.prototype.isLastLevel = function() {
 };
 
 GameController.prototype.nextLevel = function() {
+    this.currentLevel = this.levelManager.getCurrentLevel();
+    this.currentLevel.dispose();
     this.levelManager.nextLevel();
     this.initLevel();
 };
