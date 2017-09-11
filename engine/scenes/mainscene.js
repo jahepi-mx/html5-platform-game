@@ -18,6 +18,8 @@ function MainScene(context, canvas, callback) {
     this.canvas.addEventListener("mousedown", this.onMouseDownRef);
     this.canvas.addEventListener("touchstart", this.onTouchStartRef);
     this.playText = "Play Game";
+    this.backgroundX1 = 0;
+    this.backgroundX2 = Config.worldWidth;
 }
 
 MainScene.prototype.onLoadAssets = function() {
@@ -57,6 +59,18 @@ MainScene.prototype.update = function(deltatime) {
     if (!this.isLoading) {
         this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.moonlight_background.x, Atlas.tiles.moonlight_background.y, Atlas.tiles.moonlight_background.width, Atlas.tiles.moonlight_background.height, 0, 0, this.canvas.width, this.canvas.height);
         
+        this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.ground_background.x, Atlas.tiles.ground_background.y, Atlas.tiles.ground_background.width, Atlas.tiles.ground_background.height, this.backgroundX1, 0, this.canvas.width + 1, this.canvas.height);
+        this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.ground_background.x, Atlas.tiles.ground_background.y, Atlas.tiles.ground_background.width, Atlas.tiles.ground_background.height, this.backgroundX2, 0, this.canvas.width + 1, this.canvas.height);
+        
+        this.backgroundX1 -= 50 * deltatime;
+        this.backgroundX2 -= 50 * deltatime;
+        if (this.backgroundX1 + Config.worldWidth <= 0) {
+            this.backgroundX1 = Config.worldWidth;
+        }
+        if (this.backgroundX2 + Config.worldWidth <= 0) {
+            this.backgroundX2 = Config.worldWidth;
+        }
+        
         if (this.mouseX >= x && this.mouseX <= x + width 
                 && this.mouseY >= y && this.mouseY <= y + height) {          
             this.context.font = "30px joystix";
@@ -73,7 +87,7 @@ MainScene.prototype.update = function(deltatime) {
         this.context.font = "15px joystix";
         this.context.fillStyle = "yellow";
         this.context.textAlign = "center";
-        this.context.fillText("¡Collect all coins!", Config.worldWidth / 2, Config.worldHeight - 100);
+        this.context.fillText("GET ALL COINS!", Config.worldWidth / 2, Config.worldHeight - 100);
             
         if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
                 && this.mouseY >= y && this.mouseY <= y + height) {
