@@ -48,27 +48,24 @@ MainScene.prototype.onMouseDown = function(event) {
 MainScene.prototype.update = function(deltatime) {
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.imageSmoothingEnabled = false;
     var width = Config.worldWidth * 0.7;
     var height = Config.worldHeight * 0.2;
     var x = Config.worldWidth / 2 - (width / 2);
     var y = Config.worldHeight / 2 - (height / 2);
     
     if (!this.isLoading) {
+        this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.moonlight_background.x, Atlas.tiles.moonlight_background.y, Atlas.tiles.moonlight_background.width, Atlas.tiles.moonlight_background.height, 0, 0, this.canvas.width, this.canvas.height);
+        
         if (this.mouseX >= x && this.mouseX <= x + width 
                 && this.mouseY >= y && this.mouseY <= y + height) {          
             this.context.font = "30px joystix";
-            this.context.strokeStyle = 'red';
-            this.context.lineWidth = 3;
-            this.context.strokeText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
-            this.context.fillStyle = "white";
+            this.context.fillStyle = "red";
             this.context.textAlign = "center";
             this.context.fillText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);          
         } else  {
             this.context.font = "30px joystix";
-            this.context.strokeStyle = 'white';
-            this.context.lineWidth = 3;
-            this.context.strokeText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
-            this.context.fillStyle = "red";
+            this.context.fillStyle = "white";
             this.context.textAlign = "center";
             this.context.fillText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
         }
@@ -76,7 +73,7 @@ MainScene.prototype.update = function(deltatime) {
         this.context.font = "15px joystix";
         this.context.fillStyle = "yellow";
         this.context.textAlign = "center";
-        this.context.fillText("Mission: Collect all coins from every level", Config.worldWidth / 2, Config.worldHeight - 100);
+        this.context.fillText("¡Collect all coins!", Config.worldWidth / 2, Config.worldHeight - 100);
             
         if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
                 && this.mouseY >= y && this.mouseY <= y + height) {

@@ -9,6 +9,8 @@ function GameScene(context, canvas, callback) {
     this.mouseX = 0;
     this.mouseY = 0;
     this.left = this.right = this.up = this.down = false;
+    this.showLevelTextTime = 0;
+    this.showLevelTextTimeLimit = 3;
     document.onkeydown = this.onKeyDownRef;
     document.onkeyup = this.onKeyUpRef;
     this.onMouseDownRef = this.onMouseDown.bind(this);
@@ -31,9 +33,9 @@ function GameScene(context, canvas, callback) {
         down_button: {x: 55, y: Config.worldHeight - 70, width: 60, height: 60, atlas: Atlas.gui["down_2"]},
         up_button: {x: 55, y: Config.worldHeight - 150, width: 60, height: 60, atlas: Atlas.gui["up_2"]},
     };
-    this.looseBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You loose, try again?"};
-    this.winBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You win!, ready for the next level?"};
-    this.lastLevelBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You have the courage to made it to the last level"};
+    this.looseBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Ouch!, try again?"};
+    this.winBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Well done, clic for next level!"};
+    this.lastLevelBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You are the choosen one!"};
 }
 
 GameScene.prototype.onMouseDown = function(event) {
@@ -124,10 +126,12 @@ GameScene.prototype.onTouchEvent = function(x, y, pressed) {
     }
     if (this.render.isHeroDead() && x <= this.looseBtn.x + this.looseBtn.width && x >= this.looseBtn.x 
             && y >= this.looseBtn.y && y <= this.looseBtn.y + this.looseBtn.height) {
+        this.showLevelTextTime = 0;
         this.controller.initLevel();
     }
     if (this.render.isCurrentLevelFinish() && !this.render.isLastLevel() && x <= this.winBtn.x + this.winBtn.width && x >= this.winBtn.x 
             && y >= this.winBtn.y && y <= this.winBtn.y + this.winBtn.height) {
+        this.showLevelTextTime = 0;
         this.controller.nextLevel();
     }
     if (this.render.isCurrentLevelFinish() && this.render.isLastLevel() && x <= this.lastLevelBtn.x + this.lastLevelBtn.width && x >= this.lastLevelBtn.x 
@@ -145,7 +149,17 @@ GameScene.prototype.onTouchEvent = function(x, y, pressed) {
 };
 
 GameScene.prototype.update = function(deltatime) {
-    this.render.update(deltatime);
+    
+    if (this.showLevelTextTime < this.showLevelTextTimeLimit) {
+        this.showLevelTextTime += deltatime;
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.font = "20px joystix";
+        this.context.fillStyle = "white";
+        this.context.textAlign = "center";
+        this.context.fillText(this.controller.currentLevel.levelName, Config.worldWidth / 2, Config.worldHeight / 2);
+    } else {
+        this.render.update(deltatime);
+    }
     
     if (this.render.isHeroDead()) {
     
@@ -206,10 +220,12 @@ GameScene.prototype.update = function(deltatime) {
                 this.context.fillText(this.winBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
             }
         }
-    } else {        
-        for (var i in this.controlButtons) {
-            var info = this.controlButtons[i];
-            this.context.drawImage(Assets.guiAtlas, info.atlas.x, info.atlas.y, info.atlas.width, info.atlas.height, info.x, info.y, info.width, info.height);
+    } else {
+        if (this.showLevelTextTime > this.showLevelTextTimeLimit) {
+            for (var i in this.controlButtons) {
+                var info = this.controlButtons[i];
+                this.context.drawImage(Assets.guiAtlas, info.atlas.x, info.atlas.y, info.atlas.width, info.atlas.height, info.x, info.y, info.width, info.height);
+            }
         }
     }
 };
