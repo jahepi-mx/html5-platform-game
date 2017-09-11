@@ -94,7 +94,7 @@ MainScene.prototype.update = function(deltatime) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
             this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
             this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
-            this.callback("credits");
+            this.callback("game");
         } else {
             this.isMouseDown = false;
         }

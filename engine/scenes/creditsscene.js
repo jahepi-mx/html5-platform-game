@@ -7,13 +7,13 @@ function CreditsScene(context, canvas, callback) {
     this.texts = [
         {x: Config.worldWidth / 2, y: Config.worldHeight, text: "You,ve just completed the game!", red: 255, green: 255, blue: 255, size: 20, removed: false},
         {x: Config.worldWidth / 2, y: Config.worldHeight + 30, text: "Thanks for playing", red: 255, green: 255, blue: 61, size: 20, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 130, text: "Game Programming", red: 255, green: 255, blue: 61, size: 25, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 160, text: "jahepi", red: 255, green: 255, blue: 255, size: 20, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 200, text: "Game Assets", red: 255, green: 255, blue: 61, size: 25, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 230, text: "http://opengameart.org", red: 255, green: 255, blue: 255, size: 20, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 260, text: "https://www.gamedevmarket.net", red: 255, green: 255, blue: 255, size: 20, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 290, text: "http://www.gameart2d.com", red: 255, green: 255, blue: 255, size: 20, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 390, text: "THE END", red: 255, green: 255, blue: 255, size: 34, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 230, text: "Game Programming", red: 255, green: 255, blue: 61, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 260, text: "jahepi", red: 255, green: 255, blue: 255, size: 15, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 300, text: "Game Assets", red: 255, green: 255, blue: 61, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 330, text: "http://opengameart.org", red: 255, green: 255, blue: 255, size: 15, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 360, text: "https://www.gamedevmarket.net", red: 255, green: 255, blue: 255, size: 15, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 390, text: "http://www.gameart2d.com", red: 255, green: 255, blue: 255, size: 15, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 590, text: "THE END", red: 255, green: 255, blue: 255, size: 34, removed: false},
     ];
 }
 
@@ -34,11 +34,14 @@ CreditsScene.prototype.update = function(deltatime) {
     if (this.backgroundX2 + Config.worldWidth <= 0) {
         this.backgroundX2 = Config.worldWidth;
     }
+    
+    var flag = false;
     for (var i = 0; i < this.texts.length; i++) {
         if (this.texts[i].y <= 0) {
             this.texts[i].removed = true;
         }
         if (!this.texts[i].removed) {
+            flag = true;
             var alpha = this.texts[i].y / Config.worldHeight;
             this.context.font = this.texts[i].size + "px joystix";
             this.context.fillStyle = "rgba(" + this.texts[i].red + ", " + this.texts[i].green + ", " + this.texts[i].blue + ", " + alpha + ")";
@@ -46,5 +49,9 @@ CreditsScene.prototype.update = function(deltatime) {
             this.context.fillText(this.texts[i].text, this.texts[i].x, this.texts[i].y);
             this.texts[i].y -= 30 * deltatime;
         }
+    }
+    
+    if (!flag) {
+        this.callback("main");
     }
 };
