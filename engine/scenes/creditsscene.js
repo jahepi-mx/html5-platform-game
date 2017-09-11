@@ -2,67 +2,49 @@ function CreditsScene(context, canvas, callback) {
     this.context = context;
     this.canvas = canvas;
     this.callback = callback;
-    this.isMouseDown = false;
-    this.mouseX = 0;
-    this.mouseY = 0;
-    this.onMouseMoveRef = this.onMouseMove.bind(this);
-    this.onMouseDownRef = this.onMouseDown.bind(this);
-    this.onTouchStartRef = this.onTouchStart.bind(this);
-    this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
-    this.canvas.addEventListener("mousedown", this.onMouseDownRef);
-    this.canvas.addEventListener("touchstart", this.onTouchStartRef);
-    this.endText = "The End";
+    this.backgroundX1 = 0;
+    this.backgroundX2 = Config.worldWidth;   
+    this.texts = [
+        {x: Config.worldWidth / 2, y: Config.worldHeight, text: "You,ve just completed the game!", red: 255, green: 255, blue: 255, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 30, text: "Thanks for playing", red: 255, green: 255, blue: 61, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 130, text: "Game Programming", red: 255, green: 255, blue: 61, size: 25, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 160, text: "jahepi", red: 255, green: 255, blue: 255, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 200, text: "Game Assets", red: 255, green: 255, blue: 61, size: 25, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 230, text: "http://opengameart.org", red: 255, green: 255, blue: 255, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 260, text: "https://www.gamedevmarket.net", red: 255, green: 255, blue: 255, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 290, text: "http://www.gameart2d.com", red: 255, green: 255, blue: 255, size: 20, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 390, text: "THE END", red: 255, green: 255, blue: 255, size: 34, removed: false},
+    ];
 }
-
-CreditsScene.prototype.onMouseMove = function(event) {
-    var rect = this.canvas.getBoundingClientRect();
-    this.mouseX = event.clientX - rect.left;
-    this.mouseY = event.clientY - rect.top;
-};
-
-CreditsScene.prototype.onTouchStart = function(event) {
-    var rect = this.canvas.getBoundingClientRect();
-    this.mouseX = event.touches[0].clientX - rect.left;
-    this.mouseY = event.touches[0].clientY - rect.top;
-    this.isMouseDown = true;
-};
-
-CreditsScene.prototype.onMouseDown = function(event) {
-    this.isMouseDown = true;
-};
 
 CreditsScene.prototype.update = function(deltatime) {
     
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    var width = Config.worldWidth * 0.7;
-    var height = Config.worldHeight * 0.2;
-    var x = Config.worldWidth / 2 - (width / 2);
-    var y = Config.worldHeight / 2 - (height / 2);
-    
-    if (this.mouseX >= x && this.mouseX <= x + width 
-                && this.mouseY >= y && this.mouseY <= y + height) {          
-        this.context.font = "30px joystix";
-        this.context.strokeStyle = 'red';
-        this.context.lineWidth = 3;
-        this.context.strokeText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
-        this.context.fillStyle = "white";
-        this.context.textAlign = "center";
-        this.context.fillText(this.endText, Config.worldWidth / 2, Config.worldHeight / 2);          
-    } else  {
-        this.context.font = "30px joystix";
-        this.context.strokeStyle = 'white';
-        this.context.lineWidth = 3;
-        this.context.strokeText(this.endText, Config.worldWidth / 2, Config.worldHeight / 2);
-        this.context.fillStyle = "red";
-        this.context.textAlign = "center";
-        this.context.fillText(this.endText, Config.worldWidth / 2, Config.worldHeight / 2);
+    this.context.imageSmoothingEnabled = false;
+    this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.moonlight_background.x, Atlas.tiles.moonlight_background.y, Atlas.tiles.moonlight_background.width, Atlas.tiles.moonlight_background.height, 0, 0, this.canvas.width, this.canvas.height);
+        
+    this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.ground_background.x, Atlas.tiles.ground_background.y, Atlas.tiles.ground_background.width, Atlas.tiles.ground_background.height, this.backgroundX1, 0, this.canvas.width + 1, this.canvas.height);
+    this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.ground_background.x, Atlas.tiles.ground_background.y, Atlas.tiles.ground_background.width, Atlas.tiles.ground_background.height, this.backgroundX2, 0, this.canvas.width + 1, this.canvas.height);
+
+    this.backgroundX1 -= 50 * deltatime;
+    this.backgroundX2 -= 50 * deltatime;
+    if (this.backgroundX1 + Config.worldWidth <= 0) {
+        this.backgroundX1 = Config.worldWidth;
     }
-    if (this.isMouseDown && this.mouseX <= x + width && this.mouseX >= x 
-            && this.mouseY >= y && this.mouseY <= y + height) {
-        this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
-        this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
-        this.callback("main");
-    } else {
-        this.isMouseDown = false;
+    if (this.backgroundX2 + Config.worldWidth <= 0) {
+        this.backgroundX2 = Config.worldWidth;
+    }
+    for (var i = 0; i < this.texts.length; i++) {
+        if (this.texts[i].y <= 0) {
+            this.texts[i].removed = true;
+        }
+        if (!this.texts[i].removed) {
+            var alpha = this.texts[i].y / Config.worldHeight;
+            this.context.font = this.texts[i].size + "px joystix";
+            this.context.fillStyle = "rgba(" + this.texts[i].red + ", " + this.texts[i].green + ", " + this.texts[i].blue + ", " + alpha + ")";
+            this.context.textAlign = "center";
+            this.context.fillText(this.texts[i].text, this.texts[i].x, this.texts[i].y);
+            this.texts[i].y -= 30 * deltatime;
+        }
     }
 };
