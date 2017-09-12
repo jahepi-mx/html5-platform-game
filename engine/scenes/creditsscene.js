@@ -3,7 +3,8 @@ function CreditsScene(context, canvas, callback) {
     this.canvas = canvas;
     this.callback = callback;
     this.backgroundX1 = 0;
-    this.backgroundX2 = Config.worldWidth;   
+    this.backgroundX2 = Config.worldWidth;
+    this.music = Assets.playAudio(Assets.end_music, false);
     this.texts = [
         {x: Config.worldWidth / 2, y: Config.worldHeight, text: "You,ve just completed the game!", red: 255, green: 255, blue: 255, size: 20, removed: false},
         {x: Config.worldWidth / 2, y: Config.worldHeight + 30, text: "Thanks for playing", red: 255, green: 255, blue: 61, size: 20, removed: false},
@@ -52,6 +53,7 @@ CreditsScene.prototype.update = function(deltatime) {
     }
     
     if (!flag) {
+        this.music.stop();
         this.callback("main");
     }
 };

@@ -21,6 +21,8 @@ Assets.audioContext = new AudioContext();
 
 Assets.audio.srcs = [
     "assets/audio/level1_music.mp3",
+    "assets/audio/end_music.mp3",
+    "assets/audio/main_music.mp3",
     "assets/audio/coin_sound.mp3",
     "assets/audio/enemy_laser_sound.mp3",
     "assets/audio/hero_laser_sound.mp3",
@@ -30,6 +32,8 @@ Assets.audio.srcs = [
 
 Assets.audio.keys = [
     "level1_music", 
+    "end_music", 
+    "main_music", 
     "coin_sound",
     "enemy_laser_sound",
     "hero_laser_sound",

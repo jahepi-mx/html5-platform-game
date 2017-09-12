@@ -20,10 +20,12 @@ function MainScene(context, canvas, callback) {
     this.playText = "Play Game";
     this.backgroundX1 = 0;
     this.backgroundX2 = Config.worldWidth;
+    this.music = null;
 }
 
 MainScene.prototype.onLoadAssets = function() {
     Atlas.loadAll(this.onLoadAtlas.bind(this));
+    //this.music = Assets.playAudio(Assets.main_music, true);
 };
 
 MainScene.prototype.onLoadAtlas = function() {
@@ -94,6 +96,7 @@ MainScene.prototype.update = function(deltatime) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
             this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
             this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
+            //this.music.stop();
             this.callback("game");
         } else {
             this.isMouseDown = false;
