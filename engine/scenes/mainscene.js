@@ -6,6 +6,7 @@ function MainScene(context, canvas, callback) {
     this.isMouseDown = false;
     this.mouseX = 0;
     this.mouseY = 0;
+    this.music = null;
     if (Assets.loaded && Atlas.loaded) {
         this.isLoading = false;
         this.music = Assets.playAudio(Assets.main_music, true);
@@ -21,7 +22,6 @@ function MainScene(context, canvas, callback) {
     this.playText = "Play Game";
     this.backgroundX1 = 0;
     this.backgroundX2 = Config.worldWidth;
-    this.music = null;
 }
 
 MainScene.prototype.onLoadAssets = function() {
