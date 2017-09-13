@@ -54,7 +54,7 @@ GiantFatEnemy.prototype.shoot = function(x, y) {
         var diffX = x - (this.left() + this.width / 2);
         var diffY = y - (this.top() + this.height / 2);
         var radians = Math.atan2(diffY, diffX);
-        this.blasts.push(new EnemyBlast(this, radians, 0.15, EnemyBlast.FIRE_TYPE, this.camera));
+        this.blasts.push(new EnemyBlast(this, radians, 0.15, EnemyBlast.FIRE_TYPE, false, this.camera));
     }
 };
 

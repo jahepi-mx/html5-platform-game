@@ -1,7 +1,7 @@
 EnemyBlast.FIRE_TYPE = 1;
 EnemyBlast.SPHERE_TYPE = 2;
 
-function EnemyBlast(enemy, radians, sizeRatio, type, camera) {
+function EnemyBlast(enemy, radians, sizeRatio, type, gravity, camera) {
     this.width = enemy.width * sizeRatio;
     this.height = enemy.width * sizeRatio;
     this.x = enemy.left() + enemy.width / 2 - this.width / 2;
@@ -10,7 +10,12 @@ function EnemyBlast(enemy, radians, sizeRatio, type, camera) {
     this.ratioY = Math.sin(radians);
     this.camera = camera;
     this.enemy = enemy;
-    this.velocity = 200 + Math.floor(Math.random() * 100);
+    this.gravity = gravity;
+    this.velocityX = 200 + Math.floor(Math.random() * 100);
+    this.velocityY = this.velocityX;
+    if (this.gravity) {
+        this.velocityY = -this.velocityY + 100;
+    }
     this.collided = false;
     this.isDisposable = false;
     this.blastAnimation = new Animation(5, 1.5);
@@ -39,8 +44,13 @@ EnemyBlast.prototype.update = function(deltatime) {
             this.blastExplosionAnimation.update(deltatime);
         } else {
             this.blastAnimation.update(deltatime);
-            this.traveledX += this.velocity * this.ratioX * deltatime; 
-            this.traveledY += this.velocity * this.ratioY * deltatime; 
+            this.traveledX += this.velocityX * this.ratioX * deltatime;           
+            if (this.gravity) {
+                this.velocityY += Config.gravity * deltatime;
+                this.traveledY += this.velocityY * deltatime; 
+            } else {
+                this.traveledY += this.velocityY * this.ratioY * deltatime;
+            }
         }
     }
 };
