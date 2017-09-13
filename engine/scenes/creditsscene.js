@@ -48,7 +48,7 @@ CreditsScene.prototype.update = function(deltatime) {
             this.context.fillStyle = "rgba(" + this.texts[i].red + ", " + this.texts[i].green + ", " + this.texts[i].blue + ", " + alpha + ")";
             this.context.textAlign = "center";
             this.context.fillText(this.texts[i].text, this.texts[i].x, this.texts[i].y);
-            this.texts[i].y -= 30 * deltatime;
+            this.texts[i].y -= 40 * deltatime;
         }
     }
     

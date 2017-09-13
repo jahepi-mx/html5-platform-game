@@ -73,15 +73,15 @@ Assets.loadAudio = function(index) {
     xmlRequest.onload = function() {
         Assets.audioContext.decodeAudioData(xmlRequest.response, function(buffer) {
             Assets[Assets.audio.keys[index]] = buffer;
-        }, null);
-        if (index + 1 >= Assets.audio.srcs.length) {
-            Assets.loaded = true;
-            if (Assets.callback !== null) {
-                Assets.callback();
+            if (index + 1 >= Assets.audio.srcs.length) {
+                Assets.loaded = true;
+                if (Assets.callback !== null) {
+                    Assets.callback();
+                }
+            } else {
+                Assets.loadAudio(index + 1);
             }
-        } else {
-            Assets.loadAudio(index + 1);
-        }
+        }, null);
     };
     xmlRequest.send();
 };

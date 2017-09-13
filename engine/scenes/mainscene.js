@@ -8,6 +8,7 @@ function MainScene(context, canvas, callback) {
     this.mouseY = 0;
     if (Assets.loaded && Atlas.loaded) {
         this.isLoading = false;
+        this.music = Assets.playAudio(Assets.main_music, true);
     } else {
         Assets.loadAll(this.onLoadAssets.bind(this));
     }
@@ -25,7 +26,7 @@ function MainScene(context, canvas, callback) {
 
 MainScene.prototype.onLoadAssets = function() {
     Atlas.loadAll(this.onLoadAtlas.bind(this));
-    //this.music = Assets.playAudio(Assets.main_music, true);
+    this.music = Assets.playAudio(Assets.main_music, true);
 };
 
 MainScene.prototype.onLoadAtlas = function() {
@@ -96,7 +97,7 @@ MainScene.prototype.update = function(deltatime) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
             this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
             this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
-            //this.music.stop();
+            this.music.stop();
             this.callback("game");
         } else {
             this.isMouseDown = false;
