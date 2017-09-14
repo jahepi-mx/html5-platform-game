@@ -33,7 +33,7 @@ GameController.prototype.update = function(deltatime) {
     // End of ladder implementation
     
     this.hero.update(deltatime);
-    var platformOffset = 3;
+    var platformOffset = 40;
     
     // Hero collision detection
     for (var i = 0; i < this.collisionPrecision; i++) {
@@ -235,6 +235,7 @@ GameController.prototype.moveUp = function(bool) {
 };
 
 GameController.prototype.moveDown = function(bool) {
+    console.log("down");
     if (!this.isCurrentLevelFinish()) this.hero.moveDown(bool);
 };
 

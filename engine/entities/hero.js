@@ -84,6 +84,18 @@ Hero.prototype.update = function(deltatime) {
     }
     this.velocityX *= this.friction;
     
+    if (this.isOnLadder) {
+        this.velocityY = 0;
+    }
+    
+    if (this.isOnLadder && this.isDown) {
+        this.velocityY = 100;
+    }
+    
+    if (this.isOnLadder && this.isUp) {
+        this.velocityY = -100;
+    }
+    
     if (this.isOnLadder === false) {
         this.velocityY += Config.gravity * deltatime;
     }
@@ -149,16 +161,16 @@ Hero.prototype.bottom = function() {
 
 Hero.prototype.moveUp = function(bool) {
     this.isUp = bool;
-    if (this.isOnLadder) {
+    /*if (this.isOnLadder) {
         this.velocityY = bool ? -100 : 0;
-    }
+    }*/
 };
 
 Hero.prototype.moveDown = function(bool) {
     this.isDown = bool;
-    if (this.isOnLadder) {
+    /*if (this.isOnLadder) {
         this.velocityY = bool ? 100 : 0;
-    }
+    }*/
 };
 
 Hero.prototype.moveRight = function(bool) {
