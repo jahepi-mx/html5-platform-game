@@ -161,16 +161,10 @@ Hero.prototype.bottom = function() {
 
 Hero.prototype.moveUp = function(bool) {
     this.isUp = bool;
-    /*if (this.isOnLadder) {
-        this.velocityY = bool ? -100 : 0;
-    }*/
 };
 
 Hero.prototype.moveDown = function(bool) {
     this.isDown = bool;
-    /*if (this.isOnLadder) {
-        this.velocityY = bool ? 100 : 0;
-    }*/
 };
 
 Hero.prototype.moveRight = function(bool) {

@@ -235,7 +235,6 @@ GameController.prototype.moveUp = function(bool) {
 };
 
 GameController.prototype.moveDown = function(bool) {
-    console.log("down");
     if (!this.isCurrentLevelFinish()) this.hero.moveDown(bool);
 };
 
