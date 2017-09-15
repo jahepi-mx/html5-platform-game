@@ -34,8 +34,8 @@ function GameScene(context, canvas, callback) {
         up_button: {x: 55, y: Config.worldHeight - 150, width: 60, height: 60, atlas: Atlas.gui["up_2"]},
     };
     this.looseBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Ouch!, try again?"};
-    this.winBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Well done, clic for next level!"};
-    this.lastLevelBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You are the choosen one!"};
+    this.winBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Ready for next level!? Touch!"};
+    this.lastLevelBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You got all the gold! Touch!"};
 }
 
 GameScene.prototype.onMouseDown = function(event) {
