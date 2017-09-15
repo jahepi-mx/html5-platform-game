@@ -8,7 +8,6 @@ and open the template in the editor.
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
-        <link rel="manifest" href="manifest.json">
         <style type="text/css">
         @font-face {
             font-family: 'joystix';
@@ -54,6 +53,12 @@ and open the template in the editor.
                 context = canvas.getContext("2d");
                 canvas.width = Config.worldWidth;
                 canvas.height = Config.worldHeight;
+                screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+                if (screen.lockOrientationUniversal !== undefined && screen.lockOrientationUniversal("landscape")) {
+                  fullScreenOn(canvas);
+                } else {
+                  fullScreenOff();
+                }
                 scene = new MainScene(context, canvas, changeSceneCallback);
                 window.requestAnimationFrame(onUpdate);    
             };
@@ -76,6 +81,22 @@ and open the template in the editor.
                 }  else if (sceneName === "credits") {
                     scene = new CreditsScene(context, canvas, changeSceneCallback);
                 }
+            }
+            
+            function fullScreenOn(element) {
+                if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
+                    if ("requestFullscreen" in element) element.requestFullscreen();
+                    else if ("webkitRequestFullscreen" in element) element.webkitRequestFullscreen();
+                    else if ("mozRequestFullScreen" in element) element.mozRequestFullScreen();
+                    else if ("msRequestFullscreen" in element) element.msRequestFullscreen();
+                }
+            }
+            
+            function fullScreenOff() {
+                if ("exitFullscreen" in document) document.exitFullscreen();
+                else if ("webkitExitFullscreen" in document) document.webkitExitFullscreen();
+                else if ("mozCancelFullScreen" in document) document.mozCancelFullScreen();
+                else if ("msExitFullscreen" in document) document.msExitFullscreen();
             }
         </script>
     </head>

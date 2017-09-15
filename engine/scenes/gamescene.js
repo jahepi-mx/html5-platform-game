@@ -62,6 +62,7 @@ GameScene.prototype.onTouchStart = function(event) {
 };
 
 GameScene.prototype.onTouchEnd = function(event) {
+    if (this.showLevelTextTime < this.showLevelTextTimeLimit) return;
     this.left = this.right = this.up = this.down = false;
     var rect = this.canvas.getBoundingClientRect();
     for (var i = 0; i < event.touches.length; i++) {
@@ -80,6 +81,7 @@ GameScene.prototype.onTouchMove = function(event) {
 };
 
 GameScene.prototype.onKeyDown = function(e) {
+    if (this.showLevelTextTime < this.showLevelTextTimeLimit) return;
     e = e || window.event;
     if (e.keyCode === 32) this.controller.jump();
     if (e.keyCode === 37) this.controller.moveLeft(true);
@@ -90,6 +92,7 @@ GameScene.prototype.onKeyDown = function(e) {
 };
 
 GameScene.prototype.onKeyUp = function(e) {
+    if (this.showLevelTextTime < this.showLevelTextTimeLimit) return;
     e = e || window.event;
     if (e.keyCode === 37) this.controller.moveLeft(false);
     if (e.keyCode === 39) this.controller.moveRight(false);
@@ -98,6 +101,7 @@ GameScene.prototype.onKeyUp = function(e) {
 };
 
 GameScene.prototype.onTouchEvent = function(x, y, pressed) {
+    if (this.showLevelTextTime < this.showLevelTextTimeLimit) return;
     for (var i in this.controlButtons) {
         var info = this.controlButtons[i];
         var width = info.width;
