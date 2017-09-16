@@ -54,7 +54,7 @@ Assets.loadAll = function(callback) {
 Assets.load = function(index) {
     Assets[Assets.keys[index]].onload = function() {
         if (index + 1 >= Assets.srcs.length) {
-            if (Assets.audioContext !== undefined) {
+            if (Assets.audioContext && window.AudioContext) {
                 Assets.loadAllAudios();
             } else {
                 if (Assets.callback !== null) {

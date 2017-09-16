@@ -9,10 +9,13 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <style type="text/css">
-        @font-face {
-            font-family: 'joystix';
-            src: url('assets/fonts/joystix.ttf');
-        }
+            @font-face { font-family: 'joystix'; src: url('assets/fonts/joystix.ttf'); }
+            body * { font-family: joystix; color: white; font-size: .9em}
+            ul { list-style-type: none; }
+            body { background-color: black; }
+            #container { margin: 0 auto; text-align: center }
+            .item { color:red; }
+            input { color: black; }
         </style>
         <script src="engine/config/config.js"></script>
         <script src="engine/levels/levelmanager.js"></script>
@@ -54,10 +57,8 @@ and open the template in the editor.
                 canvas.width = Config.worldWidth;
                 canvas.height = Config.worldHeight;
                 screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
-                if (screen.lockOrientationUniversal !== undefined && screen.lockOrientationUniversal("landscape")) {
-                  fullScreenOn(canvas);
-                } else {
-                  fullScreenOff();
+                if (!screen.lockOrientationUniversal && screen.orientation) {
+                    screen.lockOrientationUniversal = screen.orientation.lock;
                 }
                 scene = new MainScene(context, canvas, changeSceneCallback);
                 window.requestAnimationFrame(onUpdate);    
@@ -83,25 +84,35 @@ and open the template in the editor.
                 }
             }
             
-            function fullScreenOn(element) {
-                if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
-                    if ("requestFullscreen" in element) element.requestFullscreen();
-                    else if ("webkitRequestFullscreen" in element) element.webkitRequestFullscreen();
-                    else if ("mozRequestFullScreen" in element) element.mozRequestFullScreen();
-                    else if ("msRequestFullscreen" in element) element.msRequestFullscreen();
+            function goFullScreen() {
+                if (screen.lockOrientationUniversal) {
+                    fullScreenOn(canvas);
+                    screen.lockOrientationUniversal("landscape");
                 }
             }
-            
-            function fullScreenOff() {
-                if ("exitFullscreen" in document) document.exitFullscreen();
-                else if ("webkitExitFullscreen" in document) document.webkitExitFullscreen();
-                else if ("mozCancelFullScreen" in document) document.mozCancelFullScreen();
-                else if ("msExitFullscreen" in document) document.msExitFullscreen();
+            function fullScreenOn(element) {
+                if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
+                    if (element.requestFullscreen) element.requestFullscreen();
+                    else if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
+                    else if (element.mozRequestFullScreen) element.mozRequestFullScreen();
+                    else if (element.msRequestFullscreen) element.msRequestFullscreen();
+                }
             }
         </script>
     </head>
-    <body style="background-color: black">
-        <canvas id="game" style="margin: 0 auto;"></canvas>
-        <span style="font-family: joystix; display: none">Hidden text just for loading font before canvas.</span>
+    <body>
+        <div id="container">
+            <canvas id="game"></canvas>
+            <span style="font-family: joystix; display: none">Hidden text just for loading font before canvas.</span>
+            <hr />
+            <p>If you are on a computer you can play with the keyboard:<p>
+            <ul>
+                <li><span class="item">Arrow keys</span>: Move</li>
+                <li><span class="item">A Key</span>: Shoot</li>
+                <li><span class="item">Spacebar Key</span>: Jump</li>
+            </ul>
+            <p>For best mobile experience go fullscreen:<p>
+            <input type="button" value="Go FullScreen" onclick="goFullScreen()" />
+        </div>
     </body>
 </html>
