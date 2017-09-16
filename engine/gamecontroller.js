@@ -271,6 +271,7 @@ GameController.prototype.nextLevel = function() {
 };
 
 GameController.prototype.initLevel = function() {
+    this.enemiesBlasts = [];
     this.currentLevel = this.levelManager.getCurrentLevel();
     this.currentLevel.dispose();
     this.currentLevel.setup(this.camera);

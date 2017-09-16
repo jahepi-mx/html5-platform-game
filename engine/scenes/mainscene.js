@@ -149,6 +149,10 @@ MainScene.prototype.update = function(deltatime) {
         this.context.font = "30px joystix";
         this.context.fillStyle = "white";
         this.context.textAlign = "center";
-        this.context.fillText("Loading...", Config.worldWidth / 2, Config.worldHeight / 2);
+        if (!Assets.loaded) {
+            this.context.fillText("Loading Assets " + parseInt(Assets.getLoadedRatio() * 100) + "%", Config.worldWidth / 2, Config.worldHeight / 2);
+        } else if (!Atlas.loaded) {
+            this.context.fillText("Loading XML Data " + parseInt(Atlas.getLoadedRatio() * 100) + "%", Config.worldWidth / 2, Config.worldHeight / 2);
+        }
     }      
 };

@@ -1,5 +1,6 @@
 Assets = {};
 Assets.loaded = false;
+Assets.loadedCount = 0;
 
 Assets.srcs = [
     "assets/tiles/sprites.png", 
@@ -18,6 +19,10 @@ Assets.keys = [
 Assets.audio = {};
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 Assets.audioContext = new AudioContext();
+
+Assets.getLoadedRatio = function() {
+    return Assets.loadedCount / (Assets.srcs.length + Assets.audio.srcs.length);
+};
 
 Assets.audio.srcs = [
     "assets/audio/level1_music.mp3",
@@ -54,8 +59,10 @@ Assets.loadAll = function(callback) {
 Assets.load = function(index) {
     Assets[Assets.keys[index]].onload = function() {
         if (index + 1 >= Assets.srcs.length) {
+            Assets.loadedCount++;
             Assets.loadAllAudios();
         } else {
+            Assets.loadedCount++;
             Assets.load(index + 1);
         }
     };
@@ -74,20 +81,24 @@ Assets.loadAudio = function(index) {
         Assets.audioContext.decodeAudioData(xmlRequest.response, function(buffer) {
             Assets[Assets.audio.keys[index]] = buffer;
             if (index + 1 >= Assets.audio.srcs.length) {
+                Assets.loadedCount++;
                 Assets.loaded = true;
                 if (Assets.callback !== null) {
                     Assets.callback();
                 }
             } else {
+                Assets.loadedCount++;
                 Assets.loadAudio(index + 1);
             }
         }, function() {
             if (index + 1 >= Assets.audio.srcs.length) {
+                Assets.loadedCount++;
                 Assets.loaded = true;
                 if (Assets.callback !== null) {
                     Assets.callback();
                 }
             } else {
+                Assets.loadedCount++;
                 Assets.loadAudio(index + 1);
             }
         });

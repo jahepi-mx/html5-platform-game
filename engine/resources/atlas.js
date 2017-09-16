@@ -1,5 +1,6 @@
 Atlas = {};
 Atlas.loaded = false;
+Atlas.loadedCount = 0;
 
 Atlas.xmls = [
     "assets/tiles/sprites.xml", 
@@ -14,6 +15,10 @@ Atlas.keys = [
     "enemies", 
     "gui"
 ];
+
+Atlas.getLoadedRatio = function() {
+    return Atlas.loadedCount / Atlas.xmls.length;
+};
 
 Atlas.loadAll = function(callback) {
     for (var i = 0; i < Atlas.keys.length; i++) {
@@ -40,11 +45,13 @@ Atlas.load = function(index, callback) {
            }
         }
         if (index + 1 >= Atlas.xmls.length) {
+            Atlas.loadedCount++;
             Atlas.loaded = true;
             if (callback !== null) {
                 callback();
             }
         } else {
+            Atlas.loadedCount++;
             Atlas.load(index + 1, callback);
         }
     };
