@@ -54,13 +54,7 @@ Assets.loadAll = function(callback) {
 Assets.load = function(index) {
     Assets[Assets.keys[index]].onload = function() {
         if (index + 1 >= Assets.srcs.length) {
-            if (Assets.audioContext && window.AudioContext) {
-                Assets.loadAllAudios();
-            } else {
-                if (Assets.callback !== null) {
-                    Assets.callback();
-                }
-            }
+            Assets.loadAllAudios();
         } else {
             Assets.load(index + 1);
         }
@@ -87,7 +81,16 @@ Assets.loadAudio = function(index) {
             } else {
                 Assets.loadAudio(index + 1);
             }
-        }, null);
+        }, function() {
+            if (index + 1 >= Assets.audio.srcs.length) {
+                Assets.loaded = true;
+                if (Assets.callback !== null) {
+                    Assets.callback();
+                }
+            } else {
+                Assets.loadAudio(index + 1);
+            }
+        });
     };
     xmlRequest.send();
 };

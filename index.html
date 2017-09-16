@@ -1,12 +1,7 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Game Demo</title>
         <meta charset="UTF-8">
         <style type="text/css">
             @font-face { font-family: 'joystix'; src: url('assets/fonts/joystix.ttf'); }
@@ -15,7 +10,6 @@ and open the template in the editor.
             body { background-color: black; }
             #container { margin: 0 auto; text-align: center }
             .item { color:red; }
-            input { color: black; }
         </style>
         <script src="engine/config/config.js"></script>
         <script src="engine/levels/levelmanager.js"></script>
@@ -56,10 +50,6 @@ and open the template in the editor.
                 context = canvas.getContext("2d");
                 canvas.width = Config.worldWidth;
                 canvas.height = Config.worldHeight;
-                screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
-                if (!screen.lockOrientationUniversal && screen.orientation) {
-                    screen.lockOrientationUniversal = screen.orientation.lock;
-                }
                 scene = new MainScene(context, canvas, changeSceneCallback);
                 window.requestAnimationFrame(onUpdate);    
             };
@@ -83,21 +73,6 @@ and open the template in the editor.
                     scene = new CreditsScene(context, canvas, changeSceneCallback);
                 }
             }
-            
-            function goFullScreen() {
-                if (screen.lockOrientationUniversal) {
-                    fullScreenOn(canvas);
-                    screen.lockOrientationUniversal("landscape");
-                }
-            }
-            function fullScreenOn(element) {
-                if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
-                    if (element.requestFullscreen) element.requestFullscreen();
-                    else if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
-                    else if (element.mozRequestFullScreen) element.mozRequestFullScreen();
-                    else if (element.msRequestFullscreen) element.msRequestFullscreen();
-                }
-            }
         </script>
     </head>
     <body>
@@ -111,8 +86,6 @@ and open the template in the editor.
                 <li><span class="item">A Key</span>: Shoot</li>
                 <li><span class="item">Spacebar Key</span>: Jump</li>
             </ul>
-            <p>For best mobile experience go fullscreen:<p>
-            <input type="button" value="Go FullScreen" onclick="goFullScreen()" />
         </div>
     </body>
 </html>
