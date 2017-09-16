@@ -3,6 +3,7 @@ function GameController() {
     this.camera = new Camera();
     this.collisionPrecision = 5;
     this.levelManager = new LevelManager();
+    this.enemiesBlasts = [];
     this.hero = new Hero(0, 0, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.initLevel();
 }
@@ -114,18 +115,25 @@ GameController.prototype.update = function(deltatime) {
                 
                 if (enemy.hasGuns) {
                     if (enemy.isShooting) {
-                        enemy.shoot(this.hero.left() + this.hero.width / 2, this.hero.top() + this.hero.height / 2);
+                        enemy.shoot(this.hero.left() + this.hero.width / 2, this.hero.top() + this.hero.height / 2, this.enemiesBlasts);
                     }
                     enemy.changeDirection(this.hero.centerX);                    
-                    for (var i = 0; i < enemy.blasts.length; i++) {
-                        this.hero.collide(enemy.blasts[i]);
-                    }
                 }
                 
                 if (enemy.isDisposable) {
                     this.enemies[y * this.currentLevel.mapWidth + x] = null;
                 } 
             }
+        }
+    }
+    
+    for (var i = 0; i < this.enemiesBlasts.length; i++) {
+        if (this.enemiesBlasts[i].isDisposable) {
+            this.enemiesBlasts[i] = null;
+            this.enemiesBlasts.splice(i, 1);
+        } else {
+            this.enemiesBlasts[i].update(deltatime);
+            this.hero.collide(this.enemiesBlasts[i]);
         }
     }
     
@@ -149,15 +157,8 @@ GameController.prototype.update = function(deltatime) {
                         this.hero.blasts[i].collide(tile);
                     }                  
                     // Verify if any enemy blast collide with a tile
-                    for (var y2 = this.getMinEnemyY(); y2 <= this.getMaxEnemyY(); y2++) {
-                        for (var x2 = this.getMinEnemyX(); x2 <= this.getMaxEnemyX(); x2++) {
-                            var enemy2 = this.getEnemy(y2 * this.currentLevel.mapWidth + x2);
-                            if (enemy2 !== null && enemy2.hasGuns) {
-                                for (var i = 0; i < enemy2.blasts.length; i++) {
-                                    enemy2.blasts[i].collide(tile);
-                                }
-                            }
-                        }
+                    for (var i = 0; i < this.enemiesBlasts.length; i++) {
+                        this.enemiesBlasts[i].collide(tile);
                     }
                 }
             }

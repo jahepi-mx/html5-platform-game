@@ -13,7 +13,6 @@ function DragonEnemy(x, y, width, height, health, camera) {
     this.isMortal = true;
     this.hasGuns = true;
     this.blastFlag = false;
-    this.blasts = [];
     this.direction = -1;
     this.nextShootTime = 0;
     this.nextShootTimeCount = 0;
@@ -47,15 +46,15 @@ DragonEnemy.prototype.changeDirection = function(x) {
     this.direction = diff < 0 ? -1 : 1;
 };
 
-DragonEnemy.prototype.shoot = function(x, y) {
+DragonEnemy.prototype.shoot = function(x, y, blasts) {
     if (!this.blastFlag) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         this.blastFlag = true;
         var diffX = x - (this.left() + this.width / 2);
         var diffY = y - (this.top() + this.height / 2);
         var radians = Math.atan2(diffY, diffX);
-        this.blasts.push(new EnemyBlast(this, radians, 0.30, EnemyBlast.SPHERE_TYPE, false, this.camera));
-        this.blasts.push(new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, true, this.camera));
+        blasts.push(new EnemyBlast(this, radians, 0.30, EnemyBlast.SPHERE_TYPE, false, this.camera));
+        blasts.push(new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, true, this.camera));
     }
 };
 
@@ -69,15 +68,6 @@ DragonEnemy.prototype.update = function(deltatime) {
         this.nextShootTime = 0;
         this.nextShootTimeCount = 0;
         this.isShooting = true;
-    }
-    
-    for (var i = 0; i < this.blasts.length; i++) {
-        if (this.blasts[i].isDisposable) {
-            this.blasts[i] = null;
-            this.blasts.splice(i, 1);
-        } else {
-            this.blasts[i].update(deltatime);
-        }
     }
     
     if (this.isDamage && !this.damageAnimation.isStopped()) {
@@ -120,10 +110,6 @@ DragonEnemy.prototype.draw = function(context) {
         } else {
             context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x - this.camera.x, this.y - this.camera.y, this.width, this.height);
         }
-    }
-    
-    for (var i = 0; i < this.blasts.length; i++) {
-        this.blasts[i].draw(context);
     }
 };
 

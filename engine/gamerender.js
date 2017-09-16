@@ -52,6 +52,10 @@ GameRender.prototype.update = function(deltatime) {
         }
     }
     
+    for (var i = 0; i < this.controller.enemiesBlasts.length; i++) {
+        this.controller.enemiesBlasts[i].draw(context);
+    }
+    
     this.context.fillStyle = 'white';
     this.context.font = "30px joystix";
     this.context.fillText(this.controller.currentLevel.currentNumberOfCoins + "/" + this.controller.currentLevel.totalNumberOfCoins, 120, 50);
