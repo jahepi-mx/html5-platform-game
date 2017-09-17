@@ -43,16 +43,16 @@ Atlas.load = function(index, callback) {
                var height = elements[i].getAttribute("height");
                Atlas[Atlas.keys[index]][name] = {x: x, y: y, width: width, height: height};
            }
-        }
-        if (index + 1 >= Atlas.xmls.length) {
-            Atlas.loadedCount++;
-            Atlas.loaded = true;
-            if (callback !== null) {
-                callback();
+           if (index + 1 >= Atlas.xmls.length) {
+                Atlas.loadedCount++;
+                Atlas.loaded = true;
+                if (callback !== null) {
+                    callback();
+                }
+            } else {
+                Atlas.loadedCount++;
+                Atlas.load(index + 1, callback);
             }
-        } else {
-            Atlas.loadedCount++;
-            Atlas.load(index + 1, callback);
         }
     };
     xmlRequest.send();
