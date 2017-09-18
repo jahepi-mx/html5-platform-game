@@ -1,5 +1,6 @@
 EnemyBlast.FIRE_TYPE = 1;
 EnemyBlast.SPHERE_TYPE = 2;
+EnemyBlast.RED_TYPE = 4;
 
 function EnemyBlast(enemy, radians, sizeRatio, type, gravity, camera) {
     this.width = enemy.width * sizeRatio;
@@ -67,6 +68,10 @@ EnemyBlast.prototype.draw = function(context) {
             }
             if (this.type === EnemyBlast.SPHERE_TYPE) {
                 var key = "bomb";
+                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+            }
+            if (this.type === EnemyBlast.RED_TYPE) {
+                var key = "bomb2";
                 context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
             }
         }
