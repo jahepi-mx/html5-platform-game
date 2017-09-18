@@ -1,4 +1,4 @@
-function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetY, camera) {
+function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, offsetY, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -8,12 +8,14 @@ function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetY, 
     this.origHealth = health;
     this.isMortal = true;
     this.isShooting = false;
+    this.isRotating = false;
     this.hasGuns = true;
     this.nextShootTime = 0;
     this.nextShootTimeCount = 0;
-    this.shootInterval = 3;
     this.shootType = 2;
     this.shootsCount = 0;
+    this.nextRotateTime = 5;
+    this.nextRotateTimeCount = 0;
     
     this.frontAnimation = new Animation(4, 2);
     this.deadAnimation = new Animation(6, 1);
@@ -21,6 +23,7 @@ function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetY, 
     
     this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
     this.y = y * Config.tileSize + offsetY;
+    this.offsetX = offsetX;
     this.traveledX = 0;
     this.ratioX = 0;
     this.ratioY = 0;
@@ -94,18 +97,33 @@ FlyDemonBossEnemy.prototype.update = function(deltatime) {
         this.isShooting = true;
     }
     
+    if (this.isRotating === false) {
+        this.nextRotateTimeCount += deltatime;
+    }
+    
+    if (this.nextRotateTimeCount >= this.nextRotateTime && !this.isDead) {
+        this.nextRotateTimeCount = 0;
+        this.isRotating = true;
+    }
+    
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
     } else {
         this.frontAnimation.update(deltatime);
     }
-    this.degrees += 60 * deltatime;
-    this.degrees %= 360;
+    
+    if (this.isRotating) {
+        this.degrees += 90 * deltatime;
+        if (this.degrees >= 360) {
+            this.degrees = 0;
+            this.isRotating = false;
+        }
+    }
     
     this.ratioX = Math.cos(Math.PI / 180 * this.degrees);
     this.ratioY = Math.sin(Math.PI / 180 * this.degrees);
     
-    this.traveledX += ((((this.x - this.width) - this.traveledX - this.camera.x) - 250)) * 0.008;
+    this.traveledX += (this.left() - this.offsetX) * deltatime;
 
 };
 
