@@ -19,11 +19,15 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.isUp = false;
     this.isDown = false;
     this.shootingTime = 0;
-    this.shootingTimeLimit = 30 / 60;
+    this.shootingTimeLimit = 1 / 2;
+    this.damageTime = 0;
+    this.damageTimeLimit = 1;
     this.direction = 1;
     this.camera = camera;
     this.isDead = false;
     this.blasts = [];
+    this.life = 3;
+    this.origLife = this.life;
     
     this.idleAnimation = new Animation(10, 1);
     this.runAnimation = new Animation(7, 1);
@@ -36,6 +40,8 @@ function Hero(x, y, width, height, collisionSteps, camera) {
 }
 
 Hero.prototype.update = function(deltatime) {
+    
+    this.damageTime += deltatime;
     
     if (this.isShooting) {
         this.shootingTime += deltatime;
@@ -193,14 +199,23 @@ Hero.prototype.die = function() {
     this.isDead = true;
 }
 
+Hero.prototype.getLifeRatio = function() {
+    return this.life / this.origLife;
+};
+
 Hero.prototype.collide = function(entity) {
+    if (this.isDead) return;
     // AABB Collision detection
     var diffX = Math.abs((this.left() + this.width / 2) - (entity.left() + entity.width / 2));
     var diffY = Math.abs((this.top() + this.height / 2) - (entity.top() + entity.height / 2));
     var sizeX = (this.width / 2 + entity.width / 2) * 0.7;
     var sizeY = (this.height / 2 + entity.height / 2) * 0.7;
-    if (diffX < sizeX && diffY < sizeY) {
-        this.die();
+    if (diffX < sizeX && diffY < sizeY && this.damageTime > this.damageTimeLimit) {
+        this.damageTime = 0;
+        this.life--;
+        if (this.life <= 0) {
+            this.die();
+        }
     }
 };
 
@@ -254,4 +269,5 @@ Hero.prototype.resetState = function() {
     this.direction = 1;
     this.velocityX = 0;
     this.velocityY = 0;
+    this.life = this.origLife;
 };

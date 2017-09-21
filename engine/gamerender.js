@@ -64,4 +64,17 @@ GameRender.prototype.update = function(deltatime) {
     this.context.font = "12px joystix";
     this.context.fillText("Fps: " + Math.floor(1 / deltatime), Config.worldWidth - 50, 15);
     this.controller.hero.draw(this.context);
+    
+    this.context.beginPath();
+    this.context.moveTo(Config.worldWidth - 30, 50);
+    this.context.arc(Config.worldWidth - 30, 50, 25, 0, (2 * Math.PI) * this.controller.hero.getLifeRatio());
+    this.context.lineTo(Config.worldWidth - 30, 50);
+    this.context.fillStyle = 'red';
+    this.context.fill();
+
+    this.context.beginPath();
+    this.context.strokeStyle = 'white';
+    this.context.lineWidth = 4;
+    this.context.arc(Config.worldWidth - 30, 50, 25, 0, (2 * Math.PI));
+    this.context.stroke();
 };
