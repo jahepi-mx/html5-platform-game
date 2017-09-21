@@ -1,4 +1,4 @@
-function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, offsetY, camera) {
+function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, offsetY, offsetYTo, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -24,7 +24,10 @@ function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, 
     this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
     this.y = y * Config.tileSize + offsetY;
     this.offsetX = offsetX;
+    this.offsetY = offsetY;
+    this.offsetYTo = offsetYTo;
     this.traveledX = 0;
+    this.traveledY = 0;
     this.ratioX = 0;
     this.ratioY = 0;
     this.degrees = 0;
@@ -40,9 +43,9 @@ FlyDemonBossEnemy.prototype.draw = function(context) {
     // Draw life bar
     if (this.health > 0) {
         context.fillStyle='#000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25) + (this.ratioX * this.ratioDistance), this.y - this.camera.y - 20 + (this.ratioY * this.ratioDistance), 50, 6);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25) + (this.ratioX * this.ratioDistance), this.y - this.traveledY - this.camera.y - 20 + (this.ratioY * this.ratioDistance), 50, 6);
         context.fillStyle='#ff0000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24) + (this.ratioX * this.ratioDistance), this.y - this.camera.y - 19 + (this.ratioY * this.ratioDistance), 48 * (this.health / this.origHealth), 4);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24) + (this.ratioX * this.ratioDistance), this.y - this.traveledY - this.camera.y - 19 + (this.ratioY * this.ratioDistance), 48 * (this.health / this.origHealth), 4);
     }
     
     var name = "";
@@ -51,7 +54,7 @@ FlyDemonBossEnemy.prototype.draw = function(context) {
     } else {
         name = "fly_demon" + (this.frontAnimation.getFrame() + 1);
     }
-    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveledX - this.camera.x + (this.ratioX * this.ratioDistance), this.y - this.camera.y  + (this.ratioY * this.ratioDistance), this.width, this.height);
+    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveledX - this.camera.x + (this.ratioX * this.ratioDistance), this.y - this.traveledY - this.camera.y  + (this.ratioY * this.ratioDistance), this.width, this.height);
 };
 
 FlyDemonBossEnemy.prototype.changeDirection = function(x) {
@@ -88,6 +91,17 @@ FlyDemonBossEnemy.prototype.shoot = function(x, y, blasts) {
 
 FlyDemonBossEnemy.prototype.update = function(deltatime) {
     
+    if (this.isDead) {
+        this.deadAnimation.update(deltatime);
+    } else {
+        this.frontAnimation.update(deltatime);
+    }
+    
+    if (this.traveledY >= this.offsetYTo) {
+        this.traveledY -= 20 * deltatime;
+        return;
+    }
+    
     this.nextShootTimeCount += deltatime;
     if (this.nextShootTimeCount >= this.nextShootTime && !this.isDead) {
         if (this.shootType === 1) {
@@ -104,12 +118,6 @@ FlyDemonBossEnemy.prototype.update = function(deltatime) {
     if (this.nextRotateTimeCount >= this.nextRotateTime && !this.isDead) {
         this.nextRotateTimeCount = 0;
         this.isRotating = true;
-    }
-    
-    if (this.isDead) {
-        this.deadAnimation.update(deltatime);
-    } else {
-        this.frontAnimation.update(deltatime);
     }
     
     if (this.isRotating) {
@@ -156,11 +164,11 @@ FlyDemonBossEnemy.prototype.right = function() {
 };
 
 FlyDemonBossEnemy.prototype.top = function() {
-    return this.y -  this.camera.y + (this.ratioY * this.ratioDistance);
+    return this.y - this.traveledY -  this.camera.y + (this.ratioY * this.ratioDistance);
 };
 
 FlyDemonBossEnemy.prototype.bottom = function() {
-    return (this.y + this.height) - this.camera.y + (this.ratioY * this.ratioDistance);
+    return (this.y + this.height) - this.traveledY - this.camera.y + (this.ratioY * this.ratioDistance);
 };
 
 

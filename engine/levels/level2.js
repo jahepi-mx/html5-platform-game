@@ -32,6 +32,7 @@ Level2.prototype.setup = function(camera) {
         this.coins[i] = null;
     }
     
+    this.enemies[14 * this.mapWidth + 7] = new DragonBossEnemy(7, 14, 70 * 4, 210, 30, this, this.camera);
     this.coins[14 * this.mapWidth + 84] = new Coin(84, 14, this.camera);
     this.coins[14 * this.mapWidth + 85] = new Coin(85, 14, this.camera);
     this.coins[14 * this.mapWidth + 86] = new Coin(86, 14, this.camera);

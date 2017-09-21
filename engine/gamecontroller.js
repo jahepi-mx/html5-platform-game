@@ -133,7 +133,9 @@ GameController.prototype.update = function(deltatime) {
             this.enemiesBlasts.splice(i, 1);
         } else {
             this.enemiesBlasts[i].update(deltatime);
-            this.hero.collide(this.enemiesBlasts[i]);
+            if (!this.enemiesBlasts[i].collided) {
+                this.hero.collide(this.enemiesBlasts[i]);
+            }
         }
     }
     
