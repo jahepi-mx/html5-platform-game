@@ -16,14 +16,14 @@ function MainScene(context, canvas, callback) {
     this.onMouseMoveRef = this.onMouseMove.bind(this);
     this.onMouseDownRef = this.onMouseDown.bind(this);
     this.onTouchStartRef = this.onTouchStart.bind(this);
+    this.onMouseUpRef = this.onMouseUp.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMoveRef);
     this.canvas.addEventListener("mousedown", this.onMouseDownRef);
     this.canvas.addEventListener("touchstart", this.onTouchStartRef);
-    this.playText = "Play Game";
+    this.canvas.addEventListener("mouseup", this.onMouseUpRef);
     this.backgroundX1 = 0;
     this.backgroundX2 = Config.worldWidth;
     this.startIntro = false;
-    this.alphaButton = 1;
     
     this.texts = [
         {x: Config.worldWidth / 2, y: Config.worldHeight, text: "Once upon a time a man from other galaxy", red: 255, green: 255, blue: 255, size: 20, removed: false},
@@ -36,6 +36,9 @@ function MainScene(context, canvas, callback) {
         {x: Config.worldWidth / 2, y: Config.worldHeight + 280, text: "in order to get them he has to", red: 255, green: 255, blue: 255, size: 20, removed: false},
         {x: Config.worldWidth / 2, y: Config.worldHeight + 320, text: "fight against some evil entities.", red: 255, green: 255, blue: 255, size: 20, removed: false},
     ];
+    
+    this.playBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight / 2 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "Play Game", alpha: 1};
+    this.leaderBoardBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 150 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "Leaderboard", alpha: 1};
 }
 
 MainScene.prototype.onLoadAssets = function() {
@@ -64,14 +67,14 @@ MainScene.prototype.onMouseDown = function(event) {
     this.isMouseDown = true;
 };
 
+MainScene.prototype.onMouseUp = function(event) {
+    this.isMouseDown = false;
+};
+
 MainScene.prototype.update = function(deltatime) {
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.imageSmoothingEnabled = false;
-    var width = Config.worldWidth * 0.3;
-    var height = Config.worldHeight * 0.1;
-    var x = Config.worldWidth / 2 - (width / 2);
-    var y = Config.worldHeight / 2 - (height / 2);
     
     if (!this.isLoading) {
         
@@ -91,11 +94,11 @@ MainScene.prototype.update = function(deltatime) {
         
         if (this.startIntro) {
             
-            if (this.alphaButton > 0) {
-                this.alphaButton -= 0.5 * deltatime;
+            if (this.playBtn.alpha > 0) {
+                this.playBtn.alpha -= 0.5 * deltatime;
             }
             
-            if (this.alphaButton <= 0) {
+            if (this.playBtn.alpha <= 0) {
                 var flag = false;
                 for (var i = 0; i < this.texts.length; i++) {
                     if (this.texts[i].y <= 0) {
@@ -118,33 +121,59 @@ MainScene.prototype.update = function(deltatime) {
             }
         }
         
-        if (this.mouseX >= x && this.mouseX <= x + width 
-                && this.mouseY >= y && this.mouseY <= y + height) {          
+        if (this.mouseX >= this.playBtn.x && this.mouseX <= this.playBtn.x + this.playBtn.width 
+                && this.mouseY >= this.playBtn.y && this.mouseY <= this.playBtn.y + this.playBtn.height) {          
             this.context.font = "30px joystix";
-            this.context.fillStyle = "rgba(255, 0, 0, " + this.alphaButton + ")";
+            this.context.fillStyle = "rgba(255, 0, 0, " + this.playBtn.alpha + ")";
             this.context.textAlign = "center";
-            this.context.fillText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);          
+            this.context.fillText(this.playBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);          
         } else  {
             this.context.font = "30px joystix";
-            this.context.fillStyle = "rgba(255, 255, 255, " + this.alphaButton + ")";
+            this.context.fillStyle = "rgba(255, 255, 255, " + this.playBtn.alpha + ")";
             this.context.textAlign = "center";
-            this.context.fillText(this.playText, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillText(this.playBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
         }
         
+        if (this.mouseX >= this.leaderBoardBtn.x && this.mouseX <= this.leaderBoardBtn.x + this.leaderBoardBtn.width 
+                && this.mouseY >= this.leaderBoardBtn.y && this.mouseY <= this.leaderBoardBtn.y + this.leaderBoardBtn.height) {          
+            this.context.font = "20px joystix";
+            this.context.fillStyle = "rgba(0, 0, 255, " + this.playBtn.alpha + ")";
+            this.context.textAlign = "center";
+            this.context.fillText(this.leaderBoardBtn.text, Config.worldWidth / 2, Config.worldHeight - 150);       
+        } else  {
+            this.context.font = "20px joystix";
+            this.context.fillStyle = "rgba(103, 113, 158, " + this.playBtn.alpha + ")";
+            this.context.textAlign = "center";
+            this.context.fillText(this.leaderBoardBtn.text, Config.worldWidth / 2, Config.worldHeight - 150);
+        }
+
         this.context.font = "15px joystix";
-        this.context.fillStyle = "rgba(255, 255, 0, " + this.alphaButton + ")";
+        this.context.fillStyle = "rgba(255, 255, 0, " + this.playBtn.alpha + ")";
         this.context.textAlign = "center";
         this.context.fillText("GET ALL COINS!", Config.worldWidth / 2, Config.worldHeight - 100);
             
-        if (this.isMouseDown && !this.startIntro && this.mouseX <= x + width && this.mouseX >= x 
-                && this.mouseY >= y && this.mouseY <= y + height) {
+        if (this.isMouseDown && this.mouseX <= this.playBtn.x + this.playBtn.width && this.mouseX >= this.playBtn.x 
+                && this.mouseY >= this.playBtn.y && this.mouseY <= this.playBtn.y + this.playBtn.height) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
             this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
             this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
+            this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
             this.startIntro = true;
-        } else {
-            this.isMouseDown = false;
+            this.mouseX = 0;
+            this.mouseY = 0;
         }
+        
+        if (this.isMouseDown && this.mouseX <= this.leaderBoardBtn.x + this.leaderBoardBtn.width && this.mouseX >= this.leaderBoardBtn.x 
+                && this.mouseY >= this.leaderBoardBtn.y && this.mouseY <= this.leaderBoardBtn.y + this.leaderBoardBtn.height) {
+            this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
+            this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
+            this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
+            this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
+            this.mouseX = 0;
+            this.mouseY = 0;
+            this.music.stop();
+            this.callback("leaderboard");
+        }      
     } else {
         this.context.font = "30px joystix";
         this.context.fillStyle = "white";

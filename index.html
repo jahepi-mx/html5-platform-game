@@ -40,6 +40,7 @@
         <script src="engine/scenes/gamescene.js"></script>
         <script src="engine/scenes/mainscene.js"></script>
         <script src="engine/scenes/creditsscene.js"></script>
+        <script src="engine/scenes/leaderboardscene.js"></script>
         <script>
             var scene;
             var context;
@@ -71,8 +72,10 @@
                     scene = new MainScene(context, canvas, changeSceneCallback);
                 } else if (sceneName === "game") {
                     scene = new GameScene(context, canvas, changeSceneCallback);
-                }  else if (sceneName === "credits") {
+                } else if (sceneName === "credits") {
                     scene = new CreditsScene(context, canvas, changeSceneCallback);
+                } else if (sceneName === "leaderboard") {
+                    scene = new LeaderBoardScene(context, canvas, changeSceneCallback);
                 }
             }
         </script>

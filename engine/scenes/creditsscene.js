@@ -7,7 +7,7 @@ function CreditsScene(context, canvas, callback) {
     this.music = Assets.playAudio(Assets.end_music, true);
     this.animation = new Animation(4, 1);
     this.shipY = Config.worldHeight - 180;
-    // Our little man from other galaxy have just got enough gold to departure to his home planet, thanks for playing and helping him to achieve his goal.
+    
     this.texts = [
         {x: Config.worldWidth / 2, y: Config.worldHeight, text: "You,ve just completed the game!", red: 255, green: 255, blue: 61, size: 20, removed: false},
         {x: Config.worldWidth / 2, y: Config.worldHeight + 40, text: "Our little man from other galaxy", red: 255, green: 255, blue: 255, size: 20, removed: false},
