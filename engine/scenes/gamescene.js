@@ -164,6 +164,38 @@ GameScene.prototype.update = function(deltatime) {
         this.context.fillText(this.controller.currentLevel.levelName, Config.worldWidth / 2, Config.worldHeight / 2);
     } else {
         this.render.update(deltatime);
+        
+        this.context.fillStyle = 'white';
+        this.context.font = "30px joystix";
+        this.context.fillText(this.controller.currentLevel.currentNumberOfCoins + "/" + this.controller.currentLevel.totalNumberOfCoins, 120, 50);
+        this.context.drawImage(Assets.tilesAtlas, Atlas.tiles["coin_01"].x, Atlas.tiles["coin_01"].y, Atlas.tiles["coin_01"].width, Atlas.tiles["coin_01"].height, 10, 10, 60, 60);
+        this.context.fillStyle = 'green';
+        this.context.font = "12px joystix";
+        this.context.fillText("Fps: " + Math.floor(1 / deltatime), Config.worldWidth - 50, 15);
+
+        // Time
+        var time = this.controller.time;
+        var hours = Math.floor(time / 3600);
+        time %= 3600;
+        var minutes = Math.floor(time / 60);
+        var seconds = Math.floor(time % 60);
+        this.context.fillStyle = 'white';
+        this.context.font = "20px joystix";
+        this.context.fillText("TIME " + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds), Config.worldWidth - 200, 20);
+        
+        
+        this.context.beginPath();
+        this.context.moveTo(Config.worldWidth - 30, 50);
+        this.context.arc(Config.worldWidth - 30, 50, 25, 0, (2 * Math.PI) * this.controller.hero.getLifeRatio());
+        this.context.lineTo(Config.worldWidth - 30, 50);
+        this.context.fillStyle = 'red';
+        this.context.fill();
+
+        this.context.beginPath();
+        this.context.strokeStyle = 'white';
+        this.context.lineWidth = 4;
+        this.context.arc(Config.worldWidth - 30, 50, 25, 0, (2 * Math.PI));
+        this.context.stroke();
     }
     
     if (this.render.isHeroDead()) {

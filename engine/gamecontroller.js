@@ -1,4 +1,5 @@
 function GameController() {
+    this.time = 0;
     this.vectorMoves = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]];
     this.camera = new Camera();
     this.collisionPrecision = 5;
@@ -9,6 +10,8 @@ function GameController() {
 }
 
 GameController.prototype.update = function(deltatime) {
+    
+    this.time += deltatime;
     
     // Ladder implementation, when the hero is nearby a ladder tile, he is able to climb it.
     var currentX = Math.floor(Math.round((this.camera.x + this.hero.centerX) / Config.tileSize));
