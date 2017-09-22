@@ -27,6 +27,7 @@ function FlyDemonEnemy(x, y, width, height, velocityX, velocityY, health, offset
     this.direction = this.directions[Math.round(Math.random() * 2)];
     this.changeDirection = Math.random() * 2 + 2;
     this.changeDirectionTime = 0;
+    this.damagePoints = 1;
 }
 
 FlyDemonEnemy.prototype.onStopDeadAnimation = function() {

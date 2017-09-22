@@ -8,6 +8,7 @@ function ZombieEnemy(x, y, width, height, velocity, offset, health, camera) {
     this.isDead = false;
     this.isMortal = true;
     this.hasGuns = false;
+    this.damagePoints = 1;
     
     this.leftAnimation = new Animation(3, 1);
     this.rightAnimation = new Animation(3, 1);

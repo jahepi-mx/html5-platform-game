@@ -212,8 +212,9 @@ Hero.prototype.collide = function(entity) {
     var sizeY = (this.height / 2 + entity.height / 2) * 0.7;
     if (diffX < sizeX && diffY < sizeY && this.damageTime > this.damageTimeLimit) {
         this.damageTime = 0;
-        this.life--;
+        this.life -= entity.damagePoints;
         if (this.life <= 0) {
+            this.life = 0;
             this.die();
         }
     }

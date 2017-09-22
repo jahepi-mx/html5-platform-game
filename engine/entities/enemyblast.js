@@ -25,6 +25,7 @@ function EnemyBlast(enemy, radians, sizeRatio, type, gravity, camera) {
     this.traveledX = 0;
     this.traveledY = 0;
     this.type = type;
+    this.damagePoints = 1;
 }
 
 EnemyBlast.prototype.onStopExplosionAnimation = function() {

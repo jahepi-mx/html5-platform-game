@@ -18,6 +18,7 @@ function DragonBossEnemy(x, y, width, height, health, level, camera) {
     this.nextShootTimeCount = 0;
     this.shootInterval = 8;
     this.level = level;
+    this.damagePoints = 1;
     
     this.idleAnimation = new Animation(5, 1);
     this.shootAnimation = new Animation(9, 2);
@@ -143,7 +144,7 @@ DragonBossEnemy.prototype.collide = function(entity) {
             this.health--;
             if (this.health <= 0) {
                 this.isDead = true;
-                this.level.currentNumberOfCoins = 5;
+                this.level.currentNumberOfCoins++;
             } else {
                 this.damageAnimation.reset();
                 this.isDamage = true;

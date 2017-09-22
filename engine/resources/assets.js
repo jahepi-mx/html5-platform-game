@@ -33,6 +33,7 @@ Assets.audio.srcs = [
     "assets/audio/hero_laser_sound.mp3",
     "assets/audio/explosion_sound.mp3",
     "assets/audio/jump_sound.mp3",
+    "assets/audio/boss_music.ogg",
 ];
 
 Assets.audio.keys = [
@@ -44,6 +45,7 @@ Assets.audio.keys = [
     "hero_laser_sound",
     "explosion_sound",
     "jump_sound",
+    "boss_music",
 ];
 
 Assets.callback = null;

@@ -13,6 +13,7 @@ function StaticEnemy(x, y, camera, type) {
     this.hasGuns = false;
     this.type = type;
     this.camera = camera;
+    this.damagePoints = 100;
 }
 
 StaticEnemy.prototype.update = function(deltatime) {

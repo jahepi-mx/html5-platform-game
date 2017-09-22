@@ -15,7 +15,7 @@ Level2.prototype.setup = function(camera) {
     this.coins = [];
     this.totalNumberOfCoins = 5;
     this.currentNumberOfCoins = 0;
-    this.music = Assets.playAudio(Assets.level1_music, true);
+    this.music = Assets.playAudio(Assets.boss_music, true);
     this.atlasBackground = Atlas.tiles.sky_background;
     
     this.map = [

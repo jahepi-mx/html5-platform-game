@@ -11,6 +11,7 @@ function BeetleEnemy(x, y, width, height, type, velocity, maxDistance, camera, d
     this.isMortal = true;
     this.isDead = false;
     this.hasGuns = false;
+    this.damagePoints = 1;
     
     this.animation = new Animation(3, 2);
     

@@ -9,6 +9,7 @@ function SkeletonEnemy(x, y, width, height, velocityX, offset, health, camera) {
     this.isMortal = true;
     this.isJumping = false;
     this.hasGuns = false;
+    this.damagePoints = 1;
     
     this.leftAnimation = new Animation(3, 1);
     this.rightAnimation = new Animation(3, 1);

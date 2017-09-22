@@ -7,6 +7,7 @@ function LavaEnemy(x, y, camera) {
     this.isMortal = false;
     this.hasGuns = false;
     this.camera = camera;
+    this.damagePoints = 100;
 }
 
 LavaEnemy.prototype.update = function(deltatime) {

@@ -17,6 +17,7 @@ function GiantFatEnemy(x, y, width, height, health, camera) {
     this.nextShootTime = 0;
     this.nextShootTimeCount = 0;
     this.shootInterval = 8;
+    this.damagePoints = 1;
     
     this.idleAnimation = new Animation(7, 1);
     this.shootAnimation = new Animation(8, 2);

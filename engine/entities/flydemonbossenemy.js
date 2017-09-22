@@ -1,4 +1,4 @@
-function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, offsetY, offsetYTo, camera) {
+function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, offsetY, offsetYTo, level, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -16,6 +16,7 @@ function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, 
     this.shootsCount = 0;
     this.nextRotateTime = 5;
     this.nextRotateTimeCount = 0;
+    this.level = level;
     
     this.frontAnimation = new Animation(4, 2);
     this.deadAnimation = new Animation(6, 1);
@@ -149,6 +150,7 @@ FlyDemonBossEnemy.prototype.collide = function(entity) {
         this.health--;
         if (this.health <= 0) {
             this.isDead = true;
+            this.level.currentNumberOfCoins++;
         }
         return true;
     }

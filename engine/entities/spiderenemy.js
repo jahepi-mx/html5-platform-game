@@ -32,7 +32,7 @@ function SpiderEnemy(x, y, width, height, velocityX, velocityY, offsetX, offsetY
     this.changeXDirectionTime = 0;
     this.changeYDirection = Math.random() * 5 + 2;
     this.changeYDirectionTime = 0;
-
+    this.damagePoints = 1;
 }
 
 SpiderEnemy.prototype.onStopDeadAnimation = function() {
