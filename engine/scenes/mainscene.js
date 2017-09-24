@@ -77,7 +77,7 @@ MainScene.prototype.update = function(deltatime) {
     this.context.imageSmoothingEnabled = false;
     
     if (!this.isLoading) {
-        
+ 
         this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.moonlight_background.x, Atlas.tiles.moonlight_background.y, Atlas.tiles.moonlight_background.width, Atlas.tiles.moonlight_background.height, 0, 0, this.canvas.width, this.canvas.height);
         
         this.context.drawImage(Assets.tilesAtlas, Atlas.tiles.ground_background.x, Atlas.tiles.ground_background.y, Atlas.tiles.ground_background.width, Atlas.tiles.ground_background.height, this.backgroundX1, 0, this.canvas.width + 5, this.canvas.height);
@@ -101,7 +101,7 @@ MainScene.prototype.update = function(deltatime) {
             if (this.playBtn.alpha <= 0) {
                 var flag = false;
                 for (var i = 0; i < this.texts.length; i++) {
-                    if (this.texts[i].y <= 0) {
+                    if (this.texts[i].y <= 0 && !this.texts[i].removed) {
                         this.texts[i].removed = true;
                     }
                     if (!this.texts[i].removed) {
@@ -116,7 +116,7 @@ MainScene.prototype.update = function(deltatime) {
                 }
                 if (!flag) {
                     this.music.stop();
-                    this.callback("game");
+                    this.callback("game", null);
                 }
             }
         }
@@ -126,25 +126,25 @@ MainScene.prototype.update = function(deltatime) {
             this.context.font = "30px joystix";
             this.context.fillStyle = "rgba(255, 0, 0, " + this.playBtn.alpha + ")";
             this.context.textAlign = "center";
-            this.context.fillText(this.playBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);          
+            this.context.fillText(this.playBtn.text, this.playBtn.x + this.playBtn.width / 2, this.playBtn.y + this.playBtn.height / 2);          
         } else  {
             this.context.font = "30px joystix";
             this.context.fillStyle = "rgba(255, 255, 255, " + this.playBtn.alpha + ")";
             this.context.textAlign = "center";
-            this.context.fillText(this.playBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillText(this.playBtn.text, this.playBtn.x + this.playBtn.width / 2, this.playBtn.y + this.playBtn.height / 2);
         }
         
         if (this.mouseX >= this.leaderBoardBtn.x && this.mouseX <= this.leaderBoardBtn.x + this.leaderBoardBtn.width 
                 && this.mouseY >= this.leaderBoardBtn.y && this.mouseY <= this.leaderBoardBtn.y + this.leaderBoardBtn.height) {          
             this.context.font = "20px joystix";
-            this.context.fillStyle = "rgba(0, 0, 255, " + this.playBtn.alpha + ")";
+            this.context.fillStyle = "rgba(103, 113, 158, 0.5)";
             this.context.textAlign = "center";
-            this.context.fillText(this.leaderBoardBtn.text, Config.worldWidth / 2, Config.worldHeight - 150);       
+            this.context.fillText(this.leaderBoardBtn.text, this.leaderBoardBtn.x + this.leaderBoardBtn.width / 2, this.leaderBoardBtn.y + this.leaderBoardBtn.height / 2);       
         } else  {
             this.context.font = "20px joystix";
             this.context.fillStyle = "rgba(103, 113, 158, " + this.playBtn.alpha + ")";
             this.context.textAlign = "center";
-            this.context.fillText(this.leaderBoardBtn.text, Config.worldWidth / 2, Config.worldHeight - 150);
+            this.context.fillText(this.leaderBoardBtn.text, this.leaderBoardBtn.x + this.leaderBoardBtn.width / 2, this.leaderBoardBtn.y + this.leaderBoardBtn.height / 2);
         }
 
         this.context.font = "15px joystix";
@@ -172,7 +172,7 @@ MainScene.prototype.update = function(deltatime) {
             this.mouseX = 0;
             this.mouseY = 0;
             this.music.stop();
-            this.callback("leaderboard");
+            this.callback("leaderboard", null);
         }      
     } else {
         this.context.font = "30px joystix";

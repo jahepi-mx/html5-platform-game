@@ -103,7 +103,7 @@ LeaderBoardScene.prototype.update = function(deltatime) {
     this.context.font = "20px joystix";
     this.context.fillStyle = "rgba(103, 113, 158, " + this.backBtn.alpha + ")";
     this.context.textAlign = "center";
-    this.context.fillText(this.backBtn.text, Config.worldWidth / 2, Config.worldHeight - 50);
+    this.context.fillText(this.backBtn.text, this.backBtn.x + this.backBtn.width / 2, this.backBtn.y + this.backBtn.height / 2);
 
     if (this.isMouseDown && this.mouseX <= this.backBtn.x + this.backBtn.width && this.mouseX >= this.backBtn.x 
             && this.mouseY >= this.backBtn.y && this.mouseY <= this.backBtn.y + this.backBtn.height) {
@@ -114,7 +114,7 @@ LeaderBoardScene.prototype.update = function(deltatime) {
         this.mouseX = 0;
         this.mouseY = 0;
         this.music.stop();
-        this.callback("main");
+        this.callback("main", null);
     } else {
         this.isMouseDown = false;
     }          
@@ -129,7 +129,6 @@ LeaderBoardScene.prototype.loadJSON = function() {
             if (xhr.status === 200) {
                 var object = JSON.parse(xhr.responseText);
                 self.leaderBoardData = object.times; 
-                console.log(self.leaderBoardData.length);
             } else {
                 self.errorLoading = true;
             }

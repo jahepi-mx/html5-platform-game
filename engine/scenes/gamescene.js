@@ -149,7 +149,7 @@ GameScene.prototype.onTouchEvent = function(x, y, pressed) {
         document.onkeydown = null;
         document.onkeyup = null;
         this.controller.currentLevel.dispose();
-        this.callback("credits");
+        this.callback("credits", this.controller.time);
     }
 };
 
@@ -205,16 +205,16 @@ GameScene.prototype.update = function(deltatime) {
             this.context.font = "30px joystix";
             this.context.strokeStyle = 'red';
             this.context.lineWidth = 20;
-            this.context.strokeText(this.looseBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.strokeText(this.looseBtn.text, this.looseBtn.x + this.looseBtn.width / 2, this.looseBtn.y + this.looseBtn.height / 2);
             this.context.fillStyle = "white";
-            this.context.fillText(this.looseBtn.text, Config.worldWidth / 2, Config.worldHeight / 2); 
+            this.context.fillText(this.looseBtn.text, this.looseBtn.x + this.looseBtn.width / 2, this.looseBtn.y + this.looseBtn.height / 2); 
         } else  {
             this.context.font = "30px joystix";
             this.context.strokeStyle = 'white';
             this.context.lineWidth = 20;
-            this.context.strokeText(this.looseBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.strokeText(this.looseBtn.text, this.looseBtn.x + this.looseBtn.width / 2, this.looseBtn.y + this.looseBtn.height / 2);
             this.context.fillStyle = "red";
-            this.context.fillText(this.looseBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+            this.context.fillText(this.looseBtn.text, this.looseBtn.x + this.looseBtn.width / 2, this.looseBtn.y + this.looseBtn.height / 2);
         }
         
     } else if (this.render.isCurrentLevelFinish()) {
@@ -226,16 +226,16 @@ GameScene.prototype.update = function(deltatime) {
                 this.context.font = "30px joystix";
                 this.context.strokeStyle = '#00E500';
                 this.context.lineWidth = 20;
-                this.context.strokeText(this.lastLevelBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.strokeText(this.lastLevelBtn.text, this.lastLevelBtn.x + this.lastLevelBtn.width / 2, this.lastLevelBtn.y + this.lastLevelBtn.height / 2);
                 this.context.fillStyle = "white";
-                this.context.fillText(this.lastLevelBtn.text, Config.worldWidth / 2, Config.worldHeight / 2); 
+                this.context.fillText(this.lastLevelBtn.text, this.lastLevelBtn.x + this.lastLevelBtn.width / 2, this.lastLevelBtn.y + this.lastLevelBtn.height / 2); 
             } else  {
                 this.context.font = "30px joystix";
                 this.context.strokeStyle = 'white';
                 this.context.lineWidth = 20;
-                this.context.strokeText(this.lastLevelBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.strokeText(this.lastLevelBtn.text, this.lastLevelBtn.x + this.lastLevelBtn.width / 2, this.lastLevelBtn.y + this.lastLevelBtn.height / 2);
                 this.context.fillStyle = '#00E500';
-                this.context.fillText(this.lastLevelBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.fillText(this.lastLevelBtn.text, this.lastLevelBtn.x + this.lastLevelBtn.width / 2, this.lastLevelBtn.y + this.lastLevelBtn.height / 2);
             }
             
         } else {
@@ -245,16 +245,16 @@ GameScene.prototype.update = function(deltatime) {
                 this.context.font = "30px joystix";
                 this.context.strokeStyle = '#00E500';
                 this.context.lineWidth = 20;
-                this.context.strokeText(this.winBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.strokeText(this.winBtn.text, this.winBtn.x + this.winBtn.width / 2, this.winBtn.y + this.winBtn.height / 2);
                 this.context.fillStyle = "white";
-                this.context.fillText(this.winBtn.text, Config.worldWidth / 2, Config.worldHeight / 2); 
+                this.context.fillText(this.winBtn.text, this.winBtn.x + this.winBtn.width / 2, this.winBtn.y + this.winBtn.height / 2); 
             } else  {
                 this.context.font = "30px joystix";
                 this.context.strokeStyle = 'white';
                 this.context.lineWidth = 20;
-                this.context.strokeText(this.winBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.strokeText(this.winBtn.text, this.winBtn.x + this.winBtn.width / 2, this.winBtn.y + this.winBtn.height / 2);
                 this.context.fillStyle = '#00E500';
-                this.context.fillText(this.winBtn.text, Config.worldWidth / 2, Config.worldHeight / 2);
+                this.context.fillText(this.winBtn.text, this.winBtn.x + this.winBtn.width / 2, this.winBtn.y + this.winBtn.height / 2);
             }
         }
     } else {

@@ -213,22 +213,22 @@ GameController.prototype.getMaxY = function() {
 };
 
 GameController.prototype.getMinEnemyX = function() {
-    var minX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) - Config.visibilityEnemyRatioX);
+    var minX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) - this.currentLevel.visibilityEnemyRatioX);
     return Math.max(0, minX);
 };
 
 GameController.prototype.getMaxEnemyX = function() {
-    var maxX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) + Config.visibilityEnemyRatioX);
+    var maxX = Math.floor(((this.camera.x + this.hero.centerX) / Config.tileSize) + this.currentLevel.visibilityEnemyRatioX);
     return maxX;
 };
 
 GameController.prototype.getMinEnemyY = function() {
-    var minY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) - Config.visibilityEnemyRatioY);
+    var minY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) - this.currentLevel.visibilityEnemyRatioY);
     return Math.max(0, minY);
 };
 
 GameController.prototype.getMaxEnemyY = function() {
-    var maxY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) + Config.visibilityEnemyRatioY);
+    var maxY = Math.floor(((this.camera.y + this.hero.centerY) / Config.tileSize) + this.currentLevel.visibilityEnemyRatioY);
     return maxY;
 };
 

@@ -17,6 +17,8 @@ Level1.prototype.setup = function(camera) {
     this.currentNumberOfCoins = 0;
     this.music = Assets.playAudio(Assets.level1_music, true);
     this.atlasBackground = Atlas.tiles.sky_background;
+    this.visibilityEnemyRatioX = 9; // 9 tiles 
+    this.visibilityEnemyRatioY = 5; // 5 tiles
     
     this.map = [
         15,15,15,15,15,15,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,16,15,15,15,15,15,15,

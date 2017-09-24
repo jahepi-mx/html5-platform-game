@@ -67,13 +67,14 @@
                 window.requestAnimationFrame(onUpdate);
             }
             
-            function changeSceneCallback(sceneName) {
+            function changeSceneCallback(sceneName, data) {
                 if (sceneName === "main") {
                     scene = new MainScene(context, canvas, changeSceneCallback);
                 } else if (sceneName === "game") {
                     scene = new GameScene(context, canvas, changeSceneCallback);
                 } else if (sceneName === "credits") {
                     scene = new CreditsScene(context, canvas, changeSceneCallback);
+                    scene.setFinalTime(data);
                 } else if (sceneName === "leaderboard") {
                     scene = new LeaderBoardScene(context, canvas, changeSceneCallback);
                 }
