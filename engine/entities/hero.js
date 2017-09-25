@@ -25,6 +25,7 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.direction = 1;
     this.camera = camera;
     this.isDead = false;
+    this.isDamage = false;
     this.blasts = [];
     this.life = 3;
     this.origLife = this.life;
@@ -37,6 +38,8 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.shootAnimation = new Animation(4, 1);
     this.deadAnimation = new Animation(10, 1);
     this.deadAnimation.stopAtSequenceNumber(1, null);
+    this.damageAnimation = new Animation(10, 3);
+    this.damageAnimation.stopAtSequenceNumber(1, null);
 }
 
 Hero.prototype.update = function(deltatime) {
@@ -47,6 +50,11 @@ Hero.prototype.update = function(deltatime) {
         this.shootingTime += deltatime;
     }
     
+    if (this.damageAnimation.isStopped()) {
+        this.isDamage = false;
+        this.damageAnimation.reset();
+    }
+    
     if (this.shootingTime >= this.shootingTimeLimit) {
         this.isShooting = false;
     }
@@ -54,6 +62,8 @@ Hero.prototype.update = function(deltatime) {
     if (this.isDead) {
         this.movingLeft = this.movingRight = false;
         this.deadAnimation.update(deltatime);
+    } else if (this.isDamage) {
+        this.damageAnimation.update(deltatime);
     } else {
         this.idleAnimation.update(deltatime);
         this.runAnimation.update(deltatime);
@@ -216,6 +226,8 @@ Hero.prototype.collide = function(entity) {
         if (this.life <= 0) {
             this.life = 0;
             this.die();
+        } else {
+            this.isDamage = true;
         }
     }
 };
@@ -228,6 +240,8 @@ Hero.prototype.draw = function(context) {
         var key = "";
         if (this.isDead) {
             key = "dead" + ((this.deadAnimation.stopped ? this.deadAnimation.lastFrame() : this.deadAnimation.getFrame()) + 1);
+        } else if (this.isDamage) {
+            key = "dead" + ((this.damageAnimation.stopped ? this.damageAnimation.lastFrame() : this.damageAnimation.getFrame()) + 1);
         } else if (this.isJumping && this.isShooting) {
             key = "jump_shoot" + (this.jumpShootAnimation.getFrame() + 1);
         } else if (this.isJumping) {
@@ -267,6 +281,7 @@ Hero.prototype.resetState = function() {
     this.isUp = false;
     this.isShooting = false;
     this.deadAnimation.reset();
+    this.damageAnimation.reset();
     this.direction = 1;
     this.velocityX = 0;
     this.velocityY = 0;
