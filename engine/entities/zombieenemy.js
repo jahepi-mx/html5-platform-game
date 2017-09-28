@@ -7,8 +7,12 @@ function ZombieEnemy(x, y, width, height, velocity, offset, health, camera) {
     this.origHealth = health;
     this.isDead = false;
     this.isMortal = true;
-    this.hasGuns = false;
+    this.isShooting = false;
+    this.hasGuns = true;
     this.damagePoints = 1;
+    this.nextShootTime = 0;
+    this.nextShootTimeCount = 0;
+    this.shootInterval = 5;
     
     this.leftAnimation = new Animation(3, 1);
     this.rightAnimation = new Animation(3, 1);
@@ -21,9 +25,9 @@ function ZombieEnemy(x, y, width, height, velocity, offset, health, camera) {
     this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
     this.y = y * Config.tileSize + (Config.tileSize - this.height);
     this.velocity = velocity;
-    this.traveled = 0;
+    this.traveledX = 0;
     this.direction = this.directions[Math.round(Math.random() * 2)];
-    this.changeDirection = Math.random() * 2 + 2;
+    this.currChangeDirection = Math.random() * 2 + 2;
     this.changeDirectionTime = 0;
 }
 
@@ -36,9 +40,9 @@ ZombieEnemy.prototype.draw = function(context) {
     // Draw life bar
     if (this.health > 0) {
         context.fillStyle='#000';
-        context.fillRect(this.x - this.traveled - this.camera.x + (this.width / 2 - 25), this.y - this.camera.y - 20, 50, 6);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25), this.y - this.camera.y - 20, 50, 6);
         context.fillStyle='#ff0000';
-        context.fillRect(this.x - this.traveled - this.camera.x + (this.width / 2 - 24), this.y - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24), this.y - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
     }
     var name = "";
     if (this.isDead) {
@@ -50,17 +54,45 @@ ZombieEnemy.prototype.draw = function(context) {
     } else {
         name = "zombie_right_" + (this.rightAnimation.getFrame() + 1);
     }
-    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveledX - this.camera.x, this.y - this.camera.y, this.width, this.height);
+};
+
+ZombieEnemy.prototype.shoot = function(x, y, blasts) {
+    if (this.direction === 1) {
+        Assets.playAudio(Assets.enemy_laser_sound, false);
+        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.RED_TYPE, false, this.camera));
+    }
+    if (this.direction === -1) {
+        Assets.playAudio(Assets.enemy_laser_sound, false);
+        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.RED_TYPE, false, this.camera));
+    }
+    this.isShooting = false;
+};
+
+ZombieEnemy.prototype.changeDirection = function(x) {
 };
 
 ZombieEnemy.prototype.update = function(deltatime) {
     
     this.changeDirectionTime += deltatime;
     
-    if (this.changeDirectionTime >= this.changeDirection) {
+    if (this.changeDirectionTime >= this.currChangeDirection) {
         this.changeDirectionTime = 0;
-        this.changeDirection = Math.random() * 2 + 2;
+        this.currChangeDirection = Math.random() * 2 + 2;
         this.direction = this.directions[Math.round(Math.random() * 2)];     
+    }
+    
+    this.nextShootTimeCount += deltatime;
+    
+    if (this.nextShootTime === 0) {
+        // Shoots randomly in X seconds interval
+        this.nextShootTime = Math.random() * this.shootInterval;
+    }
+    
+    if (this.nextShootTimeCount >= this.nextShootTime && !this.isDead) {
+        this.nextShootTime = 0;
+        this.nextShootTimeCount = 0;
+        this.isShooting = true;
     }
     
     var minX = (this.x - this.offset) - this.camera.x;
@@ -93,7 +125,7 @@ ZombieEnemy.prototype.update = function(deltatime) {
     }
     
     if (this.direction !== 0) {
-        this.traveled += this.velocity * deltatime;
+        this.traveledX += this.velocity * deltatime;
     }
 };
 
@@ -118,11 +150,11 @@ ZombieEnemy.prototype.collide = function(entity) {
 };
 
 ZombieEnemy.prototype.left = function() {
-    return this.x - this.traveled - this.camera.x;
+    return this.x - this.traveledX - this.camera.x;
 };
 
 ZombieEnemy.prototype.right = function() {
-    return (this.x + this.width) - this.traveled - this.camera.x;
+    return (this.x + this.width) - this.traveledX - this.camera.x;
 };
 
 ZombieEnemy.prototype.top = function() {

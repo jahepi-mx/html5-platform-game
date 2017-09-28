@@ -69,15 +69,15 @@ FlyDemonBossEnemy.prototype.shoot = function(x, y, blasts) {
         this.isShooting = false;
         
         if (this.shootType === 1) {
-            var diffX = x - (this.left() + this.width / 2);
-            var diffY = y - (this.top() + this.height / 2);
+            var diffX = (this.left() + this.width / 2) - x;
+            var diffY = (this.top() + this.height / 2) - y;
             var radians = Math.atan2(diffY, diffX);
             blasts.push(new EnemyBlast(this, radians, 0.3, EnemyBlast.RED_TYPE, false, this.camera));
         } else {
             this.shootType = 1;
-            blasts.push(new EnemyBlast(this, Math.PI / 180 * 45, 0.3, EnemyBlast.RED_TYPE, false, this.camera));
-            blasts.push(new EnemyBlast(this, Math.PI / 180 * 90, 0.3, EnemyBlast.RED_TYPE, false, this.camera));
-            blasts.push(new EnemyBlast(this, Math.PI / 180 * 135, 0.3, EnemyBlast.RED_TYPE, false, this.camera));
+            blasts.push(new EnemyBlast(this, Math.PI / 180 * -45, 0.3, EnemyBlast.RED_TYPE, false, this.camera));
+            blasts.push(new EnemyBlast(this, Math.PI / 180 * -90, 0.3, EnemyBlast.RED_TYPE, false, this.camera));
+            blasts.push(new EnemyBlast(this, Math.PI / 180 * -135, 0.3, EnemyBlast.RED_TYPE, false, this.camera));
             this.nextShootTime = 3;
         }
         

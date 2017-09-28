@@ -10,12 +10,13 @@ function EnemyBlast(enemy, radians, sizeRatio, type, gravity, camera) {
     this.ratioX = Math.cos(radians);
     this.ratioY = Math.sin(radians);
     this.camera = camera;
-    this.enemy = enemy;
+    this.cameraOrigY = this.camera.y;
+    this.cameraOrigX = this.camera.x;
     this.gravity = gravity;
     this.velocityX = 200 + Math.floor(Math.random() * 100);
     this.velocityY = this.velocityX;
     if (this.gravity) {
-        this.velocityY = -this.velocityY + 100;
+        this.velocityY = this.velocityY - 100;
     }
     this.collided = false;
     this.isDisposable = false;
@@ -33,10 +34,6 @@ EnemyBlast.prototype.onStopExplosionAnimation = function() {
 };
 
 EnemyBlast.prototype.update = function(deltatime) {
-    
-    this.x = this.enemy.left() + this.enemy.width / 2 - this.width / 2;
-    this.y = this.enemy.top() + this.enemy.height / 2 - this.height / 2;
-    
     if (Math.abs(this.traveledX) >= 600 || Math.abs(this.traveledY) >= 600) {
         this.collided = true;
     }
@@ -48,7 +45,7 @@ EnemyBlast.prototype.update = function(deltatime) {
             this.blastAnimation.update(deltatime);
             this.traveledX += this.velocityX * this.ratioX * deltatime;           
             if (this.gravity) {
-                this.velocityY += Config.gravity * deltatime;
+                this.velocityY -= Config.gravity * deltatime;
                 this.traveledY += this.velocityY * deltatime; 
             } else {
                 this.traveledY += this.velocityY * this.ratioY * deltatime;
@@ -59,21 +56,23 @@ EnemyBlast.prototype.update = function(deltatime) {
 
 EnemyBlast.prototype.draw = function(context) {
     if (!this.isDisposable) {
+        var y = this.y - this.traveledY - (this.camera.y - this.cameraOrigY);
+        var x = this.x - this.traveledX - (this.camera.x - this.cameraOrigX);
         if (this.collided) {
             var key = "explo_" + (this.blastExplosionAnimation.getFrame() + 1);
-            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height); 
+            context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, x, y, this.width, this.height); 
         } else {
             if (this.type === EnemyBlast.FIRE_TYPE) {
                 var key = "spin_" + (this.blastAnimation.getFrame() + 1);
-                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, x, y, this.width, this.height);
             }
             if (this.type === EnemyBlast.SPHERE_TYPE) {
                 var key = "bomb";
-                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, x, y, this.width, this.height);
             }
             if (this.type === EnemyBlast.RED_TYPE) {
                 var key = "bomb2";
-                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, this.x + this.traveledX, this.y + this.traveledY, this.width, this.height);
+                context.drawImage(Assets.enemiesAtlas, Atlas.enemies[key].x, Atlas.enemies[key].y, Atlas.enemies[key].width, Atlas.enemies[key].height, x, y, this.width, this.height);
             }
         }
     }
@@ -94,17 +93,17 @@ EnemyBlast.prototype.collide = function(entity) {
 };
 
 EnemyBlast.prototype.left = function() {
-    return this.x + this.traveledX;
+    return this.x - this.traveledX - (this.camera.x - this.cameraOrigX);
 };
 
 EnemyBlast.prototype.right = function() {
-    return (this.x + this.width) + this.traveledX;
+    return (this.x + this.width) - this.traveledX - (this.camera.x - this.cameraOrigX);
 };
 
 EnemyBlast.prototype.top = function() {
-    return this.y + this.traveledY;
+    return this.y - this.traveledY - (this.camera.y - this.cameraOrigY);
 };
 
 EnemyBlast.prototype.bottom = function() {
-    return (this.y + this.height) - this.traveledY;
+    return (this.y + this.height) - (this.camera.y - this.cameraOrigY);
 };

@@ -52,24 +52,24 @@ DragonBossEnemy.prototype.shoot = function(x, y, blasts) {
     if (!this.blastFlag) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         this.blastFlag = true;
-        var diffX = x - (this.left() + this.width / 2);
-        var diffY = y - (this.top() + this.height / 2);
+        var diffX = (this.left() + this.width / 2) - x;
+        var diffY = (this.top() + this.height / 2) - y;
         var radians = Math.atan2(diffY, diffX);
         var shoot1 = new EnemyBlast(this, radians + (Math.PI / 180 * -15), 0.30, EnemyBlast.SPHERE_TYPE, true, this.camera);
         shoot1.velocityX = 40 + Math.random() * 40;
-        shoot1.velocityY = -250;
+        shoot1.velocityY = 250;
         blasts.push(shoot1);
         var shoot2 = new EnemyBlast(this, radians + (Math.PI / 180 * -30), 0.30, EnemyBlast.SPHERE_TYPE, true, this.camera);
         shoot2.velocityX = 120 +Math.random() * 40;
-        shoot2.velocityY = -250;
+        shoot2.velocityY = 250;
         blasts.push(shoot2);
         var shoot3 = new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, true, this.camera);
         shoot3.velocityX = 200 + Math.random() * 40;
-        shoot3.velocityY = -250;
+        shoot3.velocityY = 250;
         blasts.push(shoot3);
         var shoot4 = new EnemyBlast(this, radians + (Math.PI / 180 * -60), 0.30, EnemyBlast.SPHERE_TYPE, true, this.camera);
         shoot4.velocityX = 310 + Math.random() * 40;
-        shoot4.velocityY = -250;
+        shoot4.velocityY = 250;
         blasts.push(shoot4);
     }
 };

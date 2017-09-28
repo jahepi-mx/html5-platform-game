@@ -51,8 +51,8 @@ GiantFatEnemy.prototype.shoot = function(x, y, blasts) {
     if (!this.blastFlag) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         this.blastFlag = true;
-        var diffX = x - (this.left() + this.width / 2);
-        var diffY = y - (this.top() + this.height / 2);
+        var diffX = (this.left() + this.width / 2) - x;
+        var diffY = (this.top() + this.height / 2) - y;
         var radians = Math.atan2(diffY, diffX);
         blasts.push(new EnemyBlast(this, radians, 0.15, EnemyBlast.FIRE_TYPE, false, this.camera));
     }

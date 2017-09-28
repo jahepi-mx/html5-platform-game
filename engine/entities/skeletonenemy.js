@@ -8,8 +8,12 @@ function SkeletonEnemy(x, y, width, height, velocityX, offset, health, camera) {
     this.isDead = false;
     this.isMortal = true;
     this.isJumping = false;
-    this.hasGuns = false;
+    this.isShooting = false;
+    this.hasGuns = true;
     this.damagePoints = 1;
+    this.nextShootTime = 0;
+    this.nextShootTimeCount = 0;
+    this.shootInterval = 5;
     
     this.leftAnimation = new Animation(3, 1);
     this.rightAnimation = new Animation(3, 1);
@@ -26,7 +30,7 @@ function SkeletonEnemy(x, y, width, height, velocityX, offset, health, camera) {
     this.traveledX = 0;
     this.traveledY = 0;
     this.direction = this.directions[Math.round(Math.random() * 2)];
-    this.changeDirection = Math.random() * 2 + 2;
+    this.currChangeDirection = Math.random() * 2 + 2;
     this.changeDirectionTime = 0;
     this.jumpTime = 0;
     this.jumpTimeLimit = Math.random() * 3 + 2;
@@ -41,9 +45,9 @@ SkeletonEnemy.prototype.draw = function(context) {
     // Draw life bar
     if (this.health > 0) {
         context.fillStyle='#000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25), this.y - this.traveledY - this.camera.y - 20, 50, 6);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25), this.y + this.traveledY - this.camera.y - 20, 50, 6);
         context.fillStyle='#ff0000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24), this.y - this.traveledY - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24), this.y + this.traveledY - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
     }
     var name = "";
     if (this.isDead) {
@@ -56,6 +60,21 @@ SkeletonEnemy.prototype.draw = function(context) {
         name = "skeleton_right_" + (this.rightAnimation.getFrame() + 1);
     }
     context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveledX - this.camera.x, this.y + this.traveledY - this.camera.y, this.width, this.height);
+};
+
+SkeletonEnemy.prototype.shoot = function(x, y, blasts) {
+    if (this.direction === 1) {
+        Assets.playAudio(Assets.enemy_laser_sound, false);
+        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.RED_TYPE, false, this.camera));
+    }
+    if (this.direction === -1) {
+        Assets.playAudio(Assets.enemy_laser_sound, false);
+        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.RED_TYPE, false, this.camera));
+    }
+    this.isShooting = false;
+};
+
+SkeletonEnemy.prototype.changeDirection = function(x) {
 };
 
 SkeletonEnemy.prototype.update = function(deltatime) {
@@ -77,11 +96,24 @@ SkeletonEnemy.prototype.update = function(deltatime) {
         }
     }
     
+    this.nextShootTimeCount += deltatime;
+    
+    if (this.nextShootTime === 0) {
+        // Shoots randomly in X seconds interval
+        this.nextShootTime = Math.random() * this.shootInterval;
+    }
+    
+    if (this.nextShootTimeCount >= this.nextShootTime && !this.isDead) {
+        this.nextShootTime = 0;
+        this.nextShootTimeCount = 0;
+        this.isShooting = true;
+    }
+    
     this.changeDirectionTime += deltatime;
     
-    if (this.changeDirectionTime >= this.changeDirection) {
+    if (this.changeDirectionTime >= this.currChangeDirection) {
         this.changeDirectionTime = 0;
-        this.changeDirection = Math.random() * 2 + 2;
+        this.currChangeDirection = Math.random() * 2 + 2;
         this.direction = this.directions[Math.round(Math.random() * 2)];     
     }
     
