@@ -76,7 +76,9 @@ Level1.prototype.dispose = function() {
         this.enemies = null;
         this.tiles = null;
         this.coins = null;
-        this.music.stop();
+        try {
+            this.music.stop();
+        } catch (e) {}
         this.music = null;
     }
 };
