@@ -105,5 +105,5 @@ EnemyBlast.prototype.top = function() {
 };
 
 EnemyBlast.prototype.bottom = function() {
-    return (this.y + this.height) - (this.camera.y - this.cameraOrigY);
+    return (this.y + this.height) - this.traveledY - (this.camera.y - this.cameraOrigY);
 };
