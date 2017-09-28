@@ -16,6 +16,7 @@ function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, 
     this.shootsCount = 0;
     this.nextRotateTime = 5;
     this.nextRotateTimeCount = 0;
+    this.damagePoints = 1;
     this.level = level;
     
     this.frontAnimation = new Animation(4, 2);

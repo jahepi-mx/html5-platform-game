@@ -44,9 +44,9 @@ SpiderEnemy.prototype.draw = function(context) {
     // Draw life bar
     if (this.health > 0) {
         context.fillStyle='#000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25), this.y - this.traveledY - this.camera.y - 20, 50, 6);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25), this.y + this.traveledY - this.camera.y - 20, 50, 6);
         context.fillStyle='#ff0000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24), this.y - this.traveledY - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24), this.y + this.traveledY - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
     }
     var name = "";
     if (this.isDead) {
