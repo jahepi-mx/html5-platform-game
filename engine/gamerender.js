@@ -56,5 +56,9 @@ GameRender.prototype.update = function(deltatime) {
         this.controller.enemiesBlasts[i].draw(context);
     }
     
+    for (var i = 0; i < this.controller.platforms.length; i++) {
+        this.controller.platforms[i].draw(context);
+    }
+    
     this.controller.hero.draw(this.context);
 };

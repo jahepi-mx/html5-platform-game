@@ -16,6 +16,7 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.isJumping = false;
     this.isShooting = false;
     this.isOnLadder = false;
+    this.isOnMovingPlatform = false;
     this.isUp = false;
     this.isDown = false;
     this.shootingTime = 0;
@@ -112,7 +113,7 @@ Hero.prototype.update = function(deltatime) {
         this.velocityY = -100;
     }
     
-    if (this.isOnLadder === false) {
+    if (this.isOnLadder === false && this.isOnMovingPlatform === false) {
         this.velocityY += Config.gravity * deltatime;
     }
 };

@@ -13,6 +13,7 @@ Level1.prototype.setup = function(camera) {
     this.tiles = [];
     this.enemies = [];
     this.coins = [];
+    this.platforms = [];
     this.totalNumberOfCoins = 2;
     this.currentNumberOfCoins = 0;
     this.music = Assets.playAudio(Assets.level1_music, true);

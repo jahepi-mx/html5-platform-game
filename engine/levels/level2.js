@@ -13,6 +13,7 @@ Level2.prototype.setup = function(camera) {
     this.tiles = [];
     this.enemies = [];
     this.coins = [];
+    this.platforms = [];
     this.totalNumberOfCoins = 5;
     this.currentNumberOfCoins = 0;
     this.music = Assets.playAudio(Assets.boss_music, true);
@@ -34,12 +35,15 @@ Level2.prototype.setup = function(camera) {
         this.coins[i] = null;
     }
     
-    this.enemies[14 * this.mapWidth + 7] = new DragonBossEnemy(7, 14, 70 * 4, 210, 30, this, this.camera);
+    //this.enemies[14 * this.mapWidth + 7] = new DragonBossEnemy(7, 14, 70 * 4, 210, 30, this, this.camera);
     this.coins[14 * this.mapWidth + 84] = new Coin(84, 14, this.camera);
     this.coins[14 * this.mapWidth + 85] = new Coin(85, 14, this.camera);
     this.coins[14 * this.mapWidth + 86] = new Coin(86, 14, this.camera);
     this.coins[14 * this.mapWidth + 87] = new Coin(87, 14, this.camera);
     this.coins[14 * this.mapWidth + 88] = new Coin(88, 14, this.camera);
+    
+    this.platforms[0] = new MovingPlatform(12, 14, 100, 50, MovingPlatform.VERTICAL, 30, 200, this.camera, 1);
+    this.platforms[1] = new MovingPlatform(12, 14, 100, 50, MovingPlatform.HORIZONTAL, 30, 200, this.camera, 1);
 };
 
 Level2.prototype.dispose = function() {

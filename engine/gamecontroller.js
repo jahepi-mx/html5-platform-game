@@ -5,6 +5,7 @@ function GameController() {
     this.collisionPrecision = 5;
     this.levelManager = new LevelManager();
     this.enemiesBlasts = [];
+    this.platforms = [];
     this.hero = new Hero(0, 0, Config.heroSize, Config.heroSize, this.collisionPrecision, this.camera);
     this.initLevel();
 }
@@ -12,7 +13,7 @@ function GameController() {
 GameController.prototype.update = function(deltatime) {
     
     this.time += deltatime;
-    
+   
     // Ladder implementation, when the hero is nearby a ladder tile, he is able to climb it.
     var currentX = Math.floor(Math.round((this.camera.x + this.hero.centerX) / Config.tileSize));
     var currentY = Math.floor(Math.round((this.camera.y + this.hero.centerY) / Config.tileSize));
@@ -38,6 +39,8 @@ GameController.prototype.update = function(deltatime) {
     
     this.hero.update(deltatime);
     var platformOffset = 40;
+    
+    var movingPlatform = null;
     
     // Hero collision detection
     for (var i = 0; i < this.collisionPrecision; i++) {
@@ -96,7 +99,31 @@ GameController.prototype.update = function(deltatime) {
                     }
                 }
             }
+            
+            for (var a = 0; a < this.platforms.length; a++) {
+                var isMovingPlatformCollision = this.hero.velocityY >= 0 && this.hero.bottom() > this.platforms[a].top() && this.hero.bottom() < this.platforms[a].top() + 20;
+                if (isMovingPlatformCollision) {
+                    if (this.hero.right() >= this.platforms[a].left() && this.hero.right() <= this.platforms[a].right()) {
+                        this.hero.setJumping(false);
+                        movingPlatform = this.platforms[a];
+                        this.hero.isOnMovingPlatform = true;
+                        break;
+                    } else if (this.hero.left() >= this.platforms[a].left() && this.hero.left() <= this.platforms[a].right()) {
+                        this.hero.setJumping(false);
+                        movingPlatform = this.platforms[a];
+                        this.hero.isOnMovingPlatform = true;                      
+                        break;
+                    }
+                }
+            }
         }
+    }
+    
+    if (movingPlatform !== null) {
+        if (movingPlatform.type === MovingPlatform.HORIZONTAL) this.hero.x += movingPlatform.moveDistance;
+        else this.hero.y += movingPlatform.moveDistance;
+    } else {
+        this.hero.isOnMovingPlatform = false;
     }
     
     for (var y = this.getMinEnemyY(); y <= this.getMaxEnemyY(); y++) {
@@ -140,6 +167,10 @@ GameController.prototype.update = function(deltatime) {
                 this.hero.collide(this.enemiesBlasts[i]);
             }
         }
+    }
+    
+    for (var i = 0; i < this.platforms.length; i++) {
+        this.platforms[i].update(deltatime);
     }
     
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
@@ -282,6 +313,7 @@ GameController.prototype.initLevel = function() {
     this.currentLevel.setup(this.camera);
     this.tiles = this.currentLevel.tiles;
     this.enemies = this.currentLevel.enemies;
+    this.platforms = this.currentLevel.platforms;
     this.coins = this.currentLevel.coins;
     this.hero.x = this.currentLevel.startX;
     this.hero.y = this.currentLevel.startY;
