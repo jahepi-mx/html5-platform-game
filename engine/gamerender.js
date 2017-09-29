@@ -57,7 +57,9 @@ GameRender.prototype.update = function(deltatime) {
     }
     
     for (var i = 0; i < this.controller.platforms.length; i++) {
-        this.controller.platforms[i].draw(context);
+        if (Math.abs(this.controller.platforms[i].left()) <= MovingPlatform.VISIBILITY_DISTANCE) {
+            this.controller.platforms[i].draw(context);
+        }
     }
     
     this.controller.hero.draw(this.context);

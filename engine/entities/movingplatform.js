@@ -1,6 +1,7 @@
 // Static class members
 MovingPlatform.VERTICAL = 1;
 MovingPlatform.HORIZONTAL = 2;
+MovingPlatform.VISIBILITY_DISTANCE = 800;
 
 function MovingPlatform(x, y, width, height, type, velocity, maxDistance, camera, direction) {
     this.camera = camera;
@@ -27,12 +28,14 @@ function MovingPlatform(x, y, width, height, type, velocity, maxDistance, camera
 
 MovingPlatform.prototype.draw = function(context) {
     if (this.type === MovingPlatform.VERTICAL) {
-        context.fillStyle = "white";
-        context.fillRect(this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
+        //context.fillStyle = "white";
+        //context.fillRect(this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
+        context.drawImage(Assets.tilesAtlas, Atlas.tiles.set2_goldenblock.x, Atlas.tiles.set2_goldenblock.y, Atlas.tiles.set2_goldenblock.width, Atlas.tiles.set2_goldenblock.height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
     }
     if (this.type === MovingPlatform.HORIZONTAL) {
-        context.fillStyle = "white";
-        context.fillRect(this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+        //context.fillStyle = "white";
+        //context.fillRect(this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
+        context.drawImage(Assets.tilesAtlas, Atlas.tiles.set2_goldenblock.x, Atlas.tiles.set2_goldenblock.y, Atlas.tiles.set2_goldenblock.width, Atlas.tiles.set2_goldenblock.height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
     }
 };
 

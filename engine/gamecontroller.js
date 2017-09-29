@@ -170,7 +170,9 @@ GameController.prototype.update = function(deltatime) {
     }
     
     for (var i = 0; i < this.platforms.length; i++) {
-        this.platforms[i].update(deltatime);
+        if (Math.abs(this.platforms[i].left()) <= MovingPlatform.VISIBILITY_DISTANCE) {
+            this.platforms[i].update(deltatime);
+        }
     }
     
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {
