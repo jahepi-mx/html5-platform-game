@@ -15,12 +15,12 @@ function BeetleEnemy(x, y, width, height, type, velocity, maxDistance, camera, d
     
     this.animation = new Animation(3, 2);
     
-    this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
+    this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
     if (this.type === BeetleEnemy.VERTICAL) {
-        this.y = y * Config.tileSize + (Config.tileSize - this.height) / 2;
+        this.y = y * Config.tileSize - (this.height / 2) + (Config.tileSize / 2);
     }
     if (this.type === BeetleEnemy.HORIZONTAL) {
-        this.y = y * Config.tileSize + (Config.tileSize - this.height);
+        this.y = y * Config.tileSize - (this.height - Config.tileSize);
     }
     this.maxDistance = maxDistance;
     this.velocity = velocity;

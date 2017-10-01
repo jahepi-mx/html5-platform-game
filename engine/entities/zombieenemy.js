@@ -22,7 +22,7 @@ function ZombieEnemy(x, y, width, height, velocity, offset, health, camera) {
     this.directions = [-1, 0, 1];
     
     this.offset = offset;
-    this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
+    this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize + (Config.tileSize - this.height);
     this.velocity = velocity;
     this.traveledX = 0;

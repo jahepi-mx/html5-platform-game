@@ -23,7 +23,7 @@ function FlyDemonBossEnemy(x, y, width, height, ratioDistance, health, offsetX, 
     this.deadAnimation = new Animation(6, 1);
     this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
     
-    this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
+    this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize + offsetY;
     this.offsetX = offsetX;
     this.offsetY = offsetY;

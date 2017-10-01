@@ -9,7 +9,7 @@ function SpiderEnemy(x, y, width, height, velocityX, velocityY, offsetX, offsetY
     this.isMortal = true;
     this.hasGuns = false;
     this.isVertical = false;
-    this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
+    this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize + (Config.tileSize - this.height);
     
     this.leftAnimation = new Animation(6, 1);

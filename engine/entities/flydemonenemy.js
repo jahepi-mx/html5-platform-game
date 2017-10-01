@@ -17,7 +17,7 @@ function FlyDemonEnemy(x, y, width, height, velocityX, velocityY, health, offset
     this.directions = [-1, 0, 1];
     
     this.offsetX = offsetX;
-    this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
+    this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize + offsetY;
     this.velocityX = velocityX;
     this.velocityY = velocityY;

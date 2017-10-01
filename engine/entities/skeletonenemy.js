@@ -23,7 +23,7 @@ function SkeletonEnemy(x, y, width, height, velocityX, offset, health, camera) {
     this.directions = [-1, 0, 1];
     
     this.offset = offset;
-    this.x = x * Config.tileSize + (Config.tileSize - this.width) / 2;
+    this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize + (Config.tileSize - this.height);
     this.velocityX = velocityX;
     this.velocityY = 0;

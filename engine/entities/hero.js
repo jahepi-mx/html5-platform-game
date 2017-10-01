@@ -127,7 +127,7 @@ Hero.prototype.updateY = function(deltatime) {
 };
 
 Hero.prototype.jump = function() {
-    if (this.isDead || this.isOnLadder) {
+    if (this.isDead || this.isOnLadder || this.velocityY > 0) {
         return;
     }
     if (!this.isJumping) {
