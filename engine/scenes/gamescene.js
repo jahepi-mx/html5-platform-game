@@ -33,9 +33,9 @@ function GameScene(context, canvas, callback) {
         down_button: {x: 55, y: Config.worldHeight - 70, width: 60, height: 60, atlas: Atlas.gui["down_2"]},
         up_button: {x: 55, y: Config.worldHeight - 150, width: 60, height: 60, atlas: Atlas.gui["up_2"]},
     };
-    this.looseBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Ouch!, try again?"};
-    this.winBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Ready for next level!? Touch!"};
-    this.lastLevelBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You got all the gold! Touch!"};
+    this.looseBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Ouch!, try again?", font: "60px joystix"};
+    this.winBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "Ready for next level!? Touch!", font: "60px joystix"};
+    this.lastLevelBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.7) / 2, y: Config.worldHeight / 2 - (Config.worldHeight * 0.2) / 2, width: Config.worldWidth * 0.7, height: Config.worldHeight * 0.2, text: "You got all the gold! Touch!", font: "60px joystix"};
 }
 
 GameScene.prototype.onMouseDown = function(event) {
@@ -158,7 +158,7 @@ GameScene.prototype.update = function(deltatime) {
     if (this.showLevelTextTime < this.showLevelTextTimeLimit) {
         this.showLevelTextTime += deltatime;
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.font = "20px joystix";
+        this.context.font = "50px joystix";
         this.context.fillStyle = "white";
         this.context.textAlign = "center";
         this.context.fillText(this.controller.currentLevel.levelName, Config.worldWidth / 2, Config.worldHeight / 2);
@@ -166,11 +166,11 @@ GameScene.prototype.update = function(deltatime) {
         this.render.update(deltatime);
         
         this.context.fillStyle = 'white';
-        this.context.font = "30px joystix";
+        this.context.font = "60px joystix";
         this.context.fillText(this.controller.currentLevel.currentNumberOfCoins + "/" + this.controller.currentLevel.totalNumberOfCoins, 120, 50);
         this.context.drawImage(Assets.tilesAtlas, Atlas.tiles["coin_01"].x, Atlas.tiles["coin_01"].y, Atlas.tiles["coin_01"].width, Atlas.tiles["coin_01"].height, 10, 10, 60, 60);
         this.context.fillStyle = 'green';
-        this.context.font = "12px joystix";
+        this.context.font = "25px joystix";
         this.context.fillText("Fps: " + Math.floor(1 / deltatime), Config.worldWidth - 50, 15);
 
         // Time
@@ -180,8 +180,8 @@ GameScene.prototype.update = function(deltatime) {
         var minutes = Math.floor(time / 60);
         var seconds = Math.floor(time % 60);
         this.context.fillStyle = 'white';
-        this.context.font = "20px joystix";
-        this.context.fillText("TIME " + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds), Config.worldWidth - 200, 20);
+        this.context.font = "40px joystix";
+        this.context.fillText("Time " + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds), Config.worldWidth - 200, 20);
         
         
         this.context.beginPath();
@@ -202,14 +202,14 @@ GameScene.prototype.update = function(deltatime) {
     
         if (this.mouseX >= this.looseBtn.x && this.mouseX <= this.looseBtn.x + this.looseBtn.width 
                 && this.mouseY >= this.looseBtn.y && this.mouseY <= this.looseBtn.y + this.looseBtn.height) {
-            this.context.font = "30px joystix";
+            this.context.font = this.looseBtn.font;
             this.context.strokeStyle = 'red';
             this.context.lineWidth = 20;
             this.context.strokeText(this.looseBtn.text, this.looseBtn.x + this.looseBtn.width / 2, this.looseBtn.y + this.looseBtn.height / 2);
             this.context.fillStyle = "white";
             this.context.fillText(this.looseBtn.text, this.looseBtn.x + this.looseBtn.width / 2, this.looseBtn.y + this.looseBtn.height / 2); 
         } else  {
-            this.context.font = "30px joystix";
+            this.context.font = this.looseBtn.font;
             this.context.strokeStyle = 'white';
             this.context.lineWidth = 20;
             this.context.strokeText(this.looseBtn.text, this.looseBtn.x + this.looseBtn.width / 2, this.looseBtn.y + this.looseBtn.height / 2);
@@ -223,14 +223,14 @@ GameScene.prototype.update = function(deltatime) {
             
             if (this.mouseX >= this.lastLevelBtn.x && this.mouseX <= this.lastLevelBtn.x + this.lastLevelBtn.width
                     && this.mouseY >= this.lastLevelBtn.y && this.mouseY <= this.lastLevelBtn.y + this.lastLevelBtn.height) {
-                this.context.font = "30px joystix";
+                this.context.font = this.lastLevelBtn.font;
                 this.context.strokeStyle = '#00E500';
                 this.context.lineWidth = 20;
                 this.context.strokeText(this.lastLevelBtn.text, this.lastLevelBtn.x + this.lastLevelBtn.width / 2, this.lastLevelBtn.y + this.lastLevelBtn.height / 2);
                 this.context.fillStyle = "white";
                 this.context.fillText(this.lastLevelBtn.text, this.lastLevelBtn.x + this.lastLevelBtn.width / 2, this.lastLevelBtn.y + this.lastLevelBtn.height / 2); 
             } else  {
-                this.context.font = "30px joystix";
+                this.context.font = this.lastLevelBtn.font;
                 this.context.strokeStyle = 'white';
                 this.context.lineWidth = 20;
                 this.context.strokeText(this.lastLevelBtn.text, this.lastLevelBtn.x + this.lastLevelBtn.width / 2, this.lastLevelBtn.y + this.lastLevelBtn.height / 2);
@@ -242,14 +242,14 @@ GameScene.prototype.update = function(deltatime) {
         
             if (this.mouseX >= this.winBtn.x && this.mouseX <= this.winBtn.x + this.winBtn.width
                     && this.mouseY >= this.winBtn.y && this.mouseY <= this.winBtn.y + this.winBtn.height) {
-                this.context.font = "30px joystix";
+                this.context.font = this.winBtn.font;
                 this.context.strokeStyle = '#00E500';
                 this.context.lineWidth = 20;
                 this.context.strokeText(this.winBtn.text, this.winBtn.x + this.winBtn.width / 2, this.winBtn.y + this.winBtn.height / 2);
                 this.context.fillStyle = "white";
                 this.context.fillText(this.winBtn.text, this.winBtn.x + this.winBtn.width / 2, this.winBtn.y + this.winBtn.height / 2); 
             } else  {
-                this.context.font = "30px joystix";
+                this.context.font = this.winBtn.font;
                 this.context.strokeStyle = 'white';
                 this.context.lineWidth = 20;
                 this.context.strokeText(this.winBtn.text, this.winBtn.x + this.winBtn.width / 2, this.winBtn.y + this.winBtn.height / 2);

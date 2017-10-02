@@ -19,7 +19,7 @@ function LeaderBoardScene(context, canvas, callback) {
     this.backgroundX1 = 0;
     this.backgroundX2 = Config.worldWidth;
     
-    this.backBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 50 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "Back to Main", alpha: 1};
+    this.backBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 5 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "Back to Main", alpha: 1};
     this.leaderBoardData = [];
     this.loadJSON();
 }
@@ -64,7 +64,7 @@ LeaderBoardScene.prototype.update = function(deltatime) {
         this.backgroundX2 = Config.worldWidth;
     }
     
-    this.context.font = "20px joystix";
+    this.context.font = "40px joystix";
     this.context.fillStyle = "white";
     this.context.textAlign = "center";
     if (this.isLoading) {
@@ -75,11 +75,11 @@ LeaderBoardScene.prototype.update = function(deltatime) {
         } else {
             if (this.leaderBoardData.length > 0) {
                 
-                this.context.font = "30px joystix";
+                this.context.font = "60px joystix";
                 this.context.fillText("TOP 10 TIMES", Config.worldWidth / 2, 40);
                 var yStart = 80;
                 for (var i = 0; i < this.leaderBoardData.length; i++) {
-                    this.context.font = "20px joystix";
+                    this.context.font = "50px joystix";
                     this.context.fillStyle = 'red';
                     this.context.textAlign = "left";
                     this.context.fillText(this.leaderBoardData[i].name, 270, yStart);
@@ -90,7 +90,7 @@ LeaderBoardScene.prototype.update = function(deltatime) {
                     var minutes = Math.floor(time / 60);
                     var seconds = Math.floor(time % 60);
                     this.context.fillStyle = 'white';
-                    this.context.font = "20px joystix";
+                    this.context.font = "50px joystix";
                     this.context.fillText((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds), Config.worldWidth - 400, yStart);
                     yStart += 35;
                 }                
@@ -100,7 +100,7 @@ LeaderBoardScene.prototype.update = function(deltatime) {
         }
     }
     
-    this.context.font = "20px joystix";
+    this.context.font = "50px joystix";
     this.context.fillStyle = "rgba(103, 113, 158, " + this.backBtn.alpha + ")";
     this.context.textAlign = "center";
     this.context.fillText(this.backBtn.text, this.backBtn.x + this.backBtn.width / 2, this.backBtn.y + this.backBtn.height / 2);

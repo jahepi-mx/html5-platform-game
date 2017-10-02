@@ -7,26 +7,26 @@ function CreditsScene(context, canvas, callback) {
     this.music = Assets.playAudio(Assets.end_music, true);
     this.animation = new Animation(4, 1);
     this.shipY = Config.worldHeight - 180;
-    this.limitY = Config.worldHeight * 0.8;
+    this.limitY = Config.worldHeight * 0.7;
     this.currTime = 0;
     this.finalTime = 0;
     this.letterColor = "red";
     this.isSaving = false;
     
     this.texts = [
-        {x: Config.worldWidth / 2, y: Config.worldHeight, text: "You,ve just completed the game!", red: 255, green: 255, blue: 61, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 40, text: "Our little man from other galaxy", red: 255, green: 255, blue: 255, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 80, text: "have just got enough gold to departure", red: 255, green: 255, blue: 255, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 120, text: "to his home planet", red: 255, green: 255, blue: 255, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 160, text: "Thanks for playing and helping him", red: 255, green: 255, blue: 255, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 200, text: "to achieve his goal.", red: 255, green: 255, blue: 255, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 260, text: "Game Programming", red: 255, green: 255, blue: 61, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 300, text: "jahepi", red: 255, green: 255, blue: 255, size: 15, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 340, text: "Game Assets", red: 255, green: 255, blue: 61, size: 20, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 400, text: "http://opengameart.org", red: 255, green: 255, blue: 255, size: 15, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 440, text: "https://www.gamedevmarket.net", red: 255, green: 255, blue: 255, size: 15, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 480, text: "http://www.gameart2d.com", red: 255, green: 255, blue: 255, size: 15, removed: false, to: 0, isRemovable: true},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 650, text: "THE END", red: 0, green: 255, blue: 255, size: 40, removed: false, to: 150, isRemovable: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight, text: "You,ve just completed the game!", red: 255, green: 255, blue: 61, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 40, text: "Our little man from other galaxy", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 80, text: "have just got enough gold to departure", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 120, text: "to his home planet", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 160, text: "Thanks for playing and helping him", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 200, text: "to achieve his goal.", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 300, text: "Game Programming", red: 255, green: 255, blue: 61, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 340, text: "jahepi", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 440, text: "Game Assets", red: 255, green: 255, blue: 61, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 480, text: "http://opengameart.org", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 520, text: "https://www.gamedevmarket.net", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 560, text: "http://www.gameart2d.com", red: 255, green: 255, blue: 255, size: 50, removed: false, to: 0, isRemovable: true},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 760, text: "THE END", red: 0, green: 255, blue: 255, size: 80, removed: false, to: 150, isRemovable: false},
     ];
     
     this.mouseX = 0;
@@ -44,9 +44,9 @@ function CreditsScene(context, canvas, callback) {
     this.canvas.addEventListener("touchstart", this.onTouchStartRef);
     this.canvas.addEventListener("touchend", this.onTouchEndRef);
     this.creditsButtons = {
-        A: {x: 100, y: Config.worldHeight - 10, size: 60, textIndex: 0},
-        B: {x: 200, y: Config.worldHeight - 10, size: 60, textIndex: 0},
-        C: {x: 300, y: Config.worldHeight - 10, size: 60, textIndex: 0},
+        A: {x: 100, y: Config.worldHeight - 10, size: 80, textIndex: 0},
+        B: {x: 200, y: Config.worldHeight - 10, size: 80, textIndex: 0},
+        C: {x: 300, y: Config.worldHeight - 10, size: 80, textIndex: 0},
     };
     this.instructions1 = "Touch letters to change nickname and save score";
     this.instructions2 = "Your final time is: ";
@@ -180,7 +180,7 @@ CreditsScene.prototype.update = function(deltatime) {
         }
         if (!this.texts[i].removed) {
             if (this.texts[i].y < this.limitY) {
-                var alpha = 1 - this.texts[i].y / this.limitY;
+                var alpha = 1.3 - this.texts[i].y / this.limitY;
                 this.context.font = this.texts[i].size + "px joystix";
                 this.context.fillStyle = "rgba(" + this.texts[i].red + ", " + this.texts[i].green + ", " + this.texts[i].blue + ", " + alpha + ")";
                 this.context.textAlign = "center";
@@ -192,7 +192,7 @@ CreditsScene.prototype.update = function(deltatime) {
         }
     }
     
-    this.context.font = "18px joystix";
+    this.context.font = "40px joystix";
     this.context.fillStyle = "white";
     this.context.textAlign = "left";
     this.context.fillText(this.instructions1, 10, Config.worldHeight - 100);
@@ -202,20 +202,20 @@ CreditsScene.prototype.update = function(deltatime) {
     time %= 3600;
     var minutes = Math.floor(time / 60);
     var seconds = Math.floor(time % 60);
-    this.context.fillText(this.instructions2 + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds), 10, Config.worldHeight - 80);
+    this.context.fillText(this.instructions2 + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds), 10, Config.worldHeight - 70);
     
-    this.context.font = "20px joystix";
+    this.context.font = "40px joystix";
     this.context.fillStyle = "white";
     this.context.fillRect(this.saveTimeBtn.x, this.saveTimeBtn.y, this.saveTimeBtn.width, this.saveTimeBtn.height);
     this.context.fillStyle = "rgba(103, 113, 158, 1)";
     this.context.textAlign = "left";
-    this.context.fillText(this.saveTimeBtn.text, this.saveTimeBtn.x, this.saveTimeBtn.y + this.saveTimeBtn.height - 5);
+    this.context.fillText(this.saveTimeBtn.text, this.saveTimeBtn.x + 15, this.saveTimeBtn.y + this.saveTimeBtn.height - 2);
     
     this.context.fillStyle = "white";
     this.context.fillRect(this.backBtn.x, this.backBtn.y, this.backBtn.width, this.backBtn.height);
     this.context.fillStyle = "rgba(103, 113, 158, 1)";
     this.context.textAlign = "left";
-    this.context.fillText(this.backBtn.text, this.backBtn.x, this.backBtn.y + this.backBtn.height - 5); 
+    this.context.fillText(this.backBtn.text, this.backBtn.x + 10, this.backBtn.y + this.backBtn.height - 2); 
     
     if (this.currTime >= 0.2) {
         this.currTime = 0;
