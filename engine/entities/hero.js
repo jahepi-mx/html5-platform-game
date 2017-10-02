@@ -93,14 +93,6 @@ Hero.prototype.update = function(deltatime) {
         this.velocityX = -Math.abs(this.velocityX);
     } 
     
-    var fps = 1 / deltatime;
-    if (fps < 30) {
-        this.friction = 0.82;
-    } else {
-        this.friction = 0.92;
-    }
-    this.velocityX *= this.friction;
-    
     if (this.isOnLadder) {
         this.velocityY = 0;
     }
@@ -116,6 +108,16 @@ Hero.prototype.update = function(deltatime) {
     if (this.isOnLadder === false && this.isOnMovingPlatform === false) {
         this.velocityY += Config.gravity * deltatime;
     }
+};
+
+Hero.prototype.updateXFriction = function(deltatime) {
+    var fps = 1 / deltatime;
+    var ratio = fps / 60;
+    if (ratio > 1) {
+        ratio = 1;
+    }
+    this.friction = 0.92 * ratio;
+    this.velocityX *= this.friction;
 };
 
 Hero.prototype.updateX = function(deltatime) {

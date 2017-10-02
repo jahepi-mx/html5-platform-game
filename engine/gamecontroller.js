@@ -202,6 +202,7 @@ GameController.prototype.update = function(deltatime) {
             }
         } 
     }
+    this.hero.updateXFriction(deltatime);
 };
 
 GameController.prototype.getTile = function(index) {
