@@ -171,7 +171,7 @@ GameScene.prototype.update = function(deltatime) {
         this.context.drawImage(Assets.tilesAtlas, Atlas.tiles["coin_01"].x, Atlas.tiles["coin_01"].y, Atlas.tiles["coin_01"].width, Atlas.tiles["coin_01"].height, 10, 10, 60, 60);
         this.context.fillStyle = 'green';
         this.context.font = "25px joystix";
-        this.context.fillText("Fps: " + Math.floor(1 / deltatime), Config.worldWidth - 50, 15);
+        this.context.fillText("fps: " + Math.floor(1 / deltatime), Config.worldWidth - 50, 15);
 
         // Time
         var time = this.controller.time;

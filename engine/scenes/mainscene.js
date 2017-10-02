@@ -26,19 +26,19 @@ function MainScene(context, canvas, callback) {
     this.startIntro = false;
     
     this.texts = [
-        {x: Config.worldWidth / 2, y: Config.worldHeight, text: "Once upon a time a man from other galaxy", red: 255, green: 255, blue: 255, size: 40, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 40, text: "Had to land on the earth,", red: 255, green: 255, blue: 255, size: 40, removed: false}, 
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 80, text: "it´s ship ran out of fuel,", red: 255, green: 255, blue: 255, size: 40, removed: false}, 
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 120, text: "and the main source of it is gold.", red: 255, green: 255, blue: 255, size: 40, removed: false}, 
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 160, text: "He discovered several places", red: 255, green: 255, blue: 255, size: 40, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 200, text: "where this resource can be found", red: 255, green: 255, blue: 255, size: 40, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 240, text: "in form of coins, the problem is that", red: 255, green: 255, blue: 255, size: 40, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 280, text: "in order to get them he has to", red: 255, green: 255, blue: 255, size: 40, removed: false},
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 320, text: "fight against some evil entities.", red: 255, green: 255, blue: 255, size: 40, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight, text: "Once upon a time a man from other galaxy", red: 255, green: 255, blue: 255, size: 50, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 40, text: "Had to land on the earth,", red: 255, green: 255, blue: 255, size: 50, removed: false}, 
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 80, text: "it´s ship ran out of fuel,", red: 255, green: 255, blue: 255, size: 50, removed: false}, 
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 120, text: "and the main source of it is gold.", red: 255, green: 255, blue: 255, size: 50, removed: false}, 
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 160, text: "He discovered several places", red: 255, green: 255, blue: 255, size: 50, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 200, text: "where this resource can be found", red: 255, green: 255, blue: 255, size: 50, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 240, text: "in form of coins, the problem is that", red: 255, green: 255, blue: 255, size: 50, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 280, text: "in order to get them he has to", red: 255, green: 255, blue: 255, size: 50, removed: false},
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 320, text: "fight against some evil entities.", red: 255, green: 255, blue: 255, size: 50, removed: false},
     ];
     
-    this.playBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight / 2 - (Config.worldWidth * 0.3 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "Play Game", alpha: 1, font: "70px joystix"};
-    this.leaderBoardBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 150 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "Leaderboard", alpha: 1, font: "50px joystix"};
+    this.playBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight / 2 - (Config.worldWidth * 0.3 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "play game", alpha: 1, font: "70px joystix"};
+    this.leaderBoardBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 150 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "leaderboard", alpha: 1, font: "50px joystix"};
 }
 
 MainScene.prototype.onLoadAssets = function() {
@@ -150,7 +150,7 @@ MainScene.prototype.update = function(deltatime) {
         this.context.font = "35px joystix";
         this.context.fillStyle = "rgba(255, 255, 0, " + this.playBtn.alpha + ")";
         this.context.textAlign = "center";
-        this.context.fillText("GET ALL COINS!", Config.worldWidth / 2, Config.worldHeight - 100);
+        this.context.fillText("get all coins!", Config.worldWidth / 2, Config.worldHeight - 100);
             
         if (this.isMouseDown && this.mouseX <= this.playBtn.x + this.playBtn.width && this.mouseX >= this.playBtn.x 
                 && this.mouseY >= this.playBtn.y && this.mouseY <= this.playBtn.y + this.playBtn.height) {
