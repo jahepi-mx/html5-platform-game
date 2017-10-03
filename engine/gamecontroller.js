@@ -27,6 +27,8 @@ GameController.prototype.update = function(deltatime) {
                 foundOnLadder = true;
                 if (!this.hero.isJumping && (this.hero.isUp || this.hero.isDown)) {
                     this.hero.isOnLadder = true;
+                    // Center hero on ladder
+                    this.hero.x = (tile.x - this.hero.left()) + tile.width / 2 - this.hero.width / 2;
                     break;
                 }
             }
