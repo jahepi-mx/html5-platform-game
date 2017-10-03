@@ -56,13 +56,15 @@ BeetleEnemy.prototype.update = function(deltatime) {
     this.animation.update(deltatime);
     if (this.direction === -1) {
         this.traveled += this.velocity * deltatime;
-        if (this.traveled >= this.maxDistance) {
+        if (this.traveled > this.maxDistance) {
             this.direction = 1;
+            this.traveled = this.maxDistance;
         }
     } else {
         this.traveled -= this.velocity * deltatime;
-        if (this.traveled <= 0) {
+        if (this.traveled < 0) {
             this.direction = -1;
+            this.traveled = 0;
         }
     }
 };
