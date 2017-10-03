@@ -1,4 +1,4 @@
-function FlyDemonEnemy(x, y, width, height, velocityX, velocityY, health, offsetX, offsetY, camera) {
+function FlyDemonEnemy(x, y, width, height, velocityX, velocityY, health, distance, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -16,18 +16,18 @@ function FlyDemonEnemy(x, y, width, height, velocityX, velocityY, health, offset
     this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
     this.directions = [-1, 0, 1];
     
-    this.offsetX = offsetX;
     this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
-    this.y = y * Config.tileSize + offsetY;
+    this.y = y * Config.tileSize - (this.height / 2) + (Config.tileSize / 2);
     this.velocityX = velocityX;
     this.velocityY = velocityY;
     this.traveledX = 0;
     this.traveledY = 0;
-    this.cosRatio = 0;
+    this.degrees = 0;
     this.direction = this.directions[Math.round(Math.random() * 2)];
-    this.changeDirection = Math.random() * 2 + 2;
+    this.changeDirection = Math.random() * 4 + 2;
     this.changeDirectionTime = 0;
     this.damagePoints = 1;
+    this.distance = distance;
 }
 
 FlyDemonEnemy.prototype.onStopDeadAnimation = function() {
@@ -66,9 +66,6 @@ FlyDemonEnemy.prototype.update = function(deltatime) {
         this.direction = this.directions[Math.round(Math.random() * 2)];     
     }
     
-    var minX = (this.x - this.offsetX) - this.camera.x;
-    var maxX = (this.x + this.offsetX) - this.camera.x;
-    
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
     } else if (this.direction === 0) {
@@ -79,12 +76,14 @@ FlyDemonEnemy.prototype.update = function(deltatime) {
         this.rightAnimation.update(deltatime);
     }
 
-    if (this.left() <= minX) {
-        this.direction = 1;      
+    if (this.traveledX > this.distance) {
+        this.direction = 1;
+        this.traveledX = this.distance;
     }
     
-    if (this.right() >= maxX) {
+    if (this.traveledX < 0) {
         this.direction = -1;
+        this.traveledX = 0;
     }
     
     if (this.direction === 1) {
@@ -99,9 +98,9 @@ FlyDemonEnemy.prototype.update = function(deltatime) {
         this.traveledX += this.velocityX * deltatime;
     }
     
-    this.cosRatio += 60 * deltatime;
-    this.cosRatio %= 360;
-    this.traveledY += this.velocityY * Math.cos(Math.PI / 180 * this.cosRatio) * deltatime;
+    this.degrees += 60 * deltatime;
+    this.degrees %= 360;
+    this.traveledY += this.velocityY * Math.cos(Math.PI / 180 * this.degrees) * deltatime;
 };
 
 FlyDemonEnemy.prototype.collide = function(entity) {
