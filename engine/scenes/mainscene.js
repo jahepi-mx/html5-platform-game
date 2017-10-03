@@ -39,6 +39,7 @@ function MainScene(context, canvas, callback) {
     
     this.playBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight / 2 - (Config.worldWidth * 0.3 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "play game", alpha: 1, font: "70px joystix"};
     this.leaderBoardBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 150 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "leaderboard", alpha: 1, font: "50px joystix"};
+    this.creditsBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 10 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "credits", alpha: 1, font: "50px joystix"};
 }
 
 MainScene.prototype.onLoadAssets = function() {
@@ -146,6 +147,19 @@ MainScene.prototype.update = function(deltatime) {
             this.context.textAlign = "center";
             this.context.fillText(this.leaderBoardBtn.text, this.leaderBoardBtn.x + this.leaderBoardBtn.width / 2, this.leaderBoardBtn.y + this.leaderBoardBtn.height / 2);
         }
+        
+        if (this.mouseX >= this.creditsBtn.x && this.mouseX <= this.creditsBtn.x + this.creditsBtn.width 
+                && this.mouseY >= this.creditsBtn.y && this.mouseY <= this.creditsBtn.y + this.creditsBtn.height) {          
+            this.context.font = this.creditsBtn.font;
+            this.context.fillStyle = "rgba(255, 0, 0, 0.5)";
+            this.context.textAlign = "center";
+            this.context.fillText(this.creditsBtn.text, this.creditsBtn.x + this.creditsBtn.width / 2, this.creditsBtn.y + this.creditsBtn.height / 2);       
+        } else  {
+            this.context.font = this.creditsBtn.font;
+            this.context.fillStyle = "rgba(255, 0, 0, " + this.playBtn.alpha + ")";
+            this.context.textAlign = "center";
+            this.context.fillText(this.creditsBtn.text, this.creditsBtn.x + this.creditsBtn.width / 2, this.creditsBtn.y + this.creditsBtn.height / 2);
+        }
 
         this.context.font = "35px joystix";
         this.context.fillStyle = "rgba(255, 255, 0, " + this.playBtn.alpha + ")";
@@ -173,7 +187,19 @@ MainScene.prototype.update = function(deltatime) {
             this.mouseY = 0;
             this.music.stop();
             this.callback("leaderboard", null);
-        }      
+        } 
+        
+        if (this.isMouseDown && this.mouseX <= this.creditsBtn.x + this.creditsBtn.width && this.mouseX >= this.creditsBtn.x 
+                && this.mouseY >= this.creditsBtn.y && this.mouseY <= this.creditsBtn.y + this.creditsBtn.height) {
+            this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
+            this.canvas.removeEventListener("mousedown", this.onMouseDownRef);
+            this.canvas.removeEventListener("touchstart", this.onTouchStartRef);
+            this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
+            this.mouseX = 0;
+            this.mouseY = 0;
+            this.music.stop();
+            this.callback("credits", null);
+        } 
     } else {
         this.context.font = "50px joystix";
         this.context.fillStyle = "white";

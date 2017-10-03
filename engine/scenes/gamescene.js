@@ -149,7 +149,7 @@ GameScene.prototype.onTouchEvent = function(x, y, pressed) {
         document.onkeydown = null;
         document.onkeyup = null;
         this.controller.currentLevel.dispose();
-        this.callback("credits", this.controller.time);
+        this.callback("ending", this.controller.time);
     }
 };
 
