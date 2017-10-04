@@ -54,8 +54,8 @@ DragonEnemy.prototype.shoot = function(x, y, blasts) {
         var diffX = (this.left() + this.width / 2) - x;
         var diffY = (this.top() + this.height / 2) - y;
         var radians = Math.atan2(diffY, diffX);
-        blasts.push(new EnemyBlast(this, radians, 0.30, EnemyBlast.SPHERE_TYPE, false, this.camera));
-        blasts.push(new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, true, this.camera));
+        blasts.push(new EnemyBlast(this, radians, 0.30, EnemyBlast.SPHERE_TYPE, false, 0, 0, this.camera));
+        blasts.push(new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, true, 0, 0, this.camera));
     }
 };
 

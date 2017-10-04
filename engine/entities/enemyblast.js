@@ -2,7 +2,7 @@ EnemyBlast.FIRE_TYPE = 1;
 EnemyBlast.SPHERE_TYPE = 2;
 EnemyBlast.RED_TYPE = 4;
 
-function EnemyBlast(enemy, radians, sizeRatio, type, gravity, camera) {
+function EnemyBlast(enemy, radians, sizeRatio, type, gravity, velocityX, velocityY, camera) {
     this.width = enemy.width * sizeRatio;
     this.height = enemy.width * sizeRatio;
     this.x = enemy.left() + enemy.width / 2 - this.width / 2;
@@ -13,10 +13,20 @@ function EnemyBlast(enemy, radians, sizeRatio, type, gravity, camera) {
     this.cameraOrigY = this.camera.y;
     this.cameraOrigX = this.camera.x;
     this.gravity = gravity;
-    this.velocityX = 200 + Math.floor(Math.random() * 100);
-    this.velocityY = this.velocityX;
+    if (velocityX === 0) {
+        this.velocityX = 200 + Math.floor(Math.random() * 100);
+        this.velocityY = this.velocityX;
+    } else {
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+    }
+    
     if (this.gravity) {
-        this.velocityY = this.velocityY - 100;
+        if (velocityY === 0) {
+            this.velocityY = this.velocityY - 100;
+        } else {
+            this.velocityY = velocityY;
+        }
     }
     this.collided = false;
     this.isDisposable = false;

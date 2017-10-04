@@ -16,7 +16,6 @@ function ZombieEnemy(x, y, width, height, velocity, distance, health, camera) {
     
     this.leftAnimation = new Animation(3, 1);
     this.rightAnimation = new Animation(3, 1);
-    this.frontAnimation = new Animation(3, 1);
     this.deadAnimation = new Animation(6, 1);
     this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
     this.directions = [-1, 1];
@@ -58,11 +57,11 @@ ZombieEnemy.prototype.draw = function(context) {
 ZombieEnemy.prototype.shoot = function(x, y, blasts) {
     if (this.direction === 1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
-        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.SPHERE_TYPE, false, this.camera));
+        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.SPHERE_TYPE, false, 0, 0, this.camera));
     }
     if (this.direction === -1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
-        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.SPHERE_TYPE, false, this.camera));
+        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.SPHERE_TYPE, false, 0, 0, this.camera));
     }
     this.isShooting = false;
 };
@@ -95,8 +94,6 @@ ZombieEnemy.prototype.update = function(deltatime) {
     
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
-    } else if (this.direction === 0) {
-        this.frontAnimation.update(deltatime);
     } else if (this.direction === -1) {
         this.leftAnimation.update(deltatime);
     } else {

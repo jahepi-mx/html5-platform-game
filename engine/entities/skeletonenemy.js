@@ -1,4 +1,4 @@
-function SkeletonEnemy(x, y, width, height, velocityX, offset, health, camera) {
+function SkeletonEnemy(x, y, width, height, velocityX, distance, health, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -13,23 +13,23 @@ function SkeletonEnemy(x, y, width, height, velocityX, offset, health, camera) {
     this.damagePoints = 1;
     this.nextShootTime = 0;
     this.nextShootTimeCount = 0;
-    this.shootInterval = 5;
+    this.shootInterval = 1;
     
-    this.leftAnimation = new Animation(3, 1);
-    this.rightAnimation = new Animation(3, 1);
-    this.frontAnimation = new Animation(3, 1);
+    this.leftAnimation = new Animation(3, 2);
+    this.rightAnimation = new Animation(3, 2);
     this.deadAnimation = new Animation(6, 1);
     this.deadAnimation.stopAtSequenceNumber(1, this.onStopDeadAnimation.bind(this));
-    this.directions = [-1, 0, 1];
+    this.directions = [-1, 1];
     
-    this.offset = offset;
+    this.distance = distance;
+    this.origDistance = distance;
     this.x = x * Config.tileSize - (this.width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize + (Config.tileSize - this.height);
     this.velocityX = velocityX;
     this.velocityY = 0;
-    this.traveledX = 0;
+    this.traveledX = Math.random() * this.distance;
     this.traveledY = 0;
-    this.direction = this.directions[Math.round(Math.random() * 2)];
+    this.direction = this.directions[Math.round(Math.random())];
     this.currChangeDirection = Math.random() * 2 + 2;
     this.changeDirectionTime = 0;
     this.jumpTime = 0;
@@ -52,8 +52,6 @@ SkeletonEnemy.prototype.draw = function(context) {
     var name = "";
     if (this.isDead) {
         name = "explo_" + (this.deadAnimation.getFrame() + 1);
-    } else if (this.direction === 0) {
-        name = "skeleton_" + (this.frontAnimation.getFrame() + 1);
     } else if (this.direction === -1) {
         name = "skeleton_left_" + (this.leftAnimation.getFrame() + 1);
     } else {
@@ -65,19 +63,25 @@ SkeletonEnemy.prototype.draw = function(context) {
 SkeletonEnemy.prototype.shoot = function(x, y, blasts) {
     if (this.direction === 1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
-        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.RED_TYPE, false, this.camera));
+        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.SPHERE_TYPE, true, 100, 300, this.camera));
     }
     if (this.direction === -1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
-        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.RED_TYPE, false, this.camera));
+        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.SPHERE_TYPE, true, 100, 300, this.camera));
     }
     this.isShooting = false;
 };
 
 SkeletonEnemy.prototype.changeDirection = function(x) {
+    var diff = x - this.left();
+    this.direction = diff < 0 ? -1 : 1;
 };
 
 SkeletonEnemy.prototype.update = function(deltatime) {
+    
+    var diff = this.distance - this.traveledX;
+    
+    this.traveledX += diff * deltatime;
     
     this.jumpTime += deltatime;
     if (this.jumpTime >= this.jumpTimeLimit && !this.isJumping) {
@@ -113,41 +117,16 @@ SkeletonEnemy.prototype.update = function(deltatime) {
     
     if (this.changeDirectionTime >= this.currChangeDirection) {
         this.changeDirectionTime = 0;
-        this.currChangeDirection = Math.random() * 2 + 2;
-        this.direction = this.directions[Math.round(Math.random() * 2)];     
+        this.currChangeDirection = Math.random() * 3 + 2;
+        this.distance = Math.random() * this.origDistance;
     }
-    
-    var minX = (this.x - this.offset) - this.camera.x;
-    var maxX = (this.x + this.offset) - this.camera.x;
     
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
-    } else if (this.direction === 0) {
-        this.frontAnimation.update(deltatime);
     } else if (this.direction === -1) {
         this.leftAnimation.update(deltatime);
     } else {
         this.rightAnimation.update(deltatime);
-    }
-
-    if (this.left() <= minX) {
-        this.direction = 1;      
-    }
-    
-    if (this.right() >= maxX) {
-        this.direction = -1;
-    }
-    
-    if (this.direction === 1) {
-        this.velocityX = -Math.abs(this.velocityX);
-    }
-    
-    if (this.direction === -1) {
-        this.velocityX = Math.abs(this.velocityX);
-    }
-    
-    if (this.direction !== 0) {
-        this.traveledX += this.velocityX * deltatime;
     }
 };
 
