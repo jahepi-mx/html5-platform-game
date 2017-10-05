@@ -102,6 +102,8 @@ Tile.TYPE[93] = {asset: "set2_win_1", type: Tile.TEXTURE};
 Tile.TYPE[94] = {asset: "set2_win_2", type: Tile.TEXTURE};
 Tile.TYPE[95] = {asset: "set2_win_3", type: Tile.TEXTURE};
 Tile.TYPE[96] = {asset: "set2_win_4", type: Tile.TEXTURE};
+Tile.TYPE[97] = {asset: "set2_goldenblock_left", type: Tile.WALL_TYPE};
+Tile.TYPE[98] = {asset: "set2_goldenblock_right", type: Tile.WALL_TYPE};
 
 function Tile(x, y, width, height, typeIndex, camera) {
     this.x = x * width;
