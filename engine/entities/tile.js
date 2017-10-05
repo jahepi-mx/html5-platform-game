@@ -107,6 +107,11 @@ Tile.TYPE[98] = {asset: "set2_goldenblock_right", type: Tile.WALL_TYPE};
 Tile.TYPE[99] = {asset: "set2_pick1", type: Tile.TEXTURE};
 Tile.TYPE[100] = {asset: "set2_fire", type: Tile.TEXTURE};
 Tile.TYPE[101] = {asset: "set2_buoy", type: Tile.TEXTURE};
+Tile.TYPE[102] = {asset: "set2_blue_brick1", type: Tile.TEXTURE};
+Tile.TYPE[103] = {asset: "set2_blue_brick2", type: Tile.TEXTURE};
+Tile.TYPE[104] = {asset: "set2_blue_brick3", type: Tile.TEXTURE};
+Tile.TYPE[105] = {asset: "set2_blue_brick4", type: Tile.TEXTURE};
+Tile.TYPE[106] = {asset: "set2_blue_brick5", type: Tile.TEXTURE};
 
 function Tile(x, y, width, height, typeIndex, camera) {
     this.x = x * width;
