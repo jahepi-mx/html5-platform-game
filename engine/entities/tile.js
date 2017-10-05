@@ -104,6 +104,9 @@ Tile.TYPE[95] = {asset: "set2_win_3", type: Tile.TEXTURE};
 Tile.TYPE[96] = {asset: "set2_win_4", type: Tile.TEXTURE};
 Tile.TYPE[97] = {asset: "set2_goldenblock_left", type: Tile.WALL_TYPE};
 Tile.TYPE[98] = {asset: "set2_goldenblock_right", type: Tile.WALL_TYPE};
+Tile.TYPE[99] = {asset: "set2_pick1", type: Tile.TEXTURE};
+Tile.TYPE[100] = {asset: "set2_fire", type: Tile.TEXTURE};
+Tile.TYPE[101] = {asset: "set2_buoy", type: Tile.TEXTURE};
 
 function Tile(x, y, width, height, typeIndex, camera) {
     this.x = x * width;
