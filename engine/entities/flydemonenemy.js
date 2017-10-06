@@ -49,7 +49,7 @@ FlyDemonEnemy.prototype.draw = function(context) {
         name = "explo_" + (this.deadAnimation.getFrame() + 1);
     } else if (this.direction === 0) {
         name = "fly_demon" + (this.frontAnimation.getFrame() + 1);
-    } else if (this.direction === -1) {
+    } else if (this.direction === 1) {
         name = "fly_demon_left" + (this.leftAnimation.getFrame() + 1);
     } else {
         name = "fly_demon_right" + (this.rightAnimation.getFrame() + 1);
@@ -70,28 +70,28 @@ FlyDemonEnemy.prototype.update = function(deltatime) {
         this.deadAnimation.update(deltatime);
     } else if (this.direction === 0) {
         this.frontAnimation.update(deltatime);
-    } else if (this.direction === -1) {
+    } else if (this.direction === 1) {
         this.leftAnimation.update(deltatime);
     } else {
         this.rightAnimation.update(deltatime);
     }
 
-    if (this.traveledX > this.distance) {
+    if (this.traveledX < -this.distance) {
         this.direction = 1;
-        this.traveledX = this.distance;
+        this.traveledX = -this.distance;
     }
     
-    if (this.traveledX < 0) {
+    if (this.traveledX > 0) {
         this.direction = -1;
         this.traveledX = 0;
     }
     
     if (this.direction === 1) {
-        this.velocityX = -Math.abs(this.velocityX);
+        this.velocityX = Math.abs(this.velocityX);
     }
     
     if (this.direction === -1) {
-        this.velocityX = Math.abs(this.velocityX);
+        this.velocityX = -Math.abs(this.velocityX);
     }
     
     if (this.direction !== 0) {

@@ -46,7 +46,7 @@ ZombieEnemy.prototype.draw = function(context) {
     var name = "";
     if (this.isDead) {
         name = "explo_" + (this.deadAnimation.getFrame() + 1);
-    } else if (this.direction === -1) {
+    } else if (this.direction === 1) {
         name = "zombie_left_" + (this.leftAnimation.getFrame() + 1);
     } else {
         name = "zombie_right_" + (this.rightAnimation.getFrame() + 1);
@@ -55,11 +55,11 @@ ZombieEnemy.prototype.draw = function(context) {
 };
 
 ZombieEnemy.prototype.shoot = function(x, y, blasts) {
-    if (this.direction === 1) {
+    if (this.direction === -1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.SPHERE_TYPE, false, 0, 0, this.camera));
     }
-    if (this.direction === -1) {
+    if (this.direction === 1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
         blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.SPHERE_TYPE, false, 0, 0, this.camera));
     }
@@ -94,28 +94,28 @@ ZombieEnemy.prototype.update = function(deltatime) {
     
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
-    } else if (this.direction === -1) {
+    } else if (this.direction === 1) {
         this.leftAnimation.update(deltatime);
     } else {
         this.rightAnimation.update(deltatime);
     }
 
-    if (this.traveledX > this.distance) {
+    if (this.traveledX < -this.distance) {
         this.direction = 1;
-        this.traveledX = this.distance;
+        this.traveledX = -this.distance;
     }
     
-    if (this.traveledX < 0) {
+    if (this.traveledX > 0) {
         this.direction = -1;
         this.traveledX = 0;
     }
     
     if (this.direction === 1) {
-        this.velocity = -Math.abs(this.velocity);
+        this.velocity = Math.abs(this.velocity);
     }
     
     if (this.direction === -1) {
-        this.velocity = Math.abs(this.velocity);
+        this.velocity = -Math.abs(this.velocity);
     }
    
     this.traveledX += this.velocity * deltatime;

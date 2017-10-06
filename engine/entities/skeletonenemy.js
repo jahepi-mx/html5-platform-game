@@ -45,9 +45,9 @@ SkeletonEnemy.prototype.draw = function(context) {
     // Draw life bar
     if (this.health > 0) {
         context.fillStyle='#000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25), this.y + this.traveledY - this.camera.y - 20, 50, 6);
+        context.fillRect(this.x + this.traveledX - this.camera.x + (this.width / 2 - 25), this.y + this.traveledY - this.camera.y - 20, 50, 6);
         context.fillStyle='#ff0000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24), this.y + this.traveledY - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
+        context.fillRect(this.x + this.traveledX - this.camera.x + (this.width / 2 - 24), this.y + this.traveledY - this.camera.y - 19, 48 * (this.health / this.origHealth), 4);
     }
     var name = "";
     if (this.isDead) {
@@ -57,7 +57,7 @@ SkeletonEnemy.prototype.draw = function(context) {
     } else {
         name = "skeleton_right_" + (this.rightAnimation.getFrame() + 1);
     }
-    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveledX - this.camera.x, this.y + this.traveledY - this.camera.y, this.width, this.height);
+    context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x + this.traveledX - this.camera.x, this.y + this.traveledY - this.camera.y, this.width, this.height);
 };
 
 SkeletonEnemy.prototype.shoot = function(x, y, blasts) {
@@ -151,11 +151,11 @@ SkeletonEnemy.prototype.collide = function(entity) {
 };
 
 SkeletonEnemy.prototype.left = function() {
-    return this.x - this.traveledX - this.camera.x;
+    return this.x + this.traveledX - this.camera.x;
 };
 
 SkeletonEnemy.prototype.right = function() {
-    return (this.x + this.width) - this.traveledX - this.camera.x;
+    return (this.x + this.width) + this.traveledX - this.camera.x;
 };
 
 SkeletonEnemy.prototype.top = function() {

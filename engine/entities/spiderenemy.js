@@ -52,7 +52,7 @@ SpiderEnemy.prototype.draw = function(context) {
     if (this.isDead) {
         name = "spider08_dead" + (this.deadAnimation.getFrame() + 1);
     } else if (!this.isVertical) {
-        if (this.directionX === -1) {
+        if (this.directionX === 1) {
             name = "spider08_leftwalk" + (this.leftAnimation.getFrame() + 1);
         } else {
             name = "spider08_rightwalk" + (this.rightAnimation.getFrame() + 1);
@@ -89,7 +89,7 @@ SpiderEnemy.prototype.update = function(deltatime) {
     }
     
     if (!this.isVertical) {
-        if (this.directionX === 1) {
+        if (this.directionX === -1) {
             this.rightAnimation.update(deltatime);
         } else {
             this.leftAnimation.update(deltatime);
@@ -102,22 +102,22 @@ SpiderEnemy.prototype.update = function(deltatime) {
         }
     }
     
-    if (this.traveledX > this.distanceX) {
+    if (this.traveledX < -this.distanceX) {
         this.directionX = 1;
-        this.traveledX = this.distanceX;
+        this.traveledX = -this.distanceX;
     }
     
-    if (this.traveledX < 0) {
+    if (this.traveledX > 0) {
         this.directionX = -1;
         this.traveledX = 0;
     }
     
     if (this.directionX === 1) {
-        this.velocityX = -Math.abs(this.velocityX);
+        this.velocityX = Math.abs(this.velocityX);
     }
     
     if (this.directionX === -1) {
-        this.velocityX = Math.abs(this.velocityX);
+        this.velocityX = -Math.abs(this.velocityX);
     }
     
     if (!this.isVertical) {
@@ -176,7 +176,7 @@ SpiderEnemy.prototype.right = function() {
 };
 
 SpiderEnemy.prototype.top = function() {
-    return this.y + this.traveledY - this.camera.y;
+    return this.y - this.traveledY - this.camera.y;
 };
 
 SpiderEnemy.prototype.bottom = function() {

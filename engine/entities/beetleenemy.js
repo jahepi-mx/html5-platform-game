@@ -2,7 +2,7 @@
 BeetleEnemy.VERTICAL = 1;
 BeetleEnemy.HORIZONTAL = 2;
 
-function BeetleEnemy(x, y, width, height, type, velocity, maxDistance, camera, direction) {
+function BeetleEnemy(x, y, width, height, type, velocity, maxDistance, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -25,10 +25,7 @@ function BeetleEnemy(x, y, width, height, type, velocity, maxDistance, camera, d
     this.maxDistance = maxDistance;
     this.velocity = velocity;
     this.traveled = 0;
-    this.direction = direction;
-    if (this.direction === 1) {
-        this.traveled = this.maxDistance;
-    }
+    this.direction = 1;
 }
 
 BeetleEnemy.prototype.draw = function(context) {
@@ -42,7 +39,7 @@ BeetleEnemy.prototype.draw = function(context) {
         }
     }
     if (this.type === BeetleEnemy.HORIZONTAL) {
-        if (this.direction === -1) {
+        if (this.direction === 1) {
             var name = "beetle_left" + (this.animation.getFrame() + 1);
             context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
         } else {
@@ -54,17 +51,33 @@ BeetleEnemy.prototype.draw = function(context) {
 
 BeetleEnemy.prototype.update = function(deltatime) {
     this.animation.update(deltatime);
-    if (this.direction === -1) {
-        this.traveled += this.velocity * deltatime;
-        if (this.traveled > this.maxDistance) {
-            this.direction = 1;
-            this.traveled = this.maxDistance;
+    if (this.type === BeetleEnemy.HORIZONTAL) {
+        if (this.direction === -1) {
+            this.traveled -= this.velocity * deltatime;
+            if (this.traveled < -this.maxDistance) {
+                this.direction = 1;
+                this.traveled = -this.maxDistance;
+            }
+        } else {
+            this.traveled += this.velocity * deltatime;
+            if (this.traveled > 0) {
+                this.direction = -1;
+                this.traveled = 0;
+            }
         }
     } else {
-        this.traveled -= this.velocity * deltatime;
-        if (this.traveled < 0) {
-            this.direction = -1;
-            this.traveled = 0;
+        if (this.direction === -1) {
+            this.traveled += this.velocity * deltatime;
+            if (this.traveled > this.maxDistance) {
+                this.direction = 1;
+                this.traveled = this.maxDistance;
+            }
+        } else {
+            this.traveled -= this.velocity * deltatime;
+            if (this.traveled < 0) {
+                this.direction = -1;
+                this.traveled = 0;
+            }
         }
     }
 };

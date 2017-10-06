@@ -108,6 +108,15 @@ Level1.prototype.setup = function(camera) {
         this.enemies[11 * this.mapWidth + x] = new StaticEnemy(x, 11, this.camera, StaticEnemy.STING_DARK_TYPE);
     }
     
+    //this.enemies[13 * this.mapWidth + 16] = new FlyDemonEnemy(16, 13, Config.tileSize, Config.tileSize, 100, 50, 3, Config.tileSize * 2, this.camera);
+    //this.enemies[13 * this.mapWidth + 16] = new BeetleEnemy(16, 13, Config.tileSize, Config.tileSize, BeetleEnemy.VERTICAL, 100, Config.tileSize * 2, this.camera);
+    //this.enemies[13 * this.mapWidth + 16] = new BuoyEnemy(16, 13, Config.tileSize, Config.tileSize, 100, 100, Config.tileSize * 2, 2, this.camera);
+    //this.enemies[13 * this.mapWidth + 16] = new BuoyEnemy360(16, 13, Config.tileSize, Config.tileSize, 90, Config.tileSize * 2, this.camera);
+    //this.enemies[13 * this.mapWidth + 16] = new ZombieEnemy(16, 13, Config.tileSize, Config.tileSize, 100, Config.tileSize * 2, 3, this.camera);
+    //this.enemies[13 * this.mapWidth + 16] = new SpiderEnemy(16, 13, Config.tileSize, Config.tileSize, 100, 100, Config.tileSize * 2, Config.tileSize, 2, this.camera);
+    this.enemies[13 * this.mapWidth + 16] = new SkeletonEnemy(16, 13, Config.tileSize, Config.tileSize, 100, Config.tileSize * 2, 2, this.camera);
+    
+    
     this.platforms[0] = new MovingPlatform(68.5, 10, Config.tileSize * 2, Config.tileSize * 0.8, MovingPlatform.HORIZONTAL, 150, Config.tileSize * 13, this.camera);
     this.platforms[1] = new MovingPlatform(96.5, 14, Config.tileSize, Config.tileSize * 0.8, MovingPlatform.VERTICAL, 150, Config.tileSize * 11, this.camera);
     this.platforms[2] = new MovingPlatform(130, 7, Config.tileSize, Config.tileSize * 0.8, MovingPlatform.HORIZONTAL, 50, Config.tileSize * 2, this.camera);
