@@ -47,8 +47,9 @@ Level2.prototype.setup = function(camera) {
     this.coins[14 * this.mapWidth + 84] = new Coin(84, 14, this.camera);
 
     
-    this.platforms[0] = new MovingPlatform(68.5, 10, Config.tileSize * 2, Config.tileSize * 0.8, MovingPlatform.HORIZONTAL, 200, Config.tileSize * 13, this.camera);
-    this.platforms[1] = new MovingPlatform(96.5, 14, Config.tileSize, Config.tileSize * 0.8, MovingPlatform.VERTICAL, 200, Config.tileSize * 11, this.camera);
+    this.platforms[0] = new MovingPlatform(68.5, 10, Config.tileSize * 2, Config.tileSize * 0.8, MovingPlatform.HORIZONTAL, 150, Config.tileSize * 13, this.camera);
+    this.platforms[1] = new MovingPlatform(96.5, 14, Config.tileSize, Config.tileSize * 0.8, MovingPlatform.VERTICAL, 150, Config.tileSize * 11, this.camera);
+    
 };
 
 Level2.prototype.dispose = function() {

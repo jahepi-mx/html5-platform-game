@@ -34,31 +34,39 @@ MovingPlatform.prototype.draw = function(context) {
 
 MovingPlatform.prototype.update = function(deltatime) {
     if (this.type === MovingPlatform.HORIZONTAL) {
-        if (this.direction === -1) {
-            this.moveDistance = this.velocity * deltatime;
+        if (this.direction === -1) {          
             this.traveled -= this.velocity * deltatime;
             if (this.traveled <= -this.maxDistance) {
                 this.direction = 1;
+                this.moveDistance = 0;
+            } else {
+                this.moveDistance = this.velocity * deltatime;
             }
-        } else {
-            this.moveDistance = -(this.velocity * deltatime);
+        } else {          
             this.traveled += this.velocity * deltatime;
             if (this.traveled >= 0) {
                 this.direction = -1;
+                this.moveDistance = 0;
+            } else {
+                this.moveDistance = -(this.velocity * deltatime);
             }
         }
     } else {
-        if (this.direction === -1) {
-            this.moveDistance = -(this.velocity * deltatime);
+        if (this.direction === -1) {           
             this.traveled += this.velocity * deltatime;
             if (this.traveled >= this.maxDistance) {
                 this.direction = 1;
+                this.moveDistance = 0;
+            } else {
+                this.moveDistance = -(this.velocity * deltatime);
             }
-        } else {
-            this.moveDistance = this.velocity * deltatime;
+        } else {          
             this.traveled -= this.velocity * deltatime;
             if (this.traveled <= 0) {
                 this.direction = -1;
+                this.moveDistance = 0;
+            } else {
+                this.moveDistance = this.velocity * deltatime;
             }
         }
     }

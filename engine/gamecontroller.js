@@ -103,7 +103,7 @@ GameController.prototype.update = function(deltatime) {
             }
             
             for (var a = 0; a < this.platforms.length; a++) {
-                var isMovingPlatformCollision = this.hero.velocityY >= 0 && this.hero.bottom() > this.platforms[a].top() && this.hero.bottom() < this.platforms[a].top() + 20;
+                var isMovingPlatformCollision = this.hero.velocityY >= 0 && this.hero.bottom() > this.platforms[a].top() && this.hero.bottom() < this.platforms[a].top() + this.platforms[a].height / 2;
                 if (isMovingPlatformCollision) {
                     if (this.hero.right() >= this.platforms[a].left() && this.hero.right() <= this.platforms[a].right()) {
                         this.hero.setJumping(false);
@@ -119,13 +119,6 @@ GameController.prototype.update = function(deltatime) {
                 }
             }
         }
-    }
-    
-    if (movingPlatform !== null) {
-        if (movingPlatform.type === MovingPlatform.HORIZONTAL) this.hero.x += movingPlatform.moveDistance;
-        else this.hero.y += movingPlatform.moveDistance;
-    } else {
-        this.hero.isOnMovingPlatform = false;
     }
     
     for (var y = this.getMinEnemyY(); y <= this.getMaxEnemyY(); y++) {
@@ -175,6 +168,13 @@ GameController.prototype.update = function(deltatime) {
         if (Math.abs(this.platforms[i].left()) <= MovingPlatform.VISIBILITY_DISTANCE) {
             this.platforms[i].update(deltatime);
         }
+    }
+    
+    if (movingPlatform !== null) {
+        if (movingPlatform.type === MovingPlatform.HORIZONTAL) this.hero.x += movingPlatform.moveDistance;
+        else this.hero.y += movingPlatform.moveDistance;
+    } else {
+        this.hero.isOnMovingPlatform = false;
     }
     
     for (var y = this.getMinY(); y <= this.getMaxY(); y++) {

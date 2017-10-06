@@ -94,7 +94,8 @@ MainScene.prototype.update = function(deltatime) {
         }
         
         if (this.startIntro) {
-            
+            this.music.stop();
+            this.callback("game", null);
             if (this.playBtn.alpha > 0) {
                 this.playBtn.alpha -= 0.5 * deltatime;
             }
