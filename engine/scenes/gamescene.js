@@ -167,7 +167,7 @@ GameScene.prototype.update = function(deltatime) {
         
         this.context.fillStyle = 'white';
         this.context.font = "60px joystix";
-        this.context.fillText(this.controller.currentLevel.currentNumberOfCoins + "/" + this.controller.currentLevel.totalNumberOfCoins, 120, 50);
+        this.context.fillText(this.controller.currentLevel.currentNumberOfCoins + "/" + this.controller.currentLevel.totalNumberOfCoins, 150, 50);
         this.context.drawImage(Assets.tilesAtlas, Atlas.tiles["coin_01"].x, Atlas.tiles["coin_01"].y, Atlas.tiles["coin_01"].width, Atlas.tiles["coin_01"].height, 10, 10, 60, 60);
         this.context.fillStyle = 'green';
         this.context.font = "25px joystix";
