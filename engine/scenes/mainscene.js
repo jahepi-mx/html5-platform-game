@@ -94,7 +94,7 @@ MainScene.prototype.update = function(deltatime) {
         }
         
         if (this.startIntro) {
-
+            
             if (this.playBtn.alpha > 0) {
                 this.playBtn.alpha -= 0.5 * deltatime;
             }

@@ -1,7 +1,7 @@
 function Camera() {
     this.x = 0;
     this.y = 0;
-    this.width = 6; // 6 visible tiles
+    this.width = 7; // 7 visible tiles
     this.height = 4; // 4 visible tiles
 }
 
