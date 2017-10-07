@@ -85,3 +85,7 @@ Level2.prototype.dispose = function() {
         this.music = null;
     }
 };
+
+Level2.prototype.checkpoint = function() {
+    
+};

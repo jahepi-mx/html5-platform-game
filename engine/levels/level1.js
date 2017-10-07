@@ -1,5 +1,7 @@
 function Level1() {
     this.loaded = false;
+    this.startX = Config.tileSize * 8 - Config.worldWidth / 2;
+    this.startY = Config.tileSize * 12  - Config.worldHeight / 2;
 }
 
 Level1.prototype.setup = function(camera) {
@@ -7,8 +9,6 @@ Level1.prototype.setup = function(camera) {
     this.levelName = "Level 1: Catacumbs";
     this.mapWidth = 300;
     this.mapHeight = 20;
-    this.startX = Config.tileSize * 8;
-    this.startY = Config.tileSize * 9;
     this.camera = camera;
     this.tiles = [];
     this.enemies = [];
@@ -16,8 +16,8 @@ Level1.prototype.setup = function(camera) {
     this.totalNumberOfCoins = 71;
     this.music = Assets.playAudio(Assets.boss_music, true);
     this.atlasBackground = Atlas.tiles.cave_background;
-    this.visibilityEnemyRatioX = 30; // 9 tiles 
-    this.visibilityEnemyRatioY = 20; // 5 tiles
+    this.visibilityEnemyRatioX = 30; // 30 tiles 
+    this.visibilityEnemyRatioY = 20; // 20 tiles
     if (!this.loaded) {
         this.coins = [];
     }
@@ -127,7 +127,7 @@ Level1.prototype.setup = function(camera) {
     this.enemies[11 * this.mapWidth + 151] = new BeetleEnemy(151, 11, Config.tileSize, Config.tileSize, BeetleEnemy.HORIZONTAL, 50, Config.tileSize * 6, this.camera);
     this.enemies[11 * this.mapWidth + 167] = new BeetleEnemy(167, 11, Config.tileSize, Config.tileSize, BeetleEnemy.VERTICAL, 100, Config.tileSize * 4, this.camera);
     this.enemies[11 * this.mapWidth + 172] = new BeetleEnemy(172, 11, Config.tileSize, Config.tileSize, BeetleEnemy.VERTICAL, 150, Config.tileSize * 4, this.camera);
-    this.enemies[11 * this.mapWidth + 177] = new BeetleEnemy(177, 11, Config.tileSize, Config.tileSize, BeetleEnemy.VERTICAL, 200, Config.tileSize * 4, this.camera);
+    this.enemies[11 * this.mapWidth + 176] = new BeetleEnemy(176, 11, Config.tileSize, Config.tileSize, BeetleEnemy.VERTICAL, 200, Config.tileSize * 4, this.camera);
     this.enemies[5 * this.mapWidth + 231] = new BeetleEnemy(231, 5, Config.tileSize, Config.tileSize, BeetleEnemy.HORIZONTAL, 50, Config.tileSize * 2, this.camera);
     this.enemies[13 * this.mapWidth + 261] = new ZombieEnemy(261, 13, Config.tileSize * 1.2, Config.tileSize * 1.2, 50, Config.tileSize, 5, this.camera);
     this.enemies[13 * this.mapWidth + 265] = new ZombieEnemy(265, 13, Config.tileSize * 1.2, Config.tileSize * 1.2, 50, Config.tileSize, 5, this.camera);
@@ -218,5 +218,32 @@ Level1.prototype.dispose = function() {
             this.music.stop();
         } catch (e) {}
         this.music = null;
+    }
+};
+
+Level1.prototype.checkpoint = function() {
+    var tileX = (this.camera.x + Config.worldWidth / 2) / Config.tileSize;
+    var tileY = (this.camera.y + Config.worldHeight / 2) / Config.tileSize;
+    if (tileX >= 8 && tileX <= 9) {
+        this.startX = Config.tileSize * 8 - Config.worldWidth / 2;
+        this.startY = Config.tileSize * 12 - Config.worldHeight / 2;
+    } else if (tileX >= 40 && tileX <= 41) {
+        this.startX = Config.tileSize * 40 - Config.worldWidth / 2;
+        this.startY = Config.tileSize * 6 - Config.worldHeight / 2;
+    } else if (tileX >= 66 && tileX <= 67) {
+        this.startX = Config.tileSize * 66 - Config.worldWidth / 2;
+        this.startY = Config.tileSize * 8 - Config.worldHeight / 2;
+    } else if (tileX >= 86 && tileX <= 87) {
+        this.startX = Config.tileSize * 86 - Config.worldWidth / 2;
+        this.startY = Config.tileSize * 8 - Config.worldHeight / 2;
+    } else if (tileX >= 125 && tileX <= 126) {
+        this.startX = Config.tileSize * 125 - Config.worldWidth / 2;
+        this.startY = Config.tileSize * 10 - Config.worldHeight / 2;
+    } else if (tileX >= 178 && tileX <= 179) {
+        this.startX = Config.tileSize * 178 - Config.worldWidth / 2;
+        this.startY = Config.tileSize * 10 - Config.worldHeight / 2;
+    } else if (tileX >= 214 && tileX <= 215) {
+        this.startX = Config.tileSize * 214 - Config.worldWidth / 2;
+        this.startY = Config.tileSize * 7 - Config.worldHeight / 2;
     }
 };
