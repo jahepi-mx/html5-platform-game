@@ -16,7 +16,7 @@ function DragonBossEnemy(x, y, width, height, health, level, camera) {
     this.direction = -1;
     this.nextShootTime = 0;
     this.nextShootTimeCount = 0;
-    this.shootInterval = 8;
+    this.shootInterval = 3;
     this.level = level;
     this.damagePoints = 1;
     
@@ -56,20 +56,20 @@ DragonBossEnemy.prototype.shoot = function(x, y, blasts) {
         var diffY = (this.top() + this.height / 2) - y;
         var radians = Math.atan2(diffY, diffX);
         var shoot1 = new EnemyBlast(this, radians + (Math.PI / 180 * -15), 0.30, EnemyBlast.SPHERE_TYPE, true, 0, 0, this.camera);
-        shoot1.velocityX = 40 + Math.random() * 40;
-        shoot1.velocityY = 250;
+        shoot1.velocityX = 40 + Math.random() * 240;
+        shoot1.velocityY = 350;
         blasts.push(shoot1);
         var shoot2 = new EnemyBlast(this, radians + (Math.PI / 180 * -30), 0.30, EnemyBlast.SPHERE_TYPE, true, 0, 0, this.camera);
-        shoot2.velocityX = 120 +Math.random() * 40;
-        shoot2.velocityY = 250;
+        shoot2.velocityX = 120 +Math.random() * 240;
+        shoot2.velocityY = 350;
         blasts.push(shoot2);
         var shoot3 = new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, true, 0, 0, this.camera);
-        shoot3.velocityX = 200 + Math.random() * 40;
-        shoot3.velocityY = 250;
+        shoot3.velocityX = 200 + Math.random() * 240;
+        shoot3.velocityY = 350;
         blasts.push(shoot3);
         var shoot4 = new EnemyBlast(this, radians + (Math.PI / 180 * -60), 0.30, EnemyBlast.SPHERE_TYPE, true, 0, 0, this.camera);
-        shoot4.velocityX = 310 + Math.random() * 40;
-        shoot4.velocityY = 250;
+        shoot4.velocityX = 310 + Math.random() * 240;
+        shoot4.velocityY = 350;
         blasts.push(shoot4);
     }
 };
