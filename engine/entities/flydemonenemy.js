@@ -58,22 +58,24 @@ FlyDemonEnemy.prototype.draw = function(context) {
 };
 
 FlyDemonEnemy.prototype.update = function(deltatime) {
-    this.changeDirectionTime += deltatime;
-    
-    if (this.changeDirectionTime >= this.changeDirection) {
-        this.changeDirectionTime = 0;
-        this.changeDirection = Math.random() * 2 + 2;
-        this.direction = this.directions[Math.round(Math.random() * 2)];     
-    }
     
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
+        return;
     } else if (this.direction === 0) {
         this.frontAnimation.update(deltatime);
     } else if (this.direction === 1) {
         this.leftAnimation.update(deltatime);
     } else {
         this.rightAnimation.update(deltatime);
+    }
+    
+    this.changeDirectionTime += deltatime;
+    
+    if (this.changeDirectionTime >= this.changeDirection) {
+        this.changeDirectionTime = 0;
+        this.changeDirection = Math.random() * 2 + 2;
+        this.direction = this.directions[Math.round(Math.random() * 2)];     
     }
 
     if (this.traveledX < -this.distance) {

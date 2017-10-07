@@ -79,6 +79,15 @@ SkeletonEnemy.prototype.changeDirection = function(x) {
 
 SkeletonEnemy.prototype.update = function(deltatime) {
     
+    if (this.isDead) {
+        this.deadAnimation.update(deltatime);
+        return;
+    } else if (this.direction === -1) {
+        this.leftAnimation.update(deltatime);
+    } else {
+        this.rightAnimation.update(deltatime);
+    }
+    
     var diff = this.distance - this.traveledX;
     
     this.traveledX += diff * deltatime;
@@ -119,14 +128,6 @@ SkeletonEnemy.prototype.update = function(deltatime) {
         this.changeDirectionTime = 0;
         this.currChangeDirection = Math.random() * 3 + 2;
         this.distance = Math.random() * this.origDistance;
-    }
-    
-    if (this.isDead) {
-        this.deadAnimation.update(deltatime);
-    } else if (this.direction === -1) {
-        this.leftAnimation.update(deltatime);
-    } else {
-        this.rightAnimation.update(deltatime);
     }
 };
 

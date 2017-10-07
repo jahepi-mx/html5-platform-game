@@ -95,6 +95,7 @@ FlyDemonBossEnemy.prototype.update = function(deltatime) {
     
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
+        return;
     } else {
         this.frontAnimation.update(deltatime);
     }

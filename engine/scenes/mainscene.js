@@ -28,7 +28,7 @@ function MainScene(context, canvas, callback) {
     this.texts = [
         {x: Config.worldWidth / 2, y: Config.worldHeight, text: "Once upon a time a man from other galaxy", red: 255, green: 255, blue: 255, size: 50, removed: false},
         {x: Config.worldWidth / 2, y: Config.worldHeight + 40, text: "Had to land on the earth,", red: 255, green: 255, blue: 255, size: 50, removed: false}, 
-        {x: Config.worldWidth / 2, y: Config.worldHeight + 80, text: "it´s ship ran out of fuel,", red: 255, green: 255, blue: 255, size: 50, removed: false}, 
+        {x: Config.worldWidth / 2, y: Config.worldHeight + 80, text: "its ship ran out of fuel,", red: 255, green: 255, blue: 255, size: 50, removed: false}, 
         {x: Config.worldWidth / 2, y: Config.worldHeight + 120, text: "and the main source of it is gold.", red: 255, green: 255, blue: 255, size: 50, removed: false}, 
         {x: Config.worldWidth / 2, y: Config.worldHeight + 160, text: "He discovered several places", red: 255, green: 255, blue: 255, size: 50, removed: false},
         {x: Config.worldWidth / 2, y: Config.worldHeight + 200, text: "where this resource can be found", red: 255, green: 255, blue: 255, size: 50, removed: false},

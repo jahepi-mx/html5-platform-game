@@ -1,7 +1,7 @@
 function Level1() {
     this.loaded = false;
-    this.startX = Config.tileSize * 8 - Config.worldWidth / 2;
-    this.startY = Config.tileSize * 12  - Config.worldHeight / 2;
+    this.startX = Config.tileSize * 7 - Config.worldWidth / 2 + Config.heroSize / 2;
+    this.startY = Config.tileSize * 14  - Config.worldHeight / 2 - Config.heroSize / 2;
 }
 
 Level1.prototype.setup = function(camera) {
@@ -18,6 +18,10 @@ Level1.prototype.setup = function(camera) {
     this.atlasBackground = Atlas.tiles.cave_background;
     this.visibilityEnemyRatioX = 30; // 30 tiles 
     this.visibilityEnemyRatioY = 20; // 20 tiles
+    this.checkpointTime = 0;
+    this.checkpointTimeLimit = 2;
+    this.isCheckpoint = false;
+    
     if (!this.loaded) {
         this.coins = [];
     }
@@ -221,29 +225,45 @@ Level1.prototype.dispose = function() {
     }
 };
 
-Level1.prototype.checkpoint = function() {
+Level1.prototype.checkpoint = function(deltatime) {
     var tileX = (this.camera.x + Config.worldWidth / 2) / Config.tileSize;
     var tileY = (this.camera.y + Config.worldHeight / 2) / Config.tileSize;
-    if (tileX >= 8 && tileX <= 9) {
-        this.startX = Config.tileSize * 8 - Config.worldWidth / 2;
-        this.startY = Config.tileSize * 12 - Config.worldHeight / 2;
+    
+    if (this.isCheckpoint) {
+        this.checkpointTime += deltatime;
+        if (this.checkpointTime >= this.checkpointTimeLimit) {
+            this.isCheckpoint = false;
+            this.checkpointTime = 0;
+        }
+    }
+    
+    if (tileX >= 25 && tileX <= 26) {
+        this.isCheckpoint = true;
+        this.startX = Config.tileSize * 25 - Config.worldWidth / 2 + Config.heroSize / 2;
+        this.startY = Config.tileSize * 14 - Config.worldHeight / 2 - Config.heroSize / 2;
     } else if (tileX >= 40 && tileX <= 41) {
-        this.startX = Config.tileSize * 40 - Config.worldWidth / 2;
-        this.startY = Config.tileSize * 6 - Config.worldHeight / 2;
+        this.isCheckpoint = true;
+        this.startX = Config.tileSize * 40 - Config.worldWidth / 2 + Config.heroSize / 2;
+        this.startY = Config.tileSize * 7 - Config.worldHeight / 2 - Config.heroSize / 2;
     } else if (tileX >= 66 && tileX <= 67) {
-        this.startX = Config.tileSize * 66 - Config.worldWidth / 2;
-        this.startY = Config.tileSize * 8 - Config.worldHeight / 2;
+        this.isCheckpoint = true;
+        this.startX = Config.tileSize * 66 - Config.worldWidth / 2 + Config.heroSize / 2;
+        this.startY = Config.tileSize * 9 - Config.worldHeight / 2 - Config.heroSize / 2;
     } else if (tileX >= 86 && tileX <= 87) {
-        this.startX = Config.tileSize * 86 - Config.worldWidth / 2;
-        this.startY = Config.tileSize * 8 - Config.worldHeight / 2;
+        this.isCheckpoint = true;
+        this.startX = Config.tileSize * 86 - Config.worldWidth / 2 + Config.heroSize / 2;
+        this.startY = Config.tileSize * 9 - Config.worldHeight / 2 - Config.heroSize / 2;
     } else if (tileX >= 125 && tileX <= 126) {
-        this.startX = Config.tileSize * 125 - Config.worldWidth / 2;
-        this.startY = Config.tileSize * 10 - Config.worldHeight / 2;
+        this.isCheckpoint = true;
+        this.startX = Config.tileSize * 125 - Config.worldWidth / 2 + Config.heroSize / 2;
+        this.startY = Config.tileSize * 11 - Config.worldHeight / 2 - Config.heroSize / 2;
     } else if (tileX >= 178 && tileX <= 179) {
-        this.startX = Config.tileSize * 178 - Config.worldWidth / 2;
-        this.startY = Config.tileSize * 10 - Config.worldHeight / 2;
+        this.isCheckpoint = true;
+        this.startX = Config.tileSize * 178 - Config.worldWidth / 2 + Config.heroSize / 2;
+        this.startY = Config.tileSize * 11 - Config.worldHeight / 2 - Config.heroSize / 2;
     } else if (tileX >= 214 && tileX <= 215) {
-        this.startX = Config.tileSize * 214 - Config.worldWidth / 2;
-        this.startY = Config.tileSize * 7 - Config.worldHeight / 2;
+        this.isCheckpoint = true;
+        this.startX = Config.tileSize * 214 - Config.worldWidth / 2 + Config.heroSize / 2;
+        this.startY = Config.tileSize * 8 - Config.worldHeight / 2 - Config.heroSize / 2;
     }
 };

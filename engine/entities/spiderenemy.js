@@ -68,6 +68,12 @@ SpiderEnemy.prototype.draw = function(context) {
 };
 
 SpiderEnemy.prototype.update = function(deltatime) {
+    
+    if (this.isDead) {
+        this.deadAnimation.update(deltatime);
+        return;
+    }
+    
     this.changeXDirectionTime += deltatime;
     
     if (this.changeXDirectionTime >= this.changeXDirection) {
@@ -82,10 +88,6 @@ SpiderEnemy.prototype.update = function(deltatime) {
         this.changeYDirectionTime = 0;
         this.changeYDirection = Math.random() * 5 + 2;
         this.isVertical = true;
-    }
-    
-    if (this.isDead) {
-        this.deadAnimation.update(deltatime);
     }
     
     if (!this.isVertical) {

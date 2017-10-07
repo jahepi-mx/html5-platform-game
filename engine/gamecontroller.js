@@ -205,7 +205,7 @@ GameController.prototype.update = function(deltatime) {
         } 
     }
     this.hero.updateXFriction(deltatime);
-    this.currentLevel.checkpoint();
+    this.currentLevel.checkpoint(deltatime);
 };
 
 GameController.prototype.getTile = function(index) {

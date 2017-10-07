@@ -71,6 +71,15 @@ ZombieEnemy.prototype.changeDirection = function(x) {
 
 ZombieEnemy.prototype.update = function(deltatime) {
     
+    if (this.isDead) {
+        this.deadAnimation.update(deltatime);
+        return;
+    } else if (this.direction === 1) {
+        this.leftAnimation.update(deltatime);
+    } else {
+        this.rightAnimation.update(deltatime);
+    }
+    
     this.changeDirectionTime += deltatime;
     
     if (this.changeDirectionTime >= this.currChangeDirection) {
@@ -90,14 +99,6 @@ ZombieEnemy.prototype.update = function(deltatime) {
         this.nextShootTime = 0;
         this.nextShootTimeCount = 0;
         this.isShooting = true;
-    }
-    
-    if (this.isDead) {
-        this.deadAnimation.update(deltatime);
-    } else if (this.direction === 1) {
-        this.leftAnimation.update(deltatime);
-    } else {
-        this.rightAnimation.update(deltatime);
     }
 
     if (this.traveledX < -this.distance) {

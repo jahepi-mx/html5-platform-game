@@ -165,6 +165,12 @@ GameScene.prototype.update = function(deltatime) {
     } else {
         this.render.update(deltatime);
         
+        if (this.controller.currentLevel.isCheckpoint) {
+            this.context.fillStyle = 'white';
+            this.context.font = "40px joystix";
+            this.context.fillText("Checkpoint reached", Config.worldWidth / 2, 50);
+        }
+        
         this.context.fillStyle = 'white';
         this.context.font = "60px joystix";
         this.context.fillText(this.controller.currentLevel.currentNumberOfCoins + "/" + this.controller.currentLevel.totalNumberOfCoins, 150, 50);

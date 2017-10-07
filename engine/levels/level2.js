@@ -20,6 +20,9 @@ Level2.prototype.setup = function(camera) {
     this.atlasBackground = Atlas.tiles.sky_background;
     this.visibilityEnemyRatioX = 9; // 9 tiles 
     this.visibilityEnemyRatioY = 5; // 5 tiles
+    this.checkpointTime = 0;
+    this.checkpointTimeLimit = 2;
+    this.isCheckpoint = false;
     
     this.map = [
         15,15,15,15,15,15,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,16,15,15,15,15,15,15,
@@ -86,6 +89,6 @@ Level2.prototype.dispose = function() {
     }
 };
 
-Level2.prototype.checkpoint = function() {
+Level2.prototype.checkpoint = function(deltatime) {
     
 };
