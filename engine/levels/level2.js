@@ -44,17 +44,19 @@ Level2.prototype.setup = function(camera) {
     this.enemies[15 * this.mapWidth + 17] = new StaticEnemy(17, 15, this.camera, StaticEnemy.FIRE_TYPE);
     this.enemies[15 * this.mapWidth + 20] = new StaticEnemy(20, 15, this.camera, StaticEnemy.FIRE_TYPE);
     
-    this.enemies[14 * this.mapWidth + 8] = new DragonBossEnemy(8, 14, Config.tileSize * 5, Config.tileSize * 5, 25, this, this.camera);
+    this.enemies[14 * this.mapWidth + 8] = new DragonBossEnemy(8, 14, Config.tileSize * 4, Config.tileSize * 4, 25, this, this.camera);
     
     this.loaded = true;
 };
 
-Level2.prototype.dispose = function() {
+Level2.prototype.dispose = function(all) {
     if (this.loaded) {
-        this.loaded = false;
+        if (all) {
+            this.loaded = false;
+            this.coins = null;
+        }
         this.enemies = null;
         this.tiles = null;
-        this.coins = null;
         try {
             this.music.stop();
         } catch (e) {}

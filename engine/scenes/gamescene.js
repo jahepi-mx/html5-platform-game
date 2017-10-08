@@ -148,7 +148,7 @@ GameScene.prototype.onTouchEvent = function(x, y, pressed) {
         this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
         document.onkeydown = null;
         document.onkeyup = null;
-        this.controller.currentLevel.dispose();
+        this.controller.currentLevel.dispose(true);
         this.callback("ending", this.controller.time);
     }
 };

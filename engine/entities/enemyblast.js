@@ -35,6 +35,8 @@ function EnemyBlast(enemy, radians, sizeRatio, type, gravity, velocityX, velocit
     this.blastExplosionAnimation.stopAtSequenceNumber(1, this.onStopExplosionAnimation.bind(this));
     this.traveledX = 0;
     this.traveledY = 0;
+    this.traveledXLimit = 600;
+    this.traveledYLimit = 600;
     this.type = type;
     this.damagePoints = 1;
 }
@@ -44,7 +46,7 @@ EnemyBlast.prototype.onStopExplosionAnimation = function() {
 };
 
 EnemyBlast.prototype.update = function(deltatime) {
-    if (Math.abs(this.traveledX) >= 600 || Math.abs(this.traveledY) >= 600) {
+    if (Math.abs(this.traveledX) >= this.traveledXLimit || Math.abs(this.traveledY) >= this.traveledYLimit) {
         this.collided = true;
     }
     

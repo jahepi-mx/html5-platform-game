@@ -212,12 +212,14 @@ Level1.prototype.setup = function(camera) {
     this.loaded = true;
 };
 
-Level1.prototype.dispose = function() {
+Level1.prototype.dispose = function(all) {
     if (this.loaded) {
-        //this.loaded = false;
+        if (all) {
+            this.loaded = false;
+            this.coins = null;
+        }
         this.enemies = null;
         this.tiles = null;
-        //this.coins = null;
         try {
             this.music.stop();
         } catch (e) {}

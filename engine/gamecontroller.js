@@ -307,7 +307,7 @@ GameController.prototype.isLastLevel = function() {
 
 GameController.prototype.nextLevel = function() {
     this.currentLevel = this.levelManager.getCurrentLevel();
-    this.currentLevel.dispose();
+    this.currentLevel.dispose(true);
     this.levelManager.nextLevel();
     this.initLevel();
 };
@@ -315,7 +315,7 @@ GameController.prototype.nextLevel = function() {
 GameController.prototype.initLevel = function() {
     this.enemiesBlasts = [];
     this.currentLevel = this.levelManager.getCurrentLevel();
-    this.currentLevel.dispose();
+    this.currentLevel.dispose(false);
     this.currentLevel.setup(this.camera);
     this.tiles = this.currentLevel.tiles;
     this.enemies = this.currentLevel.enemies;
