@@ -166,8 +166,11 @@ GameScene.prototype.update = function(deltatime) {
         this.render.update(deltatime);
         
         if (this.controller.currentLevel.isCheckpoint) {
-            this.context.fillStyle = 'white';
             this.context.font = "40px joystix";
+            this.context.strokeStyle = 'white';
+            this.context.lineWidth = 10;
+            this.context.strokeText("Checkpoint reached", Config.worldWidth / 2, 50);
+            this.context.fillStyle = 'blue';
             this.context.fillText("Checkpoint reached", Config.worldWidth / 2, 50);
         }
         

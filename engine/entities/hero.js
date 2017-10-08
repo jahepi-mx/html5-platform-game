@@ -20,7 +20,7 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.isUp = false;
     this.isDown = false;
     this.shootingTime = 0;
-    this.shootingTimeLimit = 1 / 2;
+    this.shootingTimeLimit = 1 / 3;
     this.damageTime = 0;
     this.damageTimeLimit = 1;
     this.direction = 1;
@@ -289,4 +289,7 @@ Hero.prototype.resetState = function() {
     this.velocityX = 0;
     this.velocityY = 0;
     this.life = this.origLife;
+    this.blasts = [];
+    this.isDamage = false;
+    this.isOnMovingPlatform = false;
 };
