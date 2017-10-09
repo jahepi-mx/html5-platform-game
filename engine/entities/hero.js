@@ -292,4 +292,6 @@ Hero.prototype.resetState = function() {
     this.blasts = [];
     this.isDamage = false;
     this.isOnMovingPlatform = false;
+    this.movingRight = false;
+    this.movingLeft = false;
 };
