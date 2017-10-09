@@ -112,6 +112,9 @@ Tile.TYPE[103] = {asset: "set2_blue_brick2", type: Tile.TEXTURE};
 Tile.TYPE[104] = {asset: "set2_blue_brick3", type: Tile.TEXTURE};
 Tile.TYPE[105] = {asset: "set2_blue_brick4", type: Tile.TEXTURE};
 Tile.TYPE[106] = {asset: "set2_blue_brick5", type: Tile.TEXTURE};
+Tile.TYPE[107] = {asset: "pick", type: Tile.TEXTURE};
+Tile.TYPE[108] = {asset: "lava1", type: Tile.TEXTURE};
+Tile.TYPE[109] = {asset: "rock", type: Tile.PLATFORM_TYPE};
 
 function Tile(x, y, width, height, typeIndex, camera) {
     this.x = x * width;
