@@ -1,4 +1,4 @@
-function DragonEnemy(x, y, width, height, health, camera) {
+function DragonEnemy(x, y, width, height, health, blastVelocityXMin, blastVelocityXMax, blastVelocityYMin, blastVelocityYMax, degreesMin, degreesMax, shootInterval, camera) {
     this.x = x * Config.tileSize - (width / 2) + (Config.tileSize / 2);
     this.y = y * Config.tileSize - (height - Config.tileSize);
     this.width = width;
@@ -16,8 +16,14 @@ function DragonEnemy(x, y, width, height, health, camera) {
     this.direction = -1;
     this.nextShootTime = 0;
     this.nextShootTimeCount = 0;
-    this.shootInterval = 8;
+    this.shootInterval = shootInterval;
     this.damagePoints = 1;
+    this.blastVelocityXMin = blastVelocityXMin;
+    this.blastVelocityYMin = blastVelocityYMin;
+    this.blastVelocityXMax = blastVelocityXMax;
+    this.blastVelocityYMax = blastVelocityYMax;
+    this.degreesMin = degreesMin;
+    this.degreesMax = degreesMax;
     
     this.idleAnimation = new Animation(5, 1);
     this.shootAnimation = new Animation(9, 2);
@@ -53,9 +59,43 @@ DragonEnemy.prototype.shoot = function(x, y, blasts) {
         this.blastFlag = true;
         var diffX = (this.left() + this.width / 2) - x;
         var diffY = (this.top() + this.height / 2) - y;
-        var radians = Math.atan2(diffY, diffX);
-        blasts.push(new EnemyBlast(this, radians, 0.30, EnemyBlast.SPHERE_TYPE, false, 0, 0, this.camera));
-        blasts.push(new EnemyBlast(this, radians + (Math.PI / 180 * -45), 0.30, EnemyBlast.SPHERE_TYPE, true, 0, 0, this.camera));
+        var radians = 0; //Math.atan2(diffY, diffX);
+        
+        var degree = this.degreesMax - this.degreesMin;
+        degree = Math.random() * degree;
+        degree = this.degreesMin + degree;
+        
+        var velocityX = this.blastVelocityXMax - this.blastVelocityXMin;
+        velocityX = Math.random() * velocityX;
+        velocityX = this.blastVelocityXMin + velocityX;
+        if (this.direction > 0) velocityX = -velocityX;
+        
+        var velocityY = this.blastVelocityYMax - this.blastVelocityYMin;
+        velocityY = Math.random() * velocityY;
+        velocityY = this.blastVelocityYMin + velocityY;
+        
+        var shoot = new EnemyBlast(this, radians + (Math.PI / 180 * degree), 0.60, EnemyBlast.RED_TYPE, true, velocityX, velocityY, this.camera);
+        shoot.traveledXLimit = 2000;
+        shoot.traveledYLimit = 2000;
+        blasts.push(shoot);
+        
+        degree = this.degreesMax - this.degreesMin;
+        degree = Math.random() * degree;
+        degree = this.degreesMin + degree;
+        
+        velocityX = this.blastVelocityXMax - this.blastVelocityXMin;
+        velocityX = Math.random() * velocityX;
+        velocityX = this.blastVelocityXMin + velocityX;
+        if (this.direction > 0) velocityX = -velocityX;
+        
+        velocityY = this.blastVelocityYMax - this.blastVelocityYMin;
+        velocityY = Math.random() * velocityY;
+        velocityY = this.blastVelocityYMin + velocityY;
+        
+        shoot = new EnemyBlast(this, radians + (Math.PI / 180 * degree), 0.30, EnemyBlast.RED_TYPE, true, velocityX, velocityY, this.camera);
+        shoot.traveledXLimit = 2000;
+        shoot.traveledYLimit = 2000;
+        blasts.push(shoot);
     }
 };
 

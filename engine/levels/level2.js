@@ -10,6 +10,7 @@ Level2.prototype.setup = function(camera) {
     this.mapWidth = 30;
     this.mapHeight = 20;
     this.camera = camera;
+    this.camera.height = 4;
     this.tiles = [];
     this.enemies = [];
     this.platforms = [];

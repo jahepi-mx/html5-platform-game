@@ -1,7 +1,7 @@
 function Level3() {
     this.loaded = false;
-    this.startX = Config.tileSize * 7 - Config.worldWidth / 2 + Config.heroSize / 2;
-    this.startY = Config.tileSize * 94  - Config.worldHeight / 2 - Config.heroSize / 2;
+    this.startX = Config.tileSize * 8 - Config.worldWidth / 2 + Config.heroSize / 2;
+    this.startY = Config.tileSize * 66  - Config.worldHeight / 2 - Config.heroSize / 2;
 }
 
 Level3.prototype.setup = function(camera) {
@@ -10,6 +10,7 @@ Level3.prototype.setup = function(camera) {
     this.mapWidth = 150;
     this.mapHeight = 100;
     this.camera = camera;
+    this.camera.height = 6;
     this.tiles = [];
     this.enemies = [];
     this.platforms = [];
@@ -70,6 +71,14 @@ Level3.prototype.setup = function(camera) {
     this.enemies[12 * this.mapWidth + 107] = new BuoyEnemy(107, 12, Config.tileSize * 3, Config.tileSize * 3, 600, 400, Config.tileSize * 3, 2.5, camera);
     this.enemies[12 * this.mapWidth + 112] = new BuoyEnemy(112, 12, Config.tileSize * 3, Config.tileSize * 3, 500, 300, Config.tileSize * 3, 2.5, camera);
     this.enemies[12 * this.mapWidth + 117] = new BuoyEnemy(117, 12, Config.tileSize * 3, Config.tileSize * 3, 700, 600, Config.tileSize * 3, 2, camera);
+    
+    this.enemies[89 * this.mapWidth + 6] = new SpiderEnemy(6, 89, Config.tileSize, Config.tileSize, 200, 100, Config.tileSize * 9, Config.tileSize * 4, 1, this.camera);
+    this.enemies[89 * this.mapWidth + 7] = new SpiderEnemy(7, 89, Config.tileSize * 0.8, Config.tileSize * 0.8, 150, 200, Config.tileSize * 9, Config.tileSize * 4, 1, this.camera);
+    this.enemies[89 * this.mapWidth + 10] = new SpiderEnemy(10, 89, Config.tileSize * 1.2, Config.tileSize * 1.2, 100, 250, Config.tileSize * 6, Config.tileSize * 2, 1, this.camera);
+    this.enemies[81 * this.mapWidth + 11] = new DragonEnemy(11, 81, Config.tileSize * 1.5, Config.tileSize * 1.5, 5, 300, 400, 200, 300, 45, 90, 4, this.camera);
+    this.enemies[77 * this.mapWidth + 8] = new DragonEnemy(8, 77, Config.tileSize * 2.5, Config.tileSize * 2.5, 5, 300, 400, 200, 300, 40, 60, 6, this.camera);
+    this.enemies[70 * this.mapWidth + 9] = new BeetleEnemy(9, 70, Config.tileSize, Config.tileSize, BeetleEnemy.VERTICAL, 200, Config.tileSize * 2, this.camera);
+    this.enemies[62 * this.mapWidth + 6] = new FlyDemonEnemy(6, 62, Config.tileSize * 1.2, Config.tileSize * 1.2, 100, 200, 2, Config.tileSize * 10, this.camera);
     
     if (!this.loaded) {
         this.currentNumberOfCoins = 0;
