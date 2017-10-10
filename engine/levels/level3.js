@@ -1,7 +1,7 @@
 function Level3() {
     this.loaded = false;
-    this.startX = Config.tileSize * 8 - Config.worldWidth / 2 + Config.heroSize / 2;
-    this.startY = Config.tileSize * 66  - Config.worldHeight / 2 - Config.heroSize / 2;
+    this.startX = Config.tileSize * 7 - Config.worldWidth / 2 + Config.heroSize / 2;
+    this.startY = Config.tileSize * 94 - Config.worldHeight / 2 - Config.heroSize / 2;
 }
 
 Level3.prototype.setup = function(camera) {
@@ -14,7 +14,7 @@ Level3.prototype.setup = function(camera) {
     this.tiles = [];
     this.enemies = [];
     this.platforms = [];
-    this.totalNumberOfCoins = 100;
+    this.totalNumberOfCoins = 101;
     this.currentNumberOfCoins = 0;
     this.music = Assets.playAudio(Assets.boss_music, true);
     this.atlasBackground = Atlas.tiles.moonlight_background;
@@ -65,6 +65,10 @@ Level3.prototype.setup = function(camera) {
     this.enemies[7 * this.mapWidth + 44] = new BuoyEnemy360(44, 7, Config.tileSize, Config.tileSize, 90, Config.tileSize * 2, this.camera);
     this.enemies[7 * this.mapWidth + 48] = new BuoyEnemy360(48, 7, Config.tileSize, Config.tileSize, 45, Config.tileSize, this.camera);
     this.enemies[6 * this.mapWidth + 52] = new BuoyEnemy360(52, 6, Config.tileSize, Config.tileSize, 120, Config.tileSize, this.camera);
+    this.enemies[50 * this.mapWidth + 9] = new BuoyEnemy360(9, 50, Config.tileSize, Config.tileSize, 45, Config.tileSize, this.camera);
+    this.enemies[50 * this.mapWidth + 12] = new BuoyEnemy360(12, 50, Config.tileSize, Config.tileSize, 90, Config.tileSize, this.camera);
+    this.enemies[17 * this.mapWidth + 14] = new BuoyEnemy360(14, 17, Config.tileSize, Config.tileSize, 90, Config.tileSize, this.camera);
+    this.enemies[17 * this.mapWidth + 11] = new BuoyEnemy360(11, 17, Config.tileSize, Config.tileSize, 180, Config.tileSize, this.camera);
     
     this.enemies[11 * this.mapWidth + 89] = new BuoyEnemy(89, 11, Config.tileSize, Config.tileSize, 400, 300, Config.tileSize * 2, 1, camera);
     this.enemies[11 * this.mapWidth + 92] = new BuoyEnemy(92, 11, Config.tileSize, Config.tileSize, 600, 400, Config.tileSize * 2, 1.5, camera);
@@ -79,7 +83,24 @@ Level3.prototype.setup = function(camera) {
     this.enemies[77 * this.mapWidth + 8] = new DragonEnemy(8, 77, Config.tileSize * 2.5, Config.tileSize * 2.5, 5, 300, 400, 200, 300, 40, 60, 6, this.camera);
     this.enemies[70 * this.mapWidth + 9] = new BeetleEnemy(9, 70, Config.tileSize, Config.tileSize, BeetleEnemy.VERTICAL, 200, Config.tileSize * 2, this.camera);
     this.enemies[62 * this.mapWidth + 6] = new FlyDemonEnemy(6, 62, Config.tileSize * 1.2, Config.tileSize * 1.2, 100, 200, 2, Config.tileSize * 10, this.camera);
+    this.enemies[37 * this.mapWidth + 15] = new DragonEnemy(15, 37, Config.tileSize * 2, Config.tileSize * 2, 1, 300, 400, 200, 300, 40, 60, 4, this.camera);
+    this.enemies[37 * this.mapWidth + 7] = new DragonEnemy(7, 37, Config.tileSize * 2, Config.tileSize * 2, 1, 300, 400, 200, 300, 40, 60, 4, this.camera);
+    this.enemies[31 * this.mapWidth + 15] = new DragonEnemy(15, 31, Config.tileSize * 2, Config.tileSize * 2, 1, 300, 400, 200, 300, 40, 60, 4, this.camera);
+    this.enemies[31 * this.mapWidth + 7] = new DragonEnemy(7, 31, Config.tileSize * 2, Config.tileSize * 2, 1, 300, 400, 200, 300, 40, 60, 4, this.camera);
+    this.enemies[25 * this.mapWidth + 15] = new DragonEnemy(15, 25, Config.tileSize * 2, Config.tileSize * 2, 1, 300, 400, 200, 300, 40, 60, 4, this.camera);
+    this.enemies[25 * this.mapWidth + 7] = new DragonEnemy(7, 25, Config.tileSize * 2, Config.tileSize * 2, 1, 300, 400, 200, 300, 40, 60, 4, this.camera);
     
+    for (var x = 74; x <= 82; x++) {
+        this.enemies[11 * this.mapWidth + x] = new ZombieEnemy(x, 11, Config.tileSize, Config.tileSize, Math.random() * 180 + 20, Math.random() * Config.tileSize * 10 + Config.tileSize, 1, this.camera);
+    }
+    /*
+    this.enemies[37 * this.mapWidth + 15] = new GiantFatEnemy(15, 37, Config.tileSize * 2, Config.tileSize * 1.5, 1, this.camera);
+    this.enemies[37 * this.mapWidth + 7] = new GiantFatEnemy(7, 37, Config.tileSize * 2, Config.tileSize * 1.5, 1, this.camera);
+    this.enemies[31 * this.mapWidth + 15] = new GiantFatEnemy(15, 31, Config.tileSize * 2, Config.tileSize * 1.5, 1, this.camera);
+    this.enemies[31 * this.mapWidth + 7] = new GiantFatEnemy(7, 31, Config.tileSize * 2, Config.tileSize * 1.5, 1, this.camera);
+    this.enemies[25 * this.mapWidth + 15] = new GiantFatEnemy(15, 25, Config.tileSize * 2, Config.tileSize * 1.5, 1, this.camera);
+    this.enemies[25 * this.mapWidth + 7] = new GiantFatEnemy(7, 25, Config.tileSize * 2, Config.tileSize * 1.5, 1, this.camera);
+    */
     if (!this.loaded) {
         this.currentNumberOfCoins = 0;
         this.coins[88 * this.mapWidth + 15] = new Coin(15, 88, this.camera);

@@ -74,7 +74,7 @@ DragonEnemy.prototype.shoot = function(x, y, blasts) {
         velocityY = Math.random() * velocityY;
         velocityY = this.blastVelocityYMin + velocityY;
         
-        var shoot = new EnemyBlast(this, radians + (Math.PI / 180 * degree), 0.60, EnemyBlast.RED_TYPE, true, velocityX, velocityY, this.camera);
+        var shoot = new EnemyBlast(this, radians + (Math.PI / 180 * degree), 0.50, EnemyBlast.SPHERE_TYPE, true, velocityX, velocityY, this.camera);
         shoot.traveledXLimit = 2000;
         shoot.traveledYLimit = 2000;
         blasts.push(shoot);
@@ -92,7 +92,7 @@ DragonEnemy.prototype.shoot = function(x, y, blasts) {
         velocityY = Math.random() * velocityY;
         velocityY = this.blastVelocityYMin + velocityY;
         
-        shoot = new EnemyBlast(this, radians + (Math.PI / 180 * degree), 0.30, EnemyBlast.RED_TYPE, true, velocityX, velocityY, this.camera);
+        shoot = new EnemyBlast(this, radians + (Math.PI / 180 * degree), 0.30, EnemyBlast.SPHERE_TYPE, true, velocityX, velocityY, this.camera);
         shoot.traveledXLimit = 2000;
         shoot.traveledYLimit = 2000;
         blasts.push(shoot);
