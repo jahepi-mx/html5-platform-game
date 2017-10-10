@@ -24,6 +24,8 @@ function MainScene(context, canvas, callback) {
     this.backgroundX1 = 0;
     this.backgroundX2 = Config.worldWidth;
     this.startIntro = false;
+    this.soundTime = 0;
+    this.soundTimeLimit = 0.5;
     
     this.texts = [
         {x: Config.worldWidth / 2, y: Config.worldHeight, text: "Once upon a time a man from other galaxy", red: 255, green: 255, blue: 255, size: 50, removed: false},
@@ -37,6 +39,7 @@ function MainScene(context, canvas, callback) {
         {x: Config.worldWidth / 2, y: Config.worldHeight + 320, text: "fight against some evil entities.", red: 255, green: 255, blue: 255, size: 50, removed: false},
     ];
     
+    this.soundBtn = {x: Config.worldWidth - Config.worldWidth * 0.1, y: 0, width: Config.worldWidth * 0.1, height: Config.worldHeight * 0.1, text: "sound on", alpha: 1, font: "23px joystix"};
     this.playBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight / 2 - (Config.worldWidth * 0.3 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "play game", alpha: 1, font: "70px joystix"};
     this.leaderBoardBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 150 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "leaderboard", alpha: 1, font: "50px joystix"};
     this.creditsBtn = {x: Config.worldWidth / 2 - (Config.worldWidth * 0.3 / 2), y: Config.worldHeight - 10 - (Config.worldWidth * 0.1 / 2), width: Config.worldWidth * 0.3, height: Config.worldWidth * 0.1, text: "credits", alpha: 1, font: "50px joystix"};
@@ -117,10 +120,25 @@ MainScene.prototype.update = function(deltatime) {
                     }
                 }
                 if (!flag) {
-                    this.music.stop();
+                    if (this.music !== null) {
+                        this.music.stop();
+                    }
                     this.callback("game", null);
                 }
             }
+        }
+        
+        if (this.mouseX >= this.soundBtn.x && this.mouseX <= this.soundBtn.x + this.soundBtn.width 
+                && this.mouseY >= this.soundBtn.y && this.mouseY <= this.soundBtn.y + this.soundBtn.height) {          
+            this.context.font = this.soundBtn.font;
+            this.context.fillStyle = "rgba(255, 182, 193, " + this.soundBtn.alpha + ")";
+            this.context.textAlign = "center";
+            this.context.fillText(this.soundBtn.text, this.soundBtn.x + this.soundBtn.width / 2, this.soundBtn.y + this.soundBtn.height / 2);          
+        } else  {
+            this.context.font = this.soundBtn.font;
+            this.context.fillStyle = "rgba(255, 105, 180, " + this.soundBtn.alpha + ")";
+            this.context.textAlign = "center";
+            this.context.fillText(this.soundBtn.text, this.soundBtn.x + this.soundBtn.width / 2, this.soundBtn.y + this.soundBtn.height / 2);
         }
         
         if (this.mouseX >= this.playBtn.x && this.mouseX <= this.playBtn.x + this.playBtn.width 
@@ -166,7 +184,27 @@ MainScene.prototype.update = function(deltatime) {
         this.context.fillStyle = "rgba(255, 255, 0, " + this.playBtn.alpha + ")";
         this.context.textAlign = "center";
         this.context.fillText("get all coins!", Config.worldWidth / 2, Config.worldHeight - 100);
-            
+        
+        this.soundTime += deltatime;
+        if (this.isMouseDown && this.mouseX <= this.soundBtn.x + this.soundBtn.width && this.mouseX >= this.soundBtn.x 
+                && this.mouseY >= this.soundBtn.y && this.mouseY <= this.soundBtn.y + this.soundBtn.height) {
+            if (this.soundTime > this.soundTimeLimit) {
+                this.soundTime = 0;              
+                if (this.music !== null) {
+                    this.music.stop();
+                    this.music = null;
+                }
+                if (Config.sound) {
+                    Config.sound = false;
+                    this.soundBtn.text = "sound off";
+                } else {
+                    Config.sound = true;
+                    this.soundBtn.text = "sound on";
+                    this.music = Assets.playAudio(Assets.main_music, true);
+                }
+            }
+        }
+        
         if (this.isMouseDown && this.mouseX <= this.playBtn.x + this.playBtn.width && this.mouseX >= this.playBtn.x 
                 && this.mouseY >= this.playBtn.y && this.mouseY <= this.playBtn.y + this.playBtn.height) {
             this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
@@ -186,7 +224,9 @@ MainScene.prototype.update = function(deltatime) {
             this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
             this.mouseX = 0;
             this.mouseY = 0;
-            this.music.stop();
+            if (this.music !== null) {
+                this.music.stop();
+            }
             this.callback("leaderboard", null);
         } 
         
@@ -198,7 +238,9 @@ MainScene.prototype.update = function(deltatime) {
             this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
             this.mouseX = 0;
             this.mouseY = 0;
-            this.music.stop();
+            if (this.music !== null) {
+                this.music.stop();
+            }
             this.callback("credits", null);
         } 
     } else {
