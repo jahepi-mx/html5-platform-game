@@ -123,7 +123,9 @@ EndingScene.prototype.onTouchEvent = function(x, y, pressed) {
         this.canvas.removeEventListener("touchend", this.onTouchEndRef);
         this.canvas.removeEventListener("touchmove", this.onTouchMoveRef);
         this.canvas.removeEventListener("mousemove", this.onMouseMoveRef);
-        this.music.stop();
+        if (this.music !== null) {
+            this.music.stop();
+        }
         this.callback("main", null);
     }
 };

@@ -1,7 +1,7 @@
 function Level3() {
     this.loaded = false;
-    this.startX = Config.tileSize * 68 - Config.worldWidth / 2 + Config.heroSize / 2;
-    this.startY = Config.tileSize * 6  - Config.worldHeight / 2 - Config.heroSize / 2;
+    this.startX = Config.tileSize * 7 - Config.worldWidth / 2 + Config.heroSize / 2;
+    this.startY = Config.tileSize * 94  - Config.worldHeight / 2 - Config.heroSize / 2;
 }
 
 Level3.prototype.setup = function(camera) {
@@ -161,7 +161,9 @@ Level3.prototype.dispose = function(all) {
         this.enemies = null;
         this.tiles = null;
         try {
-            this.music.stop();
+            if (this.music !== null) {
+                this.music.stop();
+            }
         } catch (e) {}
         this.music = null;
     }

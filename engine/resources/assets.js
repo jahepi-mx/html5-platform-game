@@ -109,10 +109,13 @@ Assets.loadAudio = function(index) {
 };
 
 Assets.playAudio = function(buffer, loop) {
-    var source = Assets.audioContext.createBufferSource();
-    source.buffer = buffer;
-    source.loop = loop;
-    source.connect(Assets.audioContext.destination);
-    source.start(0);
-    return source;
+    if (Config.sound) {
+        var source = Assets.audioContext.createBufferSource();
+        source.buffer = buffer;
+        source.loop = loop;
+        source.connect(Assets.audioContext.destination);
+        source.start(0);
+        return source;
+    }
+    return null;
 };

@@ -113,7 +113,9 @@ LeaderBoardScene.prototype.update = function(deltatime) {
         this.canvas.removeEventListener("mouseup", this.onMouseUpRef);
         this.mouseX = 0;
         this.mouseY = 0;
-        this.music.stop();
+        if (this.music !== null) {
+            this.music.stop();
+        }
         this.callback("main", null);
     } else {
         this.isMouseDown = false;
