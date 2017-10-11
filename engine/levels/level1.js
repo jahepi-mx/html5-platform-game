@@ -231,8 +231,8 @@ Level1.prototype.dispose = function(all) {
 };
 
 Level1.prototype.checkpoint = function(deltatime) {
-    var tileX = (this.camera.x + Config.worldWidth / 2) / Config.tileSize;
-    var tileY = (this.camera.y + Config.worldHeight / 2) / Config.tileSize;
+    var tileX = (this.camera.x + Config.worldWidth / 2 - Config.heroSize / 2) / Config.tileSize;
+    var tileY = (this.camera.y + Config.worldHeight / 2 + Config.heroSize / 2) / Config.tileSize;
     
     if (this.isCheckpoint) {
         this.checkpointTime += deltatime;
@@ -242,31 +242,31 @@ Level1.prototype.checkpoint = function(deltatime) {
         }
     }
     
-    if (tileX >= 25 && tileX <= 26) {
+    if (tileX >= 25 && tileX <= 26 && tileY >= 13 && tileY <= 15) {
         this.isCheckpoint = true;
         this.startX = Config.tileSize * 25 - Config.worldWidth / 2 + Config.heroSize / 2;
         this.startY = Config.tileSize * 14 - Config.worldHeight / 2 - Config.heroSize / 2;
-    } else if (tileX >= 40 && tileX <= 41) {
+    } else if (tileX >= 40 && tileX <= 41 && tileY >= 6 && tileY <= 8) {
         this.isCheckpoint = true;
         this.startX = Config.tileSize * 40 - Config.worldWidth / 2 + Config.heroSize / 2;
         this.startY = Config.tileSize * 7 - Config.worldHeight / 2 - Config.heroSize / 2;
-    } else if (tileX >= 66 && tileX <= 67) {
+    } else if (tileX >= 66 && tileX <= 67 && tileY >= 8 && tileY <= 10) {
         this.isCheckpoint = true;
         this.startX = Config.tileSize * 66 - Config.worldWidth / 2 + Config.heroSize / 2;
         this.startY = Config.tileSize * 9 - Config.worldHeight / 2 - Config.heroSize / 2;
-    } else if (tileX >= 86 && tileX <= 87) {
+    } else if (tileX >= 86 && tileX <= 87 && tileY >= 8 && tileY <= 10) {
         this.isCheckpoint = true;
         this.startX = Config.tileSize * 86 - Config.worldWidth / 2 + Config.heroSize / 2;
         this.startY = Config.tileSize * 9 - Config.worldHeight / 2 - Config.heroSize / 2;
-    } else if (tileX >= 125 && tileX <= 126) {
+    } else if (tileX >= 125 && tileX <= 126 && tileY >= 10 && tileY <= 12) {
         this.isCheckpoint = true;
         this.startX = Config.tileSize * 125 - Config.worldWidth / 2 + Config.heroSize / 2;
         this.startY = Config.tileSize * 11 - Config.worldHeight / 2 - Config.heroSize / 2;
-    } else if (tileX >= 178 && tileX <= 179) {
+    } else if (tileX >= 178 && tileX <= 179 && tileY >= 10 && tileY <= 12) {
         this.isCheckpoint = true;
         this.startX = Config.tileSize * 178 - Config.worldWidth / 2 + Config.heroSize / 2;
         this.startY = Config.tileSize * 11 - Config.worldHeight / 2 - Config.heroSize / 2;
-    } else if (tileX >= 214 && tileX <= 215) {
+    } else if (tileX >= 214 && tileX <= 215 && tileY >= 7 && tileY <= 9) {
         this.isCheckpoint = true;
         this.startX = Config.tileSize * 214 - Config.worldWidth / 2 + Config.heroSize / 2;
         this.startY = Config.tileSize * 8 - Config.worldHeight / 2 - Config.heroSize / 2;
