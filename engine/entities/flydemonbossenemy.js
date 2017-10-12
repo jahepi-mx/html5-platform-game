@@ -45,9 +45,9 @@ FlyDemonBossEnemy.prototype.draw = function(context) {
     // Draw life bar
     if (this.health > 0) {
         context.fillStyle='#000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25) + (this.ratioX * this.ratioDistance), this.y - this.traveledY - this.camera.y - 20 + (this.ratioY * this.ratioDistance), 50, 6);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 25) + (this.ratioX * this.ratioDistance), this.y + this.height + 25 - this.traveledY - this.camera.y - 20 + (this.ratioY * this.ratioDistance), 50, 6);
         context.fillStyle='#ff0000';
-        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24) + (this.ratioX * this.ratioDistance), this.y - this.traveledY - this.camera.y - 19 + (this.ratioY * this.ratioDistance), 48 * (this.health / this.origHealth), 4);
+        context.fillRect(this.x - this.traveledX - this.camera.x + (this.width / 2 - 24) + (this.ratioX * this.ratioDistance), this.y + this.height + 25 - this.traveledY - this.camera.y - 19 + (this.ratioY * this.ratioDistance), 48 * (this.health / this.origHealth), 4);
     }
     
     var name = "";
@@ -134,7 +134,7 @@ FlyDemonBossEnemy.prototype.update = function(deltatime) {
     this.ratioX = Math.cos(Math.PI / 180 * this.degrees);
     this.ratioY = Math.sin(Math.PI / 180 * this.degrees);
     
-    this.traveledX += (this.left() - this.offsetX) * deltatime;
+    this.traveledX += ((this.left() - this.offsetX) * deltatime) * 0.5;
 
 };
 
