@@ -171,8 +171,13 @@ GameController.prototype.update = function(deltatime) {
     }
     
     if (movingPlatform !== null) {
-        if (movingPlatform.type === MovingPlatform.HORIZONTAL) this.hero.x += movingPlatform.moveDistance;
-        else this.hero.y += movingPlatform.moveDistance;
+        if (movingPlatform.type === MovingPlatform.CIRCULAR) {
+            this.hero.x += movingPlatform.moveDistanceX;
+            this.hero.y += movingPlatform.moveDistanceY;
+        } else if (movingPlatform.type === MovingPlatform.HORIZONTAL) 
+            this.hero.x += movingPlatform.moveDistanceX;
+        else 
+            this.hero.y += movingPlatform.moveDistanceY;
     } else {
         this.hero.isOnMovingPlatform = false;
     }

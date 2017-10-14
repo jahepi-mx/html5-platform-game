@@ -1,6 +1,7 @@
 // Static class members
 MovingPlatform.VERTICAL = 1;
 MovingPlatform.HORIZONTAL = 2;
+MovingPlatform.CIRCULAR = 4;
 MovingPlatform.VISIBILITY_DISTANCE = 2000;
 
 function MovingPlatform(x, y, width, height, type, velocity, maxDistance, camera) {
@@ -10,63 +11,66 @@ function MovingPlatform(x, y, width, height, type, velocity, maxDistance, camera
     this.type = type;
     
     this.x = x * Config.tileSize;
-    if (this.type === MovingPlatform.VERTICAL) {
-        this.y = y * Config.tileSize;
-    }
-    if (this.type === MovingPlatform.HORIZONTAL) {
-        this.y = y * Config.tileSize;
-    }
+    this.y = y * Config.tileSize;
     this.maxDistance = maxDistance;
     this.velocity = velocity;
-    this.traveled = 0;
-    this.moveDistance = 0;
+    this.traveledX = 0;
+    this.traveledY = 0;
+    this.moveDistanceX = 0;
+    this.moveDistanceY = 0;
     this.direction = -1;
+    this.degrees = 0;
 }
 
 MovingPlatform.prototype.draw = function(context) {
-    if (this.type === MovingPlatform.VERTICAL) {
-        context.drawImage(Assets.tilesAtlas, Atlas.tiles.rock.x, Atlas.tiles.rock.y, Atlas.tiles.rock.width, Atlas.tiles.rock.height, this.x - this.camera.x, this.y - this.traveled - this.camera.y, this.width, this.height);
-    }
-    if (this.type === MovingPlatform.HORIZONTAL) {
-        context.drawImage(Assets.tilesAtlas, Atlas.tiles.rock.x, Atlas.tiles.rock.y, Atlas.tiles.rock.width, Atlas.tiles.rock.height, this.x - this.traveled - this.camera.x, this.y - this.camera.y, this.width, this.height);
-    }
+    context.drawImage(Assets.tilesAtlas, Atlas.tiles.rock.x, Atlas.tiles.rock.y, Atlas.tiles.rock.width, Atlas.tiles.rock.height, this.x - this.traveledX - this.camera.x, this.y - this.traveledY - this.camera.y, this.width, this.height);
 };
 
 MovingPlatform.prototype.update = function(deltatime) {
-    if (this.type === MovingPlatform.HORIZONTAL) {
+    if (this.type === MovingPlatform.CIRCULAR) {        
+        this.degrees += this.velocity * deltatime;
+        var radians = Math.PI / 180 * this.degrees;
+        this.moveDistanceX = Math.cos(radians) * this.maxDistance * deltatime;
+        this.moveDistanceY = Math.sin(radians) * this.maxDistance * deltatime;
+        this.traveledX += this.moveDistanceX;
+        this.traveledY += this.moveDistanceY;  
+        this.moveDistanceX = -this.moveDistanceX;
+        this.moveDistanceY = -this.moveDistanceY;
+        
+    } else if (this.type === MovingPlatform.HORIZONTAL) {
         if (this.direction === -1) {          
-            this.traveled -= this.velocity * deltatime;
-            if (this.traveled <= -this.maxDistance) {
+            this.traveledX -= this.velocity * deltatime;
+            if (this.traveledX <= -this.maxDistance) {
                 this.direction = 1;
-                this.moveDistance = 0;
+                this.moveDistanceX = 0;
             } else {
-                this.moveDistance = this.velocity * deltatime;
+                this.moveDistanceX = this.velocity * deltatime;
             }
         } else {          
-            this.traveled += this.velocity * deltatime;
-            if (this.traveled >= 0) {
+            this.traveledX += this.velocity * deltatime;
+            if (this.traveledX >= 0) {
                 this.direction = -1;
-                this.moveDistance = 0;
+                this.moveDistanceX = 0;
             } else {
-                this.moveDistance = -(this.velocity * deltatime);
+                this.moveDistanceX = -(this.velocity * deltatime);
             }
         }
     } else {
         if (this.direction === -1) {           
-            this.traveled += this.velocity * deltatime;
-            if (this.traveled >= this.maxDistance) {
+            this.traveledY += this.velocity * deltatime;
+            if (this.traveledY >= this.maxDistance) {
                 this.direction = 1;
-                this.moveDistance = 0;
+                this.moveDistanceY = 0;
             } else {
-                this.moveDistance = -(this.velocity * deltatime);
+                this.moveDistanceY = -(this.velocity * deltatime);
             }
         } else {          
-            this.traveled -= this.velocity * deltatime;
-            if (this.traveled <= 0) {
+            this.traveledY -= this.velocity * deltatime;
+            if (this.traveledY <= 0) {
                 this.direction = -1;
-                this.moveDistance = 0;
+                this.moveDistanceY = 0;
             } else {
-                this.moveDistance = this.velocity * deltatime;
+                this.moveDistanceY = this.velocity * deltatime;
             }
         }
     }
@@ -82,29 +86,17 @@ MovingPlatform.prototype.collide = function(entity) {
 };
 
 MovingPlatform.prototype.left = function() {
-    if (this.type === MovingPlatform.VERTICAL) {
-        return this.x - this.camera.x;
-    }
-    return this.x - this.traveled - this.camera.x;
+    return this.x - this.traveledX - this.camera.x;
 };
 
 MovingPlatform.prototype.right = function() {
-    if (this.type === MovingPlatform.VERTICAL) {
-        return (this.x + this.width) - this.camera.x;
-    }
-    return (this.x + this.width) - this.traveled - this.camera.x;
+    return (this.x + this.width) - this.traveledX - this.camera.x;
 };
 
 MovingPlatform.prototype.top = function() {
-    if (this.type === MovingPlatform.VERTICAL) {
-        return this.y - this.traveled - this.camera.y;
-    }
-    return this.y - this.camera.y;
+    return this.y - this.traveledY - this.camera.y;
 };
 
 MovingPlatform.prototype.bottom = function() {
-    if (this.type === MovingPlatform.VERTICAL) {
-        return (this.y + this.height) - this.traveled - this.camera.y;
-    }
-    return (this.y + this.height) - this.camera.y;
+    return (this.y + this.height) - this.traveledY - this.camera.y;
 };
