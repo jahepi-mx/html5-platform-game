@@ -1,7 +1,7 @@
 function Level3() {
     this.loaded = false;
-    this.startX = Config.tileSize * 13 - Config.worldWidth / 2 + Config.heroSize / 2;
-    this.startY = Config.tileSize * 71 - Config.worldHeight / 2 - Config.heroSize / 2;
+    this.startX = Config.tileSize * 7 - Config.worldWidth / 2 + Config.heroSize / 2;
+    this.startY = Config.tileSize * 94 - Config.worldHeight / 2 - Config.heroSize / 2;
 }
 
 Level3.prototype.setup = function(camera) {

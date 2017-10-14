@@ -1,6 +1,6 @@
 function LevelManager() {
     this.currentLevel = 0;
-    this.levels = [new Level4(), new Level3(), new Level1(), new Level2()];
+    this.levels = [new Level3(), new Level4(), new Level1(), new Level2()];
 }
 
 LevelManager.prototype.nextLevel = function() {
