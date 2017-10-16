@@ -59,7 +59,7 @@ Level4.prototype.setup = function(camera) {
     this.enemies[14 * this.mapWidth + 25] = new StaticEnemy(25, 14, this.camera, StaticEnemy.BUOY_TYPE);
     this.enemies[14 * this.mapWidth + 34] = new StaticEnemy(34, 14, this.camera, StaticEnemy.BUOY_TYPE);
     
-    this.enemies[11 * this.mapWidth + 15] = new FlyDemonBossEnemy(15, 11, Config.tileSize * 3, Config.tileSize * 3, Config.tileSize * 2, 50, Config.tileSize * 4, -Config.tileSize * 3.5, -Config.tileSize, this, this.camera);
+    this.enemies[11 * this.mapWidth + 15] = new FlyDemonBossEnemy(15, 11, Config.tileSize * 3, Config.tileSize * 3, Config.tileSize * 2, 40, Config.tileSize * 4, -Config.tileSize * 3.5, -Config.tileSize, this, this.camera);
     
     
     this.loaded = true;

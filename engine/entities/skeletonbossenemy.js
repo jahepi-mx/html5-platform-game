@@ -1,4 +1,4 @@
-function SkeletonEnemy(x, y, width, height, velocityX, distance, health, camera) {
+function SkeletonBossEnemy(x, y, width, height, velocityX, distance, health, level, shootInterval, camera) {
     this.camera = camera;
     this.width = width;
     this.height = height;
@@ -13,7 +13,8 @@ function SkeletonEnemy(x, y, width, height, velocityX, distance, health, camera)
     this.damagePoints = 1;
     this.nextShootTime = 0;
     this.nextShootTimeCount = 0;
-    this.shootInterval = 1;
+    this.shootInterval = shootInterval;
+    this.level = level;
     
     this.leftAnimation = new Animation(3, 2);
     this.rightAnimation = new Animation(3, 2);
@@ -36,11 +37,11 @@ function SkeletonEnemy(x, y, width, height, velocityX, distance, health, camera)
     this.jumpTimeLimit = Math.random() * 3 + 2;
 }
 
-SkeletonEnemy.prototype.onStopDeadAnimation = function() {
+SkeletonBossEnemy.prototype.onStopDeadAnimation = function() {
     this.isDisposable = true;
 };
 
-SkeletonEnemy.prototype.draw = function(context) {
+SkeletonBossEnemy.prototype.draw = function(context) {
     
     // Draw life bar
     if (this.health > 0) {
@@ -60,24 +61,24 @@ SkeletonEnemy.prototype.draw = function(context) {
     context.drawImage(Assets.enemiesAtlas, Atlas.enemies[name].x, Atlas.enemies[name].y, Atlas.enemies[name].width, Atlas.enemies[name].height, this.x + this.traveledX - this.camera.x, this.y + this.traveledY - this.camera.y, this.width, this.height);
 };
 
-SkeletonEnemy.prototype.shoot = function(x, y, blasts) {
+SkeletonBossEnemy.prototype.shoot = function(x, y, blasts) {
     if (this.direction === 1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
-        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.SPHERE_TYPE, true, 100, 300, this.camera));
+        blasts.push(new EnemyBlast(this, Math.PI, 0.30, EnemyBlast.FIRE_TYPE, true, 100, 300, this.camera));
     }
     if (this.direction === -1) {
         Assets.playAudio(Assets.enemy_laser_sound, false);
-        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.SPHERE_TYPE, true, 100, 300, this.camera));
+        blasts.push(new EnemyBlast(this, 0, 0.30, EnemyBlast.FIRE_TYPE, true, 100, 300, this.camera));
     }
     this.isShooting = false;
 };
 
-SkeletonEnemy.prototype.changeDirection = function(x) {
+SkeletonBossEnemy.prototype.changeDirection = function(x) {
     var diff = x - this.left();
     this.direction = diff < 0 ? -1 : 1;
 };
 
-SkeletonEnemy.prototype.update = function(deltatime) {
+SkeletonBossEnemy.prototype.update = function(deltatime) {
     
     if (this.isDead) {
         this.deadAnimation.update(deltatime);
@@ -97,7 +98,7 @@ SkeletonEnemy.prototype.update = function(deltatime) {
         this.jumpTimeLimit = Math.random() * 3 + 2;
         this.jumpTime = 0;
         this.isJumping = true;
-        this.velocityY = -200;
+        this.velocityY = -300;
     }
     
     if (this.isJumping) {
@@ -131,7 +132,7 @@ SkeletonEnemy.prototype.update = function(deltatime) {
     }
 };
 
-SkeletonEnemy.prototype.collide = function(entity) {
+SkeletonBossEnemy.prototype.collide = function(entity) {
     if (this.isDead) {
         return false;
     }
@@ -145,24 +146,25 @@ SkeletonEnemy.prototype.collide = function(entity) {
         this.health--;
         if (this.health <= 0) {
             this.isDead = true;
+            this.level.currentNumberOfCoins++;
         }
         return true;
     }
     return false;
 };
 
-SkeletonEnemy.prototype.left = function() {
+SkeletonBossEnemy.prototype.left = function() {
     return this.x + this.traveledX - this.camera.x;
 };
 
-SkeletonEnemy.prototype.right = function() {
+SkeletonBossEnemy.prototype.right = function() {
     return (this.x + this.width) + this.traveledX - this.camera.x;
 };
 
-SkeletonEnemy.prototype.top = function() {
+SkeletonBossEnemy.prototype.top = function() {
     return this.y + this.traveledY - this.camera.y;
 };
 
-SkeletonEnemy.prototype.bottom = function() {
+SkeletonBossEnemy.prototype.bottom = function() {
     return (this.y + this.height) + this.traveledY - this.camera.y;
 };
