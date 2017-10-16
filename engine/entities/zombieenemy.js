@@ -67,6 +67,10 @@ ZombieEnemy.prototype.shoot = function(x, y, blasts) {
 };
 
 ZombieEnemy.prototype.changeDirection = function(x) {
+    if (this.velocity === 0) {
+        var diff = x - this.left();
+        this.direction = diff < 0 ? 1 : -1;
+    }
 };
 
 ZombieEnemy.prototype.update = function(deltatime) {
@@ -75,17 +79,13 @@ ZombieEnemy.prototype.update = function(deltatime) {
         this.deadAnimation.update(deltatime);
         return;
     } else if (this.direction === 1) {
-        this.leftAnimation.update(deltatime);
+        if (this.velocity !== 0) {
+            this.leftAnimation.update(deltatime);
+        }
     } else {
-        this.rightAnimation.update(deltatime);
-    }
-    
-    this.changeDirectionTime += deltatime;
-    
-    if (this.changeDirectionTime >= this.currChangeDirection) {
-        this.changeDirectionTime = 0;
-        this.currChangeDirection = Math.random() * 3 + 2;
-        this.direction = this.directions[Math.round(Math.random())];     
+        if (this.velocity !== 0) {
+            this.rightAnimation.update(deltatime);
+        }
     }
     
     this.nextShootTimeCount += deltatime;
@@ -101,25 +101,35 @@ ZombieEnemy.prototype.update = function(deltatime) {
         this.isShooting = true;
     }
 
-    if (this.traveledX < -this.distance) {
-        this.direction = 1;
-        this.traveledX = -this.distance;
+    if (this.velocity !== 0) {
+        this.changeDirectionTime += deltatime;
+
+        if (this.changeDirectionTime >= this.currChangeDirection) {
+            this.changeDirectionTime = 0;
+            this.currChangeDirection = Math.random() * 3 + 2;
+            this.direction = this.directions[Math.round(Math.random())];     
+        }
+        
+        if (this.traveledX < -this.distance) {
+            this.direction = 1;
+            this.traveledX = -this.distance;
+        }
+
+        if (this.traveledX > 0) {
+            this.direction = -1;
+            this.traveledX = 0;
+        }
+
+        if (this.direction === 1) {
+            this.velocity = Math.abs(this.velocity);
+        }
+
+        if (this.direction === -1) {
+            this.velocity = -Math.abs(this.velocity);
+        }
+
+        this.traveledX += this.velocity * deltatime;
     }
-    
-    if (this.traveledX > 0) {
-        this.direction = -1;
-        this.traveledX = 0;
-    }
-    
-    if (this.direction === 1) {
-        this.velocity = Math.abs(this.velocity);
-    }
-    
-    if (this.direction === -1) {
-        this.velocity = -Math.abs(this.velocity);
-    }
-   
-    this.traveledX += this.velocity * deltatime;
 };
 
 ZombieEnemy.prototype.collide = function(entity) {

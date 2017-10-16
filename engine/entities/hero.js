@@ -5,7 +5,7 @@ function Hero(x, y, width, height, collisionSteps, camera) {
     this.centerY = Config.worldHeight / 2 + height / 2;
     this.width = width;
     this.height = height;
-    this.friction = 0.92;
+    this.friction = 0.80;
     this.movingLeft = false;
     this.movingRight = false;
     this.velocityX = 0;
@@ -116,7 +116,7 @@ Hero.prototype.updateXFriction = function(deltatime) {
     if (ratio > 1) {
         ratio = 1;
     }
-    this.friction = 0.92 * ratio;
+    this.friction = 0.80 * ratio;
     this.velocityX *= this.friction;
 };
 
