@@ -6,7 +6,6 @@ function Level1() {
 
 Level1.prototype.setup = function(camera) {
     
-    this.levelName = "Level 1: Catacumbs";
     this.mapWidth = 300;
     this.mapHeight = 20;
     this.camera = camera;
@@ -211,6 +210,7 @@ Level1.prototype.setup = function(camera) {
         this.coins[14 * this.mapWidth + 289] = new Coin(289, 14, this.camera);
     }
     this.loaded = true;
+    this.levelName = "Level 1: Catacumbs / Coins Left " + (this.totalNumberOfCoins - this.currentNumberOfCoins);
 };
 
 Level1.prototype.dispose = function(all) {

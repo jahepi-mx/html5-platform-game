@@ -6,6 +6,7 @@ var Config = {
     heroSize: 60,
     debug: false,
     sound: true,
+    serverUrl: "http://blog.jahepi.net"
 };
 
 

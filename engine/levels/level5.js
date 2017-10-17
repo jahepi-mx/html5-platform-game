@@ -6,7 +6,6 @@ function Level5() {
 
 Level5.prototype.setup = function(camera) {
     
-    this.levelName = "Level 3: Hidden Forest";
     this.mapWidth = 300;
     this.mapHeight = 40;
     this.camera = camera;
@@ -262,6 +261,7 @@ Level5.prototype.setup = function(camera) {
     }
     
     this.loaded = true;
+    this.levelName = "Level 3: Hidden Forest / Coins Left " + (this.totalNumberOfCoins - this.currentNumberOfCoins);
 };
 
 Level5.prototype.dispose = function(all) {

@@ -136,6 +136,6 @@ LeaderBoardScene.prototype.loadJSON = function() {
             }
         }
     };
-    xhr.open("GET", "http://blog.jahepi.net/getPlatform.php", true);
+    xhr.open("GET", Config.serverUrl + "/getPlatform.php", true);
     xhr.send();
 };

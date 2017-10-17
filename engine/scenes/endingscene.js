@@ -150,7 +150,7 @@ EndingScene.prototype.saveScore = function() {
             }
         }
     };
-    xhr.open("POST", "http://blog.jahepi.net/savePlatform.php", true);
+    xhr.open("POST", Config.serverUrl + "/savePlatform.php", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("time=" + this.finalTime + "&name=" + nickname);
 };

@@ -6,7 +6,6 @@ function Level3() {
 
 Level3.prototype.setup = function(camera) {
     
-    this.levelName = "Level 2: Dark Tower";
     this.mapWidth = 150;
     this.mapHeight = 100;
     this.camera = camera;
@@ -184,6 +183,7 @@ Level3.prototype.setup = function(camera) {
     }
     
     this.loaded = true;
+    this.levelName = "Level 2: Dark Tower / Coins Left " + (this.totalNumberOfCoins - this.currentNumberOfCoins);
 };
 
 Level3.prototype.dispose = function(all) {
