@@ -26,6 +26,8 @@ Assets.getLoadedRatio = function() {
 
 Assets.audio.srcs = [
     "assets/audio/level1_music.mp3",
+    "assets/audio/level3_music.mp3",
+    "assets/audio/level5_music.mp3",
     "assets/audio/end_music.mp3",
     "assets/audio/main_music.mp3",
     "assets/audio/coin_sound.mp3",
@@ -33,11 +35,13 @@ Assets.audio.srcs = [
     "assets/audio/hero_laser_sound.mp3",
     "assets/audio/explosion_sound.mp3",
     "assets/audio/jump_sound.mp3",
-    "assets/audio/boss_music.ogg",
+    "assets/audio/boss_music.wav",
 ];
 
 Assets.audio.keys = [
-    "level1_music", 
+    "level1_music",
+    "level3_music",
+    "level5_music",
     "end_music", 
     "main_music", 
     "coin_sound",

@@ -97,10 +97,7 @@ MainScene.prototype.update = function(deltatime) {
         }
         
         if (this.startIntro) {
-            if (this.music !== null) {
-                this.music.stop();
-            }
-            this.callback("game", null);
+            
             if (this.playBtn.alpha > 0) {
                 this.playBtn.alpha -= 0.5 * deltatime;
             }
@@ -133,12 +130,12 @@ MainScene.prototype.update = function(deltatime) {
         if (this.mouseX >= this.soundBtn.x && this.mouseX <= this.soundBtn.x + this.soundBtn.width 
                 && this.mouseY >= this.soundBtn.y && this.mouseY <= this.soundBtn.y + this.soundBtn.height) {          
             this.context.font = this.soundBtn.font;
-            this.context.fillStyle = "rgba(255, 182, 193, " + this.soundBtn.alpha + ")";
+            this.context.fillStyle = "rgba(255, 182, 193, " + this.playBtn.alpha + ")";
             this.context.textAlign = "center";
             this.context.fillText(this.soundBtn.text, this.soundBtn.x + this.soundBtn.width / 2, this.soundBtn.y + this.soundBtn.height / 2);          
         } else  {
             this.context.font = this.soundBtn.font;
-            this.context.fillStyle = "rgba(255, 105, 180, " + this.soundBtn.alpha + ")";
+            this.context.fillStyle = "rgba(255, 105, 180, " + this.playBtn.alpha + ")";
             this.context.textAlign = "center";
             this.context.fillText(this.soundBtn.text, this.soundBtn.x + this.soundBtn.width / 2, this.soundBtn.y + this.soundBtn.height / 2);
         }
